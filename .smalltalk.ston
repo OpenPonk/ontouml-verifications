@@ -1,0 +1,23 @@
+SmalltalkCISpec {
+	#loading : [
+		SCIMetacelloLoadSpec {
+			#platforms : [
+				#pharo
+			],
+			#baseline : 'OntoUMLVerifications'
+		}
+	],
+	#postLoading : [
+		'scripts/script.st'
+	],
+	#testing : {
+		#coverage : {
+			#packages : [
+				'OntoUML-Verification*'
+			]
+		},
+		#packages : [
+			'OntoUML-Verification*'
+		]
+	}
+}

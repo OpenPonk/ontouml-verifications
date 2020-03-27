@@ -9,12 +9,8 @@ BaselineOfOntoUMLVerifications >> baselineOf: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ Smalltalk
-				at: #BaselineOfClassEditor
-				ifAbsent: [ self
-						error:
-							'Unable to load OntoUMLVerification as standalone repository. Load it by loading ClassEditor.' ].
-			spec
+		do: [ spec
+				preLoadDoIt: #checkClassEditor;
 				package: 'OntoUML-VerificationTraits';
 				package: 'OntoUML-VerificationMessages';
 				package: 'OntoUML-VerificationResults';
@@ -28,4 +24,14 @@ BaselineOfOntoUMLVerifications >> baselineOf: spec [
 				group: 'default'
 				with:
 					#('OntoUML-VerificationTests' 'OntoUML-VerificationController' 'OntoUML-VerificationResults' 'OntoUML-VerificationMessages') ]
+]
+
+{ #category : #baselines }
+BaselineOfOntoUMLVerifications >> checkClassEditor [
+	Smalltalk
+		at: #BaselineOfClassEditor
+		ifAbsent: [ Metacello new
+				baseline: 'ClassEditor';
+				repository: 'github://openponk/class-editor/repository';
+				load ]
 ]
