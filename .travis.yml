@@ -41,7 +41,7 @@ deploy:
       smalltalk: Pharo64-8.0
     skip_cleanup: true
     script: 
-      bash scripts/trigger_dependent.sh "class-editor"
+      bash scripts/trigger_dependent.sh "class-editor" "all-in-one"
 cache:
   directories:
   - "$SMALLTALK_CI_BUILD_BASE/pharo-local/package-cache"
