@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #baselines }
-BaselineOfOntoUMLVerifications >> baselineOf: spec [
+BaselineOfOntoUMLVerifications >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
@@ -33,5 +33,5 @@ BaselineOfOntoUMLVerifications >> checkClassEditor [
 		ifAbsent: [ Metacello new
 				baseline: 'ClassEditor';
 				repository: 'github://openponk/class-editor/repository';
-				load ]
+				load: #('no-verifications') ]
 ]
