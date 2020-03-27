@@ -3,7 +3,7 @@ os:
 - linux
 env:
   global:
-  - PROJECT_NAME=class-editor
+  - PROJECT_NAME=ontouml-verifications
   - FULL_PROJECT_NAME=openponk-$PROJECT_NAME
 matrix:
   include:
@@ -16,6 +16,8 @@ matrix:
     - smalltalk: Pharo64-9.0
       env: PHARO_VERSION="9.0" PHARO_BITS="64"
   allow_failures:
+    - smalltalk: Pharo64-7.0
+      env: PHARO_VERSION="7.0" PHARO_BITS="64"
     - smalltalk: Pharo64-9.0
       env: PHARO_VERSION="9.0" PHARO_BITS="64"
 before_install:
@@ -39,8 +41,7 @@ deploy:
       smalltalk: Pharo64-8.0
     skip_cleanup: true
     script: 
-      bash scripts/deploy.sh;
-      bash scripts/trigger_dependent.sh "all-in-one"
+      bash scripts/trigger_dependent.sh "class-editor"
 cache:
   directories:
   - "$SMALLTALK_CI_BUILD_BASE/pharo-local/package-cache"
