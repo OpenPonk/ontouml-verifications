@@ -1,3 +1,12 @@
+"
+I represent specialisation of  (abstract) Verification class. I add stereotype check to canVerify: method.
+
+My subclasses should override verifiedStereotypes and verifyObject:withModel: methods.
+
+Overriden methods: canVerify.
+
+New methods: canVerifyStereotype:, verifiedStereotypes.
+"
 Class {
 	#name : #StereotypeVerification,
 	#superclass : #Verification,
@@ -5,19 +14,19 @@ Class {
 }
 
 { #category : #'instance creation' }
-StereotypeVerification class >> canVerify: arg1 [
-	^ (super canVerify: arg1) and: (self canVerifyStereotype: arg1)
+StereotypeVerification class >> canVerify: aVerifiedObject [
+	^ (super canVerify: aVerifiedObject) and: (self canVerifyStereotype: aVerifiedObject).
 ]
 
 { #category : #'instance creation' }
-StereotypeVerification class >> canVerifyStereotype: arg1 [
-	| tmp1 |
-	tmp1 := self getStereotype: arg1.
-	tmp1 ifNil: [ ^ false ].
-	^ self verifiedStereotypes anySatisfy: [ :arg2 | arg2 = tmp1 class ]
+StereotypeVerification class >> canVerifyStereotype: aVerifiedObject [
+	| stereotype |
+	stereotype := self getStereotype: aVerifiedObject.
+	stereotype ifNil: [ ^false ].
+	^ self verifiedStereotypes anySatisfy: [ :class | class = stereotype class ].
 ]
 
 { #category : #constants }
 StereotypeVerification class >> verifiedStereotypes [
-	^ {}
+	^ {}.	
 ]

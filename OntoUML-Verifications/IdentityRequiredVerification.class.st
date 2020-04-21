@@ -1,87 +1,86 @@
+"
+I am verification for IdentityRequired rule. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:, verifiedStereotypes.
+
+New methods: identityProviders, hasIdentity:, getSuperClassesFromModel:, countIdentitySources:fromModel:withAccumulator:.
+"
 Class {
 	#name : #IdentityRequiredVerification,
 	#superclass : #StereotypeVerification,
+	#traits : 'TCodeInjectionChecker + TClassUpdater',
+	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : #'OntoUML-Verifications'
 }
 
+{ #category : #updating }
+IdentityRequiredVerification class >> getUpdatedMessageCode: aVerificationUpdater [
+	| identityProvidersCode |
+	identityProvidersCode := '"I return list of all OntoUML identity providers." 
+identityProviders
+	^ { '.
+	(aVerificationUpdater classSpecifications select: [ :classSpecification | classSpecification providesIdentity ])
+		do: [ :classSpec | self checkStringForCodeInjection: classSpec name.
+			identityProvidersCode := identityProvidersCode , 'OntoUML' , classSpec name , '. ' ].
+	identityProvidersCode := identityProvidersCode , '}'.
+	^ identityProvidersCode.
+]
+
 { #category : #constants }
 IdentityRequiredVerification class >> identityProviders [
-	^ {OntoUMLKind.
-	OntoUMLCollective.
-	OntoUMLQuantity.
-	OntoUMLRelator.
-	OntoUMLMode}
+	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLMode. OntoUMLQuality. }
+]
+
+{ #category : #updating }
+IdentityRequiredVerification class >> updateFrom: aVerificationUpdater [
+	| identityProvidersCode |
+	identityProvidersCode := self getUpdatedMessageCode: aVerificationUpdater.
+	self updateMessage: identityProvidersCode withClassification: 'constants'.
 ]
 
 { #category : #constants }
 IdentityRequiredVerification class >> verifiedClass [
-	^ OPUMLClass
+	^ OPUMLClass.
 ]
 
 { #category : #constants }
 IdentityRequiredVerification class >> verifiedStereotypes [
-	^ {OntoUMLSubKind.
-	OntoUMLPhase.
-	OntoUMLRole}
+	^ {OntoUMLSubKind. OntoUMLPhase. OntoUMLRole.}.
 ]
 
 { #category : #verification }
-IdentityRequiredVerification >> countIdentitySources: arg1 fromModel: arg2 withAccumulator: arg3 [
-	| tmp1 tmp2 tmp4 |
-	(arg3 anySatisfy: [ :arg4 | arg4 = arg1 ])
-		ifTrue: [ ^ Float negativeInfinity ].
-	arg3 add: arg1.
-	tmp1 := self class getStereotype: arg1.
-	(self hasIdentity: tmp1)
-		ifTrue: [ ^ 1 ].
-	tmp4 := 0.
-	tmp2 := self getSuperClasses: arg1 fromModel: arg2.
-	tmp2
-		do: [ :arg5 | 
-			tmp4 := tmp4
-				+ (self countIdentitySources: arg5 fromModel: arg2 withAccumulator: arg3) ].
-	^ tmp4
+IdentityRequiredVerification >> countIdentitySources: aVerifiedObject fromModel: aVerifiedModel withAccumulator: aVerificationAccumulator [
+	| stereotype superclasses results |
+	(aVerificationAccumulator anySatisfy: [ :element | element = aVerifiedObject ]) ifTrue: [ ^ Float negativeInfinity. ].
+	aVerificationAccumulator add: aVerifiedObject.
+	stereotype := self class getStereotype: aVerifiedObject.
+	(self hasIdentity: stereotype) ifTrue: [ ^ 1 ].
+	results := 0.
+	superclasses := self getSuperClasses: aVerifiedObject fromModel: aVerifiedModel.
+	superclasses do: [ :superclass | results := results + (self countIdentitySources: superclass fromModel: aVerifiedModel withAccumulator: aVerificationAccumulator) ].
+	^ results.
 ]
 
 { #category : #verification }
-IdentityRequiredVerification >> getSuperClasses: arg1 fromModel: arg2 [
-	^ ((arg2 select: [ :arg3 | arg3 class = OPUMLGeneralization ])
-		select: [ :arg4 | arg4 specific = arg1 ])
-		collect: [ :arg5 | arg5 general ]
+IdentityRequiredVerification >> getSuperClasses: aVerifiedObject fromModel: aVerifiedModel [
+	^ ((aVerifiedModel select: [ :element | element class = OPUMLGeneralization ])
+		select: [ :generalizaion | generalizaion  specific = aVerifiedObject ])
+			collect: [ :generalization | generalization general ].
 ]
 
 { #category : #verification }
-IdentityRequiredVerification >> hasIdentity: arg1 [
-	^ self class identityProviders
-		anySatisfy: [ :arg2 | arg2 = arg1 class ]
+IdentityRequiredVerification >> hasIdentity: aVerifiedStereotype [
+	^ self class identityProviders anySatisfy: [ :identityProvider | identityProvider = aVerifiedStereotype class ].
 ]
 
 { #category : #verification }
-IdentityRequiredVerification >> verifyObject: arg1 withModel: arg2 [
-	| tmp1 tmp2 |
-	tmp2 := Set new.
-	tmp1 := self
-		countIdentitySources: arg1
-		fromModel: arg2
-		withAccumulator: tmp2.
-	tmp1 < 0
-		ifTrue: [ ^ {(VerificationMessageError
-				createFor: arg1
-				withVerification: self
-				withText:
-					(self class getStereotype: arg1) class name
-						, ' has loop in generalisation structure.')} ].
-	tmp1 = 0
-		ifTrue: [ ^ {(VerificationMessageError
-				createFor: arg1
-				withVerification: self
-				withText: (self class getStereotype: arg1) class name , ' has no identity.')} ].
-	tmp1 > 1
-		ifTrue: [ ^ {(VerificationMessageError
-				createFor: arg1
-				withVerification: self
-				withText:
-					(self class getStereotype: arg1) class name
-						, ' has multiple identity sources.')} ].
-	^ {}
+IdentityRequiredVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
+	| identityCount verificationAccumulator |
+	verificationAccumulator := Set new.
+	identityCount := self countIdentitySources: aVerifiedObject fromModel: aVerifiedModel  withAccumulator: verificationAccumulator.
+	identityCount < 0 ifTrue: [ ^{VerificationMessageError createFor: aVerifiedObject withVerification: self withText: (self class getStereotype: aVerifiedObject) class name, ' has loop in generalisation structure.'} ].
+	identityCount = 0 ifTrue: [ ^{VerificationMessageError createFor: aVerifiedObject withVerification: self withText: (self class getStereotype: aVerifiedObject) class name, ' has no identity.'} ].
+	identityCount > 1 ifTrue: [ ^{VerificationMessageError createFor: aVerifiedObject withVerification: self withText: (self class getStereotype: aVerifiedObject) class name, ' has multiple identity sources.'} ].
+	^ {}.
+	
 ]

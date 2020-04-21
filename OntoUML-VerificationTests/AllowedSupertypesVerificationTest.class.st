@@ -1,3 +1,6 @@
+"
+I represent tests for AllowedSupertypesVerification.
+"
 Class {
 	#name : #AllowedSupertypesVerificationTest,
 	#superclass : #AbstractVerificationTest,
@@ -5,94 +8,131 @@ Class {
 }
 
 { #category : #constants }
+AllowedSupertypesVerificationTest >> getExpectedGetValidSupertypesForCodeFromCollection [
+	^ '"I return association between OntoUML element stereotype Kind and its allowed supertypes.
+ I am tested by testValidSupertypesFor"
+validSupertypesForKind
+	^ OntoUMLKind -> { OntoUMLSubKind. OntoUMLTest. OntoUMLMock. }.'.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerificationTest >> getExpectedUpdatedMessageCode [
+	^ '"I return dictionary containing collections of allowed supertypes for each OntoUML element stereotype."
+validSupertypes
+	| result |
+	result := Dictionary new.
+	result add: self validSupertypesForKind.
+	result add: self validSupertypesForMode.
+	result add: self validSupertypesForTest.
+	^ result.'.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerificationTest >> getMockVerificationUpdater [
+	| mockUpdater |
+	mockUpdater := OntoUMLVerificationUpdater new.
+	mockUpdater classSpecifications: { MockOntoUMLClassStereotypeYaml new name: 'Kind'. MockOntoUMLClassStereotypeYaml new name: 'Mode'. MockOntoUMLClassStereotypeYaml new name: 'Test'. }.
+ 	^ mockUpdater.
+]
+
+{ #category : #constants }
 AllowedSupertypesVerificationTest >> getTestedClass [
-	^ AllowedSupertypesVerification
+	^ AllowedSupertypesVerification.
 ]
 
 { #category : #constants }
 AllowedSupertypesVerificationTest >> getVerifiedClass [
-	^ OPUMLGeneralization
+	^ OPUMLGeneralization.
 ]
 
 { #category : #tests }
 AllowedSupertypesVerificationTest >> invalidObjectTest [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 |
-	tmp1 := OPUMLClass new.
-	tmp1 applyStereotype: OntoUMLKind new.
-	tmp2 := OPUMLClass new.
-	tmp2 applyStereotype: OntoUMLSubKind new.
-	tmp3 := OPUMLGeneralization new.
-	tmp3
-		general: tmp1;
-		specific: tmp2.
-	tmp4 := {tmp1.
-	tmp2.
-	tmp3}.
-	tmp5 := VerificationResults new.
-	tmp5
-		addResults: (AllowedSubtypesVerification verify: tmp3 withModel: tmp4).
-	self assert: tmp5 results size equals: 0
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: kind.
+	generalization specific: subkind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
+	self assert: result results size equals: 0.
 ]
 
 { #category : #tests }
 AllowedSupertypesVerificationTest >> testCanVerify [
-	self canVerifyTest
+	self canVerifyTest. 
+]
+
+{ #category : #tests }
+AllowedSupertypesVerificationTest >> testGetUpdatedMessageCode [
+	| mockVerificationUpdater updatedCode |
+	mockVerificationUpdater := self getMockVerificationUpdater.
+	updatedCode := self getTestedClass getUpdatedMessageCode: mockVerificationUpdater.
+	self assert: updatedCode equals: self getExpectedUpdatedMessageCode.
+]
+
+{ #category : #tests }
+AllowedSupertypesVerificationTest >> testGetValidSubtypesForCodeFromCollection [
+	| updatedCode |
+	updatedCode := self getTestedClass getValidSupertypesForCode: 'Kind' fromCollection: { 'SubKind'. 'Test'. 'Mock'.}.
+	self assert: updatedCode equals: self getExpectedGetValidSupertypesForCodeFromCollection.
 ]
 
 { #category : #tests }
 AllowedSupertypesVerificationTest >> testNew [
-	self newTest
+	self newTest.
 ]
 
 { #category : #tests }
-AllowedSupertypesVerificationTest >> testValidSupertypes [
-	| tmp1 tmp3 |
-	tmp1 := self getTestedClass validSupertypes.
-	tmp3 := self.
-	tmp3
-		assert: (tmp1 isKindOf: Dictionary);
-		assert: tmp1 isNotEmpty
+AllowedSupertypesVerificationTest >> testValidSubtypesFor [
+	| methodList |
+	methodList := (AllowedSupertypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validSupertypesFor.*' ].
+	methodList do: [ :methodName | 
+		self assert: (AllowedSupertypesVerification class >>> (methodName asSymbol) isKindOf: Association). ].
+]
+
+{ #category : #tests }
+AllowedSupertypesVerificationTest >> testValidSupertypesFor [
+	| methodList |
+	methodList := (AllowedSupertypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validSupertypesFor.*' ].
+	self assert: methodList isNotEmpty.
+	methodList do: [ :methodName | 
+		self assert: (AllowedSupertypesVerification class >>> (methodName asSymbol) isKindOf: Association). ].
 ]
 
 { #category : #tests }
 AllowedSupertypesVerificationTest >> testVerifiedClass [
-	self verifiedClassTest
+	self verifiedClassTest.
 ]
 
 { #category : #tests }
 AllowedSupertypesVerificationTest >> testVerifyObjectWithModel [
-	self
-		validObjectTest;
-		invalidObjectTest
+	self validObjectTest.
+	self invalidObjectTest.
 ]
 
 { #category : #tests }
 AllowedSupertypesVerificationTest >> testVerifyWithModel [
-	self
-		validObjectTest;
-		invalidObjectTest
+	self validObjectTest.
+	self invalidObjectTest.
 ]
 
 { #category : #tests }
 AllowedSupertypesVerificationTest >> validObjectTest [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 |
-	tmp1 := OPUMLClass new.
-	tmp1 applyStereotype: OntoUMLKind new.
-	tmp2 := OPUMLClass new.
-	tmp2 applyStereotype: OntoUMLSubKind new.
-	tmp3 := OPUMLGeneralization new.
-	tmp3
-		general: tmp2;
-		specific: tmp1.
-	tmp4 := {tmp1.
-	tmp2.
-	tmp3}.
-	tmp5 := VerificationResults new.
-	tmp5
-		addResults: (AllowedSubtypesVerification verify: tmp3 withModel: tmp4).
-	self
-		assert: tmp5 results size equals: 1;
-		assert:
-			(tmp5 results
-				anySatisfy: [ :arg1 | arg1 isKindOf: VerificationMessageError ])
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: subkind.
+	generalization specific: kind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
+	self assert: result results size equals: 1.
+	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
 ]

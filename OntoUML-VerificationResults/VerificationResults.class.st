@@ -1,3 +1,8 @@
+"
+I represent collection of verification results.
+
+My responsibility is to store those results and allow other elements to queue for results of those elements.
+"
 Class {
 	#name : #VerificationResults,
 	#superclass : #Object,
@@ -8,44 +13,42 @@ Class {
 }
 
 { #category : #adding }
-VerificationResults >> addResult: arg1 [
-	results add: arg1
+VerificationResults >> addResult: aVerificationMessage [
+	results add: aVerificationMessage.
 ]
 
 { #category : #adding }
-VerificationResults >> addResults: arg1 [
-	results addAll: arg1
+VerificationResults >> addResults: aVerificationMessageCollection [
+	results addAll: aVerificationMessageCollection.
 ]
 
 { #category : #testing }
-VerificationResults >> hasErrors: arg1 [
-	^ self selectErrors
-		anySatisfy: [ :arg2 | arg2 objectReference = arg1 ]
+VerificationResults >> hasErrors: aVerifiedObject [
+	^ self selectErrors anySatisfy: [ :verificationMessage | verificationMessage objectReference = aVerifiedObject ].
 ]
 
 { #category : #testing }
-VerificationResults >> hasWarnings: arg1 [
-	^ self selectWarnings
-		anySatisfy: [ :arg2 | arg2 objectReference = arg1 ]
+VerificationResults >> hasWarnings: aVerifiedObject [
+	^ self selectWarnings anySatisfy: [ :verificationMessage | verificationMessage objectReference = aVerifiedObject ].
 ]
 
 { #category : #initialization }
 VerificationResults >> initialize [
 	super initialize.
-	results := Set new
+	results := Set new.
 ]
 
 { #category : #accessing }
 VerificationResults >> results [
-	^ results
+	^ results.
 ]
 
 { #category : #testing }
 VerificationResults >> selectErrors [
-	^ results select: [ :arg1 | arg1 class = VerificationMessageError ]
+	^ results select: [ :verificationMessage | verificationMessage class = VerificationMessageError ].
 ]
 
 { #category : #testing }
 VerificationResults >> selectWarnings [
-	^ results select: [ :arg1 | arg1 class = VerificationMessageWarning ]
+	^ results select: [ :verificationMessage | verificationMessage class = VerificationMessageWarning ].
 ]

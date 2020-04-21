@@ -6,70 +6,57 @@ Class {
 
 { #category : #tests }
 VerificationMessageTest >> testCreateForWithVerificationWithText [
-	| tmp1 tmp2 tmp3 tmp4 tmp6 |
-	tmp2 := Object new.
-	tmp3 := Verification basicNew.
-	tmp4 := 'dummyMessageText'.
-	tmp1 := VerificationMessage
-		createFor: tmp2
-		withVerification: tmp3
-		withText: tmp4.
-	tmp6 := self.
-	tmp6
-		assert: tmp1 objectReference equals: tmp2;
-		assert: tmp1 verification equals: tmp3;
-		assert: tmp1 messageText equals: tmp4
+	| validationMessage testObject testVerification testMessageText |
+	testObject := Object new.
+	testVerification := Verification basicNew.
+	testMessageText := 'dummyMessageText'. 
+	validationMessage := VerificationMessage createFor: testObject withVerification: testVerification  withText: testMessageText.
+	self assert: validationMessage objectReference equals: testObject;
+	assert: validationMessage verification equals: testVerification;	
+	assert: validationMessage messageText  equals: testMessageText.
 ]
 
 { #category : #tests }
 VerificationMessageTest >> testMessageText [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 |
-	tmp2 := Object new.
-	tmp3 := Verification basicNew.
-	tmp4 := 'dummyMessageText'.
-	tmp5 := 'changedText'.
-	tmp1 := VerificationMessage
-		createFor: tmp2
-		withVerification: tmp3
-		withText: tmp4.
-	self assert: tmp1 messageText equals: tmp4.
-	tmp1 messageText: tmp5.
-	self assert: tmp1 messageText equals: tmp5
+	| validationMessage testObject testVerification testMessageText secondText |
+	testObject := Object new.
+	testVerification := Verification basicNew.
+	testMessageText := 'dummyMessageText'. 
+	secondText := 'changedText'.
+	validationMessage := VerificationMessage createFor: testObject withVerification: testVerification  withText: testMessageText.
+	self assert: validationMessage messageText equals: testMessageText.
+	validationMessage messageText: secondText.
+	self assert: validationMessage messageText equals: secondText.
+	
 ]
 
 { #category : #tests }
 VerificationMessageTest >> testNew [
-	self should: [ VerificationMessage new ] raise: ShouldNotImplement
+	self should: [ VerificationMessage new. ] raise: ShouldNotImplement.
 ]
 
 { #category : #tests }
 VerificationMessageTest >> testObjectReference [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 |
-	tmp2 := Object new.
-	tmp3 := Verification basicNew.
-	tmp4 := 'dummyMessageText'.
-	tmp5 := tmp3.
-	tmp1 := VerificationMessage
-		createFor: tmp2
-		withVerification: tmp3
-		withText: tmp4.
-	self assert: tmp1 objectReference equals: tmp2.
-	tmp1 objectReference: tmp5.
-	self assert: tmp1 objectReference equals: tmp5
+	| validationMessage testObject testVerification testMessageText secondObject |
+	testObject := Object new.
+	testVerification := Verification basicNew.
+	testMessageText := 'dummyMessageText'.
+	secondObject := testVerification.
+	validationMessage := VerificationMessage createFor: testObject withVerification: testVerification  withText: testMessageText.
+	self assert: validationMessage objectReference equals: testObject.
+	validationMessage objectReference: secondObject.
+	self assert: validationMessage objectReference equals: secondObject.
 ]
 
 { #category : #tests }
 VerificationMessageTest >> testVerification [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 |
-	tmp2 := Object new.
-	tmp3 := Verification basicNew.
-	tmp4 := 'dummyMessageText'.
-	tmp5 := tmp2.
-	tmp1 := VerificationMessage
-		createFor: tmp2
-		withVerification: tmp3
-		withText: tmp4.
-	self assert: tmp1 verification equals: tmp3.
-	tmp1 verification: tmp5.
-	self assert: tmp1 verification equals: tmp5
+	| validationMessage testObject testVerification testMessageText secondVerification |
+	testObject := Object new.
+	testVerification := Verification basicNew.
+	testMessageText := 'dummyMessageText'.
+	secondVerification := testObject.
+	validationMessage := VerificationMessage createFor: testObject withVerification: testVerification  withText: testMessageText.	
+	self assert: validationMessage verification equals: testVerification.
+	validationMessage verification: secondVerification.
+	self assert: validationMessage verification equals: secondVerification.
 ]

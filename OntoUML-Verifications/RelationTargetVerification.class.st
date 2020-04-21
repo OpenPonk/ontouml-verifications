@@ -1,133 +1,151 @@
+"
+I am verification for RelationTarget rule. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:
+
+New methods: validTargets.
+"
 Class {
 	#name : #RelationTargetVerification,
 	#superclass : #Verification,
+	#traits : 'TCodeInjectionChecker + TClassUpdater',
+	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : #'OntoUML-Verifications'
 }
 
+{ #category : #updating }
+RelationTargetVerification class >> getUpdatedMessageCode: aVerificationUpdater [
+	| validTargetsCode |
+	validTargetsCode := '"I return dictionary containing collections of allowed targets for each OntoUML relationship stereotype."
+validTargets
+	| result |
+	result := Dictionary new.'.
+	aVerificationUpdater relationshipSpecifications
+		do: [ :relationshipSpecification | self checkStringForCodeInjection: relationshipSpecification name.
+			validTargetsCode := validTargetsCode , (String with: Character cr)
+				, '	result add: self validTargetsFor'
+				, relationshipSpecification name , '.' ].
+	validTargetsCode := validTargetsCode , (String with: Character cr)
+		, '	^ result.'.
+	^ validTargetsCode.
+]
+
+{ #category : #updating }
+RelationTargetVerification class >> getValidTargetsFor: aRelationship fromCollection: aCollection [
+	| methodTemplate |
+	self checkStringForCodeInjection: aRelationship.
+	methodTemplate := '"I return association between OntoUML relationship stereotype '
+		, aRelationship , ' and its allowed targets."'
+		, (String with: Character cr) , 'validTargetsFor' , aRelationship
+		, (String with: Character cr) , '	^ OntoUML' , aRelationship , ' -> { '.
+	aCollection
+		do: [ :item | self checkStringForCodeInjection: item capitalized.
+			 methodTemplate := methodTemplate , 'OntoUML' , item capitalized , '. ' ].
+	methodTemplate := methodTemplate , '}.'.
+	^ methodTemplate.
+]
+
+{ #category : #updating }
+RelationTargetVerification class >> setValidTargetsFor: aRelationship fromCollection: aCollection [
+	| validTargetsForCode |
+	validTargetsForCode := self getValidTargetsFor: aRelationship fromCollection: aCollection.
+	self updateMessage: validTargetsForCode withClassification: 'constants'.
+]
+
+{ #category : #updating }
+RelationTargetVerification class >> updateFrom: aVerificationUpdater [
+	| updatedMessageCode |
+	updatedMessageCode := self getUpdatedMessageCode: aVerificationUpdater.
+	aVerificationUpdater relationshipSpecifications do: [ :relationshipSpecification |
+		self setValidTargetsFor: relationshipSpecification name fromCollection: 
+		(self expandAllowedClassStereotypesIn: (relationshipSpecification allowedTargets) from: aVerificationUpdater). ]. 	
+	self updateMessage: updatedMessageCode  withClassification: 'constants'.
+	
+]
+
 { #category : #constants }
 RelationTargetVerification class >> validTargets [
-	| tmp1 |
-	tmp1 := Dictionary new.
-	tmp1
-		add:
-			OntoUMLFormal
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLMaterial
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLMediation
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLCharacterization
-				->
-					{OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLDerivation
-				->
-					{OntoUMLSubKind.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLComponentOf
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add: OntoUMLContainment -> {OntoUMLQuantity};
-		add:
-			OntoUMLMemberOf
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLSubCollectionOf
-				->
-					{OntoUMLSubKind.
-					OntoUMLCollective};
-		add: OntoUMLSubQuantityOf -> {OntoUMLQuality}.
-	^ tmp1
+	| result |
+	result := Dictionary new.
+	result add: self validTargetsForComponentOf.
+	result add: self validTargetsForContainment.
+	result add: self validTargetsForMemberOf.
+	result add: self validTargetsForSubCollectionOf.
+	result add: self validTargetsForSubQuantityOf.
+	result add: self validTargetsForCharacterization.
+	result add: self validTargetsForDerivation.
+	result add: self validTargetsForFormal.
+	result add: self validTargetsForMaterial.
+	result add: self validTargetsForMediation.
+	^ result.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForCharacterization [
+	^ OntoUMLCharacterization -> { OntoUMLMode. OntoUMLQuality. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForComponentOf [
+	^ OntoUMLComponentOf -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForContainment [
+	^ OntoUMLContainment -> { OntoUMLQuantity. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForDerivation [
+	^ OntoUMLDerivation -> { OntoUMLMaterial. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForFormal [
+	^ OntoUMLFormal -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForMaterial [
+	^ OntoUMLMaterial -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForMediation [
+	^ OntoUMLMediation -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForMemberOf [
+	^ OntoUMLMemberOf -> { OntoUMLPhase. OntoUMLRelator. OntoUMLRole. OntoUMLSubKind. OntoUMLCategory. OntoUMLRoleMixin. OntoUMLMode. OntoUMLQuality. OntoUMLQuantity. OntoUMLMixin. OntoUMLCollective. OntoUMLKind. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForSubCollectionOf [
+	^ OntoUMLSubCollectionOf -> { OntoUMLCollective. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForSubQuantityOf [
+	^ OntoUMLSubQuantityOf -> { OntoUMLQuantity. }.
 ]
 
 { #category : #constants }
 RelationTargetVerification class >> verifiedClass [
-	^ OPUMLAssociation
+	^ OPUMLAssociation.
 ]
 
 { #category : #verification }
-RelationTargetVerification >> verifyObject: arg1 withModel: arg2 [
-	| tmp1 tmp2 tmp3 |
-	tmp3 := self class getStereotype: arg1.
-	tmp3 ifNil: [ ^ {} ].
-	tmp1 := arg1 memberEnds at: 2.
-	tmp2 := self class getStereotype: tmp1 type.
-	tmp2 ifNil: [ ^ {} ].
-	((self class validTargets at: tmp3 class)
-		anySatisfy: [ :arg3 | tmp2 class = arg3 ])
-		ifFalse: [ ^ {(VerificationMessageError
-				createFor: arg1
-				withVerification: self
-				withText:
-					tmp2 class name , ' cannot be end of ' , tmp3 class name
-						, ' association')} ].
-	^ {}
+RelationTargetVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
+	| end endStereotype associationStereotype |
+	associationStereotype := self class getStereotype: aVerifiedAssociation.	
+	associationStereotype ifNil: [ ^{} ]. 
+	end := aVerifiedAssociation memberEnds at: 2.
+	endStereotype := self class getStereotype: end type.	
+	endStereotype ifNil: [ ^{} ]. 
+	((self class validTargets at: associationStereotype class) anySatisfy: [ :validEnd | endStereotype class = validEnd  ])
+		ifFalse: [ ^ {VerificationMessageError createFor: aVerifiedAssociation 
+			withVerification: self 
+			withText: endStereotype class name , ' cannot be end of ' , associationStereotype class name , ' association'} ].
+	^ {}.
 ]

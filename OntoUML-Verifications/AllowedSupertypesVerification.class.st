@@ -1,99 +1,160 @@
+"
+I am verification for AllowedSupertypes rule. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:
+
+New methods: validSupertypes.
+"
 Class {
 	#name : #AllowedSupertypesVerification,
 	#superclass : #Verification,
+	#traits : 'TCodeInjectionChecker + TClassUpdater',
+	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : #'OntoUML-Verifications'
 }
 
+{ #category : #updating }
+AllowedSupertypesVerification class >> getUpdatedMessageCode: aVerificationUpdater [
+	| validSupertypesCode |
+	validSupertypesCode := '"I return dictionary containing collections of allowed supertypes for each OntoUML element stereotype."
+validSupertypes
+	| result |
+	result := Dictionary new.'.
+	aVerificationUpdater classSpecifications
+		do: [ :classSpecification | self checkStringForCodeInjection: classSpecification name.
+			validSupertypesCode := validSupertypesCode , (String with: Character cr)
+				, '	result add: self validSupertypesFor' , classSpecification name
+				, '.' ].
+	validSupertypesCode := validSupertypesCode , (String with: Character cr)
+		, '	^ result.'.
+	^ validSupertypesCode.
+]
+
+{ #category : #updating }
+AllowedSupertypesVerification class >> getValidSupertypesForCode: aStereotype fromCollection: aCollection [
+	| methodTemplate |
+	self checkStringForCodeInjection: aStereotype.
+	methodTemplate := '"I return association between OntoUML element stereotype '
+		, aStereotype , ' and its allowed supertypes.', (String with: Character cr)
+		, ' I am tested by testValidSupertypesFor"'
+		, (String with: Character cr) , 'validSupertypesFor' , aStereotype
+		, (String with: Character cr) , '	^ OntoUML' , aStereotype , ' -> { '.
+	aCollection
+		do: [ :item | self checkStringForCodeInjection: item.
+			 methodTemplate := methodTemplate , 'OntoUML' , item , '. ' ].
+	methodTemplate := methodTemplate , '}.'.
+	^ methodTemplate.
+]
+
+{ #category : #updating }
+AllowedSupertypesVerification class >> setValidSupertypesFor: aStereotype fromCollection: aCollection [
+	| validSupertypesForCode |
+	validSupertypesForCode := self getValidSupertypesForCode: aStereotype fromCollection: aCollection.
+	self updateMessage: validSupertypesForCode withClassification: 'constants'.
+]
+
+{ #category : #updating }
+AllowedSupertypesVerification class >> updateFrom: aVerificationUpdater [
+	| updatedMessageCode |
+	updatedMessageCode := self getUpdatedMessageCode: aVerificationUpdater.
+	aVerificationUpdater classSpecifications do: [ :classSpecification |
+		self setValidSupertypesFor: classSpecification name fromCollection: classSpecification supertypes. ]. 	
+	self updateMessage: updatedMessageCode  withClassification: 'constants'.
+	
+]
+
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypes [
-	| tmp1 |
-	tmp1 := Dictionary new.
-	tmp1
-		add:
-			OntoUMLKind
-				->
-					{OntoUMLCategory.
-					OntoUMLMixin};
-		add:
-			OntoUMLSubKind
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLCategory.
-					OntoUMLMixin};
-		add:
-			OntoUMLCollective
-				->
-					{OntoUMLCategory.
-					OntoUMLMixin};
-		add:
-			OntoUMLQuantity
-				->
-					{OntoUMLCategory.
-					OntoUMLMixin};
-		add:
-			OntoUMLRelator
-				->
-					{OntoUMLCategory.
-					OntoUMLMixin};
-		add:
-			OntoUMLPhase
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLMixin};
-		add:
-			OntoUMLRole
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLRoleMixin.
-					OntoUMLMixin};
-		add:
-			OntoUMLCategory
-				->
-					{OntoUMLCategory.
-					OntoUMLMixin};
-		add:
-			OntoUMLRoleMixin
-				->
-					{OntoUMLRoleMixin.
-					OntoUMLMixin};
-		add: OntoUMLMixin -> {OntoUMLMixin};
-		add: OntoUMLMode -> {};
-		add: OntoUMLQuality -> {}.
-	^ tmp1
+	| result |
+	result := Dictionary new.
+	result add: self validSupertypesForKind.
+	result add: self validSupertypesForSubKind.
+	result add: self validSupertypesForCollective.
+	result add: self validSupertypesForPhase.
+	result add: self validSupertypesForQuantity.
+	result add: self validSupertypesForRelator.
+	result add: self validSupertypesForRole.
+	result add: self validSupertypesForMode.
+	result add: self validSupertypesForQuality.
+	result add: self validSupertypesForCategory.
+	result add: self validSupertypesForMixin.
+	result add: self validSupertypesForRoleMixin.
+	^ result.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForCategory [
+	^ OntoUMLCategory -> { OntoUMLCategory. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForCollective [
+	^ OntoUMLCollective -> { OntoUMLCategory. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForKind [
+	^ OntoUMLKind -> { OntoUMLCategory. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForMixin [
+	^ OntoUMLMixin -> { OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForMode [
+	^ OntoUMLMode -> { OntoUMLCategory. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForPhase [
+	^ OntoUMLPhase -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLPhase. OntoUMLRole. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForQuality [
+	^ OntoUMLQuality -> { OntoUMLCategory. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForQuantity [
+	^ OntoUMLQuantity -> { OntoUMLCategory. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForRelator [
+	^ OntoUMLRelator -> { OntoUMLCategory. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForRole [
+	^ OntoUMLRole -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLRoleMixin. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForRoleMixin [
+	^ OntoUMLRoleMixin -> { OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForSubKind [
+	^ OntoUMLSubKind -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLCategory. OntoUMLMixin. }.
 ]
 
 { #category : #constants }
 AllowedSupertypesVerification class >> verifiedClass [
-	^ OPUMLGeneralization
+	^ OPUMLGeneralization.
 ]
 
 { #category : #verification }
-AllowedSupertypesVerification >> verifyObject: arg1 withModel: arg2 [
-	| tmp1 tmp2 |
-	tmp1 := self class getStereotype: arg1 general.
-	tmp2 := self class getStereotype: arg1 specific.
-	(tmp1 isNil or: tmp2 isNil)
-		ifTrue: [ ^ {} ].
-	((self class validSupertypes at: tmp2 class)
-		anySatisfy: [ :arg3 | tmp1 class = arg3 ])
-		ifFalse: [ ^ {(VerificationMessageError
-				createFor: arg1
-				withVerification: self
-				withText: tmp1 class name , ' cannot be supertype of ' , tmp2 class name , '.')} ].
-	^ {}
+AllowedSupertypesVerification >> verifyObject: aVerifiedGeneralization withModel: aVerifiedModel [
+	| generalStereotype specificStereotype |	
+	generalStereotype := self class getStereotype: aVerifiedGeneralization general.
+	specificStereotype := self class getStereotype: aVerifiedGeneralization specific.
+	(generalStereotype isNil or: specificStereotype isNil) ifTrue: [ ^ {} ].
+	((self class validSupertypes at: specificStereotype class) 
+		anySatisfy: [ :class | generalStereotype class = class ])
+			ifFalse:[ ^ {VerificationMessageError createFor: aVerifiedGeneralization withVerification: self withText: (generalStereotype class name , ' cannot be supertype of ' , specificStereotype class name ,'.')} ].
+	^ {}.
 ]

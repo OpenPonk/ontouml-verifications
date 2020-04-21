@@ -1,3 +1,10 @@
+"
+I am verification for RoleMediationDependency rule. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:, verifiedStereotypes.
+
+New methods: calculateMultiplicity:, calculateMultiplicity:forMediation:, fulfilsMediationDependecy:.
+"
 Class {
 	#name : #RoleMediationDependencyVerification,
 	#superclass : #StereotypeVerification,
@@ -6,35 +13,27 @@ Class {
 
 { #category : #constants }
 RoleMediationDependencyVerification class >> verifiedClass [
-	^ OPUMLClass
+	^ OPUMLClass.
 ]
 
 { #category : #constants }
 RoleMediationDependencyVerification class >> verifiedStereotypes [
-	^ {OntoUMLRole}
+	^ { OntoUMLRole.}.
 ]
 
 { #category : #verification }
-RoleMediationDependencyVerification >> fulfilsMediationDependency: arg1 [
-	^ (arg1 memberEnds at: 1) lower >= 1
-		and: (arg1 memberEnds at: 2) lower >= 1
+RoleMediationDependencyVerification >> fulfilsMediationDependency: aMediation [
+	^ (aMediation memberEnds at: 1) lower >= 1 and: (aMediation memberEnds at: 2) lower >= 1
 ]
 
 { #category : #verification }
-RoleMediationDependencyVerification >> verifyObject: arg1 withModel: arg2 [
-	| tmp1 |
-	tmp1 := (arg2 select: [ :arg3 | arg3 isKindOf: OPUMLAssociation ])
-		select: [ :arg4 | 
-			(self class getStereotype: arg4) class = OntoUMLMediation
-				and: (arg4 memberEnds anySatisfy: [ :arg5 | arg5 type = arg1 ]) ].
-	tmp1 := tmp1
-		select: [ :arg6 | self fulfilsMediationDependency: arg6 ].
-	tmp1 size < 1
-		ifTrue: [ ^ {(VerificationMessageError
-				createFor: arg1
-				withVerification: self
-				withText:
-					(self class getStereotype: arg1) class name
-						, ' has to have at least one mediation with multiplicities on both ends >= 1.')} ].
-	^ {}
+RoleMediationDependencyVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
+	| mediations |
+	mediations := (aVerifiedModel select: [ :element | element isKindOf: OPUMLAssociation ])
+		select: [ :association | (self class getStereotype: association) class = OntoUMLMediation
+			and: (association memberEnds anySatisfy: [ :property | property type = aVerifiedObject ]) ].		
+	mediations := mediations select: [ :mediation | self fulfilsMediationDependency: mediation ].
+	mediations size < 1 ifTrue: [ ^ {VerificationMessageError createFor: aVerifiedObject withVerification: self withText:
+			(self class getStereotype: aVerifiedObject) class name , ' has to have at least one mediation with multiplicities on both ends >= 1.'} ].
+	^ {}.
 ]

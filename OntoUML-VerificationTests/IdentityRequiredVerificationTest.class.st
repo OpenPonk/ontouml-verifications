@@ -1,3 +1,6 @@
+"
+I represent tests for IdentityRequiredVerification.
+"
 Class {
 	#name : #IdentityRequiredVerificationTest,
 	#superclass : #StereotypeVerificationTest,
@@ -5,163 +8,148 @@ Class {
 }
 
 { #category : #constants }
+IdentityRequiredVerificationTest >> getExpectedUpdatedMessageCode [
+	^ '"I return list of all OntoUML identity providers." 
+identityProviders
+	^ { OntoUMLKind. OntoUMLQuality. OntoUMLTest. }'.
+]
+
+{ #category : #constants }
+IdentityRequiredVerificationTest >> getMockVerificationUpdater [
+	| mockUpdater |
+	mockUpdater := OntoUMLVerificationUpdater new.
+	mockUpdater classSpecifications: { (MockOntoUMLClassStereotypeYaml new name: 'Kind') providesIdentity: 'true'. 
+		(MockOntoUMLClassStereotypeYaml new name: 'Mode') providesIdentity: 'false'.
+		(MockOntoUMLClassStereotypeYaml new name: 'Quality') providesIdentity: 'true'.
+		(MockOntoUMLClassStereotypeYaml new name: 'Test') providesIdentity: 'true'. }.
+ 	^ mockUpdater.
+]
+
+{ #category : #constants }
 IdentityRequiredVerificationTest >> getTestedClass [
-	^ IdentityRequiredVerification
+	^ IdentityRequiredVerification.
 ]
 
 { #category : #constants }
 IdentityRequiredVerificationTest >> getVerifiedClass [
-	^ OPUMLClass
+	^ OPUMLClass.
 ]
 
 { #category : #constants }
 IdentityRequiredVerificationTest >> getVerifiedStereotypes [
-	^ {OntoUMLSubKind.
-	OntoUMLPhase.
-	OntoUMLRole}
+	^ {OntoUMLSubKind. OntoUMLPhase. OntoUMLRole.}.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> invalidObjectTest [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 |
-	tmp1 := OPUMLClass new.
-	tmp1 applyStereotype: OntoUMLKind new.
-	tmp2 := OPUMLClass new.
-	tmp2 applyStereotype: OntoUMLSubKind new.
-	tmp3 := OPUMLGeneralization new.
-	tmp3
-		general: tmp1;
-		specific: tmp2.
-	tmp4 := {tmp1.
-	tmp2.
-	tmp3}.
-	tmp5 := VerificationResults new.
-	tmp5 addResults: (self getTestedClass verify: tmp2 withModel: tmp4).
-	self assert: tmp5 results size equals: 0
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: kind.
+	generalization specific: subkind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: subkind withModel: model).
+	self assert: result results size equals: 0.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testCanVerify [
-	self canVerifyTest
+	self canVerifyTest.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testCountIdentitySourcesFromModelWithAccumulator [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 tmp6 |
-	tmp1 := OPUMLClass new applyStereotype: OntoUMLKind new.
-	tmp2 := OPUMLClass new applyStereotype: OntoUMLKind new.
-	tmp3 := OPUMLClass new applyStereotype: OntoUMLRole new.
-	tmp5 := OPUMLGeneralization new.
-	tmp6 := OPUMLGeneralization new.
-	tmp5
-		general: tmp1;
-		specific: tmp3.
-	tmp6
-		general: tmp2;
-		specific: tmp3.
-	tmp4 := {tmp1.
-	tmp2.
-	tmp3.
-	tmp5.
-	tmp6}.
-	self
-		assert:
-			(self getTestedClass basicNew
-				countIdentitySources: tmp3
-				fromModel: tmp4
-				withAccumulator: Set new)
-		equals: 2
+	| kind kind2 role model gen1 gen2 |
+	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
+	kind2 := OPUMLClass new applyStereotype: OntoUMLKind new.
+	role := OPUMLClass new applyStereotype: OntoUMLRole new.
+	gen1 := OPUMLGeneralization new.
+	gen2 := OPUMLGeneralization new.
+	gen1 general: kind; specific: role.
+	gen2 general: kind2; specific: role.
+	model := { kind. kind2. role. gen1. gen2. }.	
+	self assert: (self getTestedClass basicNew countIdentitySources: role fromModel: model withAccumulator: Set new) equals: 2.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testGetSuperClassesFromModel [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 tmp6 |
-	tmp1 := OPUMLClass new applyStereotype: OntoUMLKind new.
-	tmp2 := OPUMLClass new applyStereotype: OntoUMLSubKind new.
-	tmp3 := OPUMLClass new applyStereotype: OntoUMLRole new.
-	tmp5 := OPUMLGeneralization new.
-	tmp6 := OPUMLGeneralization new.
-	tmp5
-		general: tmp1;
-		specific: tmp2.
-	tmp6
-		general: tmp2;
-		specific: tmp3.
-	tmp4 := {tmp1.
-	tmp2.
-	tmp3.
-	tmp5.
-	tmp6}.
-	self
-		assert:
-			((self getTestedClass basicNew getSuperClasses: tmp3 fromModel: tmp4)
-				at: 1)
-		equals: tmp2
+	| kind subkind role model gen1 gen2 |
+	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.
+	role := OPUMLClass new applyStereotype: OntoUMLRole new.
+	gen1 := OPUMLGeneralization new.
+	gen2 := OPUMLGeneralization new.
+	gen1 general: kind; specific: subkind.
+	gen2 general: subkind; specific: role.
+	model := { kind. subkind. role. gen1. gen2. }.	
+	self assert: ((self getTestedClass basicNew getSuperClasses: role fromModel: model) at:1) equals: subkind.
+]
+
+{ #category : #tests }
+IdentityRequiredVerificationTest >> testGetUpdatedMessageCode [
+	| mockVerificationUpdater updatedCode |
+	mockVerificationUpdater := self getMockVerificationUpdater.
+	updatedCode := self getTestedClass getUpdatedMessageCode: mockVerificationUpdater.
+	self assert: updatedCode equals: self getExpectedUpdatedMessageCode.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testHasIdentity [
-	| tmp1 tmp2 |
-	tmp1 := OntoUMLKind new.
-	tmp2 := OntoUMLSubKind new.
-	self
-		assert: (self getTestedClass basicNew hasIdentity: tmp1)
-			equals: true;
-		assert: (self getTestedClass basicNew hasIdentity: tmp2)
-			equals: false
+	| kind subkind |
+	kind := OntoUMLKind new.
+	subkind := OntoUMLSubKind new.
+	self assert: (self getTestedClass basicNew hasIdentity: kind) equals: true. 
+	self assert: (self getTestedClass basicNew hasIdentity: subkind) equals: false.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testIdentityProviders [
-	self
-		assert: (self getTestedClass identityProviders isKindOf: Collection)
-		equals: true
+	self assert: (self getTestedClass identityProviders isKindOf: Collection) equals: true.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testNew [
-	self newTest
+	self newTest.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testVerifiedClass [
-	self verifiedClassTest
+	self verifiedClassTest.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testVerifiedStereotypes [
-	super testVerifiedStereotypes
+	super testVerifiedStereotypes.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testVerifyObjectWithModel [
-	self
-		validObjectTest;
-		invalidObjectTest
+	self validObjectTest.
+	self invalidObjectTest.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testVerifyWithModel [
-	self
-		validObjectTest;
-		invalidObjectTest
+	self validObjectTest.
+	self invalidObjectTest.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> validObjectTest [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 |
-	tmp1 := OPUMLClass new.
-	tmp1 applyStereotype: OntoUMLKind new.
-	tmp2 := OPUMLClass new.
-	tmp2 applyStereotype: OntoUMLSubKind new.
-	tmp3 := OPUMLGeneralization new.
-	tmp3
-		general: tmp2;
-		specific: tmp1.
-	tmp4 := {tmp1.
-	tmp2.
-	tmp3}.
-	tmp5 := VerificationResults new.
-	tmp5 addResults: (self getTestedClass verify: tmp2 withModel: tmp4).
-	self assert: tmp5 results size equals: 1
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: subkind.
+	generalization specific: kind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: subkind withModel: model).
+	self assert: result results size equals: 1.
 ]

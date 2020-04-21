@@ -1,3 +1,9 @@
+"
+I represent negative verification result.
+
+My responsibility is to store reference to verification, verified object, and text containing brief descritpion of the broken rule.
+
+"
 Class {
 	#name : #VerificationMessage,
 	#superclass : #Object,
@@ -10,47 +16,46 @@ Class {
 }
 
 { #category : #'instance creation' }
-VerificationMessage class >> createFor: arg1 withVerification: arg2 withText: arg3 [
-	| tmp1 |
-	tmp1 := self basicNew.
-	tmp1
-		objectReference: arg1;
-		verification: arg2;
-		messageText: arg3.
-	^ tmp1
+VerificationMessage class >> createFor: aObject withVerification: aVerification withText: aText [
+	| message |
+	message := self basicNew.
+	message objectReference: aObject;
+	verification: aVerification;
+	messageText: aText.
+	^ message.
 ]
 
 { #category : #'instance creation' }
 VerificationMessage class >> new [
-	^ self shouldNotImplement
+	^ self shouldNotImplement.
 ]
 
 { #category : #accessing }
 VerificationMessage >> messageText [
-	^ messageText
+	^ messageText.
 ]
 
 { #category : #accessing }
-VerificationMessage >> messageText: arg1 [
-	^ messageText := arg1
+VerificationMessage >> messageText: aText [
+	^ messageText := aText.
 ]
 
 { #category : #accessing }
 VerificationMessage >> objectReference [
-	^ objectReference
+	^ objectReference.
 ]
 
 { #category : #accessing }
-VerificationMessage >> objectReference: arg1 [
-	^ objectReference := arg1
+VerificationMessage >> objectReference: aObject [
+	^ objectReference := aObject.
 ]
 
 { #category : #accessing }
 VerificationMessage >> verification [
-	^ verification
+	^ verification.
 ]
 
 { #category : #accessing }
-VerificationMessage >> verification: arg1 [
-	^ verification := arg1
+VerificationMessage >> verification: aVerificationReference [
+	^ verification := aVerificationReference.
 ]

@@ -1,3 +1,8 @@
+"
+I represent abstract test class.
+
+My responsibility lies in defining unified interface for my subclasses.
+"
 Class {
 	#name : #AbstractVerificationTest,
 	#superclass : #TestCase,
@@ -6,68 +11,67 @@ Class {
 
 { #category : #tests }
 AbstractVerificationTest >> canVerifyTest [
-	self
-		assert: (self getTestedClass canVerify: self getNotVerifiedClassInstance)
-			equals: false;
-		assert: (self getTestedClass canVerify: self getVerifiedClassInstance)
-			equals: true
+	self assert: (self getTestedClass canVerify: self getNotVerifiedClassInstance) equals: false.	
+	self assert: (self getTestedClass canVerify: self getVerifiedClassInstance) equals: true.
 ]
 
 { #category : #'tests - utility' }
-AbstractVerificationTest >> createAssociationFrom: arg1 to: arg2 [
-	| tmp1 tmp2 tmp3 tmp5 tmp7 |
-	tmp1 := OPUMLAssociation new.
-	tmp5 := tmp2 := OPUMLProperty new.
-	tmp5
+AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd [
+	| association leftProp rightProp |
+	association := OPUMLAssociation new.
+	(leftProp := OPUMLProperty new)
 		name: '';
 		lowerValue: (OPUMLLiteralInteger new value: 1);
 		upperValue: (OPUMLLiteralUnlimitedNatural new value: 1);
-		owningAssociation: tmp1;
-		type: arg1.
-	tmp7 := tmp3 := OPUMLProperty new.
-	tmp7
+		owningAssociation: association;
+		type: aSource.
+	(rightProp := OPUMLProperty new)
 		name: '';
 		lowerValue: (OPUMLLiteralInteger new value: 1);
 		upperValue: (OPUMLLiteralUnlimitedNatural new value: 1);
-		owningAssociation: tmp1;
-		type: arg2.
-	tmp1 memberEnds addAll: tmp1 ownedEnds asArray.
-	^ tmp1
+		owningAssociation: association;
+		type: aEnd.
+	association memberEnds addAll: association ownedEnds asArray.
+	^ association
 ]
 
 { #category : #constants }
 AbstractVerificationTest >> getNotVerifiedClass [
-	^ Object
+	^ Object.
 ]
 
 { #category : #constants }
 AbstractVerificationTest >> getNotVerifiedClassInstance [
-	^ self getNotVerifiedClass new
+	^ self getNotVerifiedClass new.
 ]
 
 { #category : #constants }
 AbstractVerificationTest >> getTestedClass [
-	self subclassResponsibility
+	self subclassResponsibility.
 ]
 
 { #category : #constants }
 AbstractVerificationTest >> getVerifiedClass [
-	self subclassResponsibility
+	self subclassResponsibility.
 ]
 
 { #category : #constants }
 AbstractVerificationTest >> getVerifiedClassInstance [
-	^ self getVerifiedClass new
+	^ self getVerifiedClass new.
 ]
 
 { #category : #tests }
 AbstractVerificationTest >> newTest [
-	self should: [ self getTestedClass new ] raise: ShouldNotImplement
+	self should: [ self getTestedClass new. ] raise: ShouldNotImplement.
+]
+
+{ #category : #tests }
+AbstractVerificationTest >> testUpdateFrom [
+	"Each of my subclasses that contains test for updateable verification should implement this method."
+	
 ]
 
 { #category : #tests }
 AbstractVerificationTest >> verifiedClassTest [
-	self
-		assert: self getTestedClass verifiedClass
-		equals: self getVerifiedClass
+	self assert: self getTestedClass verifiedClass equals: self getVerifiedClass.
 ]

@@ -1,3 +1,8 @@
+"
+I represent main gate to the verification framework.
+
+My responsibility is to start verifications and return their results in form of VerificationResults instance.
+"
 Class {
 	#name : #VerificationController,
 	#superclass : #Object,
@@ -6,40 +11,31 @@ Class {
 
 { #category : #verification }
 VerificationController >> getVerifications [
-	^ (RPackageOrganizer default packageNamed: 'OntoUML-Verifications')
-		definedClasses
+	^ (RPackageOrganizer default packageNamed:'OntoUML-Verifications') definedClasses.
 ]
 
 { #category : #verification }
-VerificationController >> getVerifiedObjects: arg1 [
-	| tmp1 tmp2 |
-	tmp1 := arg1 packagedElements
-		select: [ :arg2 | arg2 isKindOf: OPUMLElement ].
-	tmp2 := tmp1 flatCollect: [ :arg3 | arg3 generalizations ].
-	tmp1
-		addAll: tmp2;
-		addAll: (tmp2 flatCollect: [ :arg4 | arg4 generalizationSets ]).
-	^ tmp1
+VerificationController >> getVerifiedObjects: aVerifiedModel [
+	| verifiedObjects generalizations |
+	verifiedObjects := aVerifiedModel packagedElements select:	[ :element | element isKindOf: OPUMLElement. ].
+	generalizations := (verifiedObjects flatCollect: [ :object | object generalizations ]).
+	verifiedObjects addAll: generalizations.
+	verifiedObjects addAll: (generalizations flatCollect: [ :generalization | generalization generalizationSets ]).	
+	^ verifiedObjects.
+	
 ]
 
 { #category : #verification }
-VerificationController >> verify: arg1 [
-	| tmp1 tmp2 tmp3 |
-	tmp1 := self getVerifiedObjects: arg1.
-	tmp2 := self getVerifications.
-	tmp3 := VerificationResults new.
-	tmp1
-		do: [ :arg2 | 
-			self
-				verifySingleObject: arg2
-				withVerifications: tmp2
-				withModel: tmp1
-				withResults: tmp3 ].
-	^ tmp3
+VerificationController >> verify: aVerifiedModel [
+	| verifiedObjects verifications results |
+	verifiedObjects := self getVerifiedObjects: aVerifiedModel.
+	verifications := self getVerifications.
+	results := VerificationResults new.
+	(verifiedObjects do: [ :verifiedObject | (self verifySingleObject: verifiedObject withVerifications: verifications withModel: verifiedObjects withResults: results) ]).
+	^ results.
 ]
 
 { #category : #verification }
-VerificationController >> verifySingleObject: arg1 withVerifications: arg2 withModel: arg3 withResults: arg4 [
-	^ arg2
-		do: [ :arg5 | arg4 addResults: (arg5 verify: arg1 withModel: arg3) ]
+VerificationController >> verifySingleObject: aVerifiedObject withVerifications: aVerifications withModel: aVerifiedModel withResults: aVerificationResults [
+	^ (aVerifications do: [ :verification | aVerificationResults addResults: (verification verify: aVerifiedObject withModel: aVerifiedModel) ]).
 ]

@@ -1,3 +1,6 @@
+"
+I represent tests for AllowedSubtypesVerification.
+"
 Class {
 	#name : #AllowedSubtypesVerificationTest,
 	#superclass : #AbstractVerificationTest,
@@ -5,94 +8,131 @@ Class {
 }
 
 { #category : #constants }
+AllowedSubtypesVerificationTest >> getExpectedGetValidSubtypesForCodeFromCollection [
+	^ '"I return association between OntoUML element stereotype Kind and its allowed subtypes.
+ I am tested by testValidSubtypesFor"
+validSubtypesForKind
+	^ OntoUMLKind -> { OntoUMLSubKind. OntoUMLTest. OntoUMLMock. }.'.
+]
+
+{ #category : #constants }
+AllowedSubtypesVerificationTest >> getExpectedUpdatedMessageCode [
+	^ '"I return dictionary containing collections of allowed subtypes for each OntoUML element stereotype."
+validSubtypes
+	| result |
+	result := Dictionary new.
+	result add: self validSubtypesForKind.
+	result add: self validSubtypesForMode.
+	result add: self validSubtypesForTest.
+	^ result.'.
+]
+
+{ #category : #constants }
+AllowedSubtypesVerificationTest >> getMockVerificationUpdater [
+	| mockUpdater |
+	mockUpdater := OntoUMLVerificationUpdater new.
+	mockUpdater classSpecifications: { MockOntoUMLClassStereotypeYaml new name: 'Kind'. MockOntoUMLClassStereotypeYaml new name: 'Mode'. MockOntoUMLClassStereotypeYaml new name: 'Test'. }.
+ 	^ mockUpdater.
+]
+
+{ #category : #constants }
 AllowedSubtypesVerificationTest >> getTestedClass [
-	^ AllowedSubtypesVerification
+ ^ AllowedSubtypesVerification.
 ]
 
 { #category : #constants }
 AllowedSubtypesVerificationTest >> getVerifiedClass [
-	^ OPUMLGeneralization
+ ^ OPUMLGeneralization.
 ]
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> invalidObjectTest [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 |
-	tmp1 := OPUMLClass new.
-	tmp1 applyStereotype: OntoUMLKind new.
-	tmp2 := OPUMLClass new.
-	tmp2 applyStereotype: OntoUMLSubKind new.
-	tmp3 := OPUMLGeneralization new.
-	tmp3
-		general: tmp1;
-		specific: tmp2.
-	tmp4 := {tmp1.
-	tmp2.
-	tmp3}.
-	tmp5 := VerificationResults new.
-	tmp5
-		addResults: (AllowedSubtypesVerification verify: tmp3 withModel: tmp4).
-	self assert: tmp5 results size equals: 0
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: kind.
+	generalization specific: subkind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
+	self assert: result results size equals: 0.
 ]
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> testCanVerify [
-	self canVerifyTest
+	self canVerifyTest. 
+]
+
+{ #category : #tests }
+AllowedSubtypesVerificationTest >> testGetUpdatedMessageCode [
+	| mockVerificationUpdater updatedCode |
+	mockVerificationUpdater := self getMockVerificationUpdater.
+	updatedCode := self getTestedClass getUpdatedMessageCode: mockVerificationUpdater.
+	self assert: updatedCode equals: self getExpectedUpdatedMessageCode.
+]
+
+{ #category : #tests }
+AllowedSubtypesVerificationTest >> testGetValidSubtypesForCodeFromCollection [
+	| updatedCode |
+	updatedCode := self getTestedClass getValidSubtypesForCode: 'Kind' fromCollection: { 'SubKind'. 'Test'. 'Mock'.}.
+	self assert: updatedCode equals: self getExpectedGetValidSubtypesForCodeFromCollection.
 ]
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> testNew [
-	self newTest
+	self newTest.
 ]
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> testValidSubtypes [
-	| tmp1 tmp3 |
-	tmp1 := AllowedSubtypesVerification validSubtypes.
-	tmp3 := self.
-	tmp3
-		assert: (tmp1 isKindOf: Dictionary);
-		assert: tmp1 isNotEmpty
+	| result |
+	result := AllowedSubtypesVerification validSubtypes.
+	self assert: (result isKindOf: Dictionary);
+	assert: result isNotEmpty.
+]
+
+{ #category : #tests }
+AllowedSubtypesVerificationTest >> testValidSubtypesFor [
+	| methodList |
+	methodList := (AllowedSubtypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validSubtypesFor.*' ].
+	self assert: methodList isNotEmpty.
+	methodList do: [ :methodName | 
+		self assert: (AllowedSubtypesVerification class >>> (methodName asSymbol) isKindOf: Association). ].
 ]
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> testVerifiedClass [
-	self verifiedClassTest
+	self verifiedClassTest.
 ]
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> testVerifyObjectWithModel [
-	self
-		validObjectTest;
-		invalidObjectTest
+	self validObjectTest.
+	self invalidObjectTest.
 ]
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> testVerifyWithModel [
-	self
-		validObjectTest;
-		invalidObjectTest
+	self validObjectTest.
+	self invalidObjectTest.
 ]
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> validObjectTest [
-	| tmp1 tmp2 tmp3 tmp4 tmp5 |
-	tmp1 := OPUMLClass new.
-	tmp1 applyStereotype: OntoUMLKind new.
-	tmp2 := OPUMLClass new.
-	tmp2 applyStereotype: OntoUMLSubKind new.
-	tmp3 := OPUMLGeneralization new.
-	tmp3
-		general: tmp2;
-		specific: tmp1.
-	tmp4 := {tmp1.
-	tmp2.
-	tmp3}.
-	tmp5 := VerificationResults new.
-	tmp5
-		addResults: (AllowedSubtypesVerification verify: tmp3 withModel: tmp4).
-	self
-		assert: tmp5 results size equals: 1;
-		assert:
-			(tmp5 results
-				anySatisfy: [ :arg1 | arg1 isKindOf: VerificationMessageError ])
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: subkind.
+	generalization specific: kind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
+	self assert: result results size equals: 1.
+	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
 ]

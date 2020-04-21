@@ -1,3 +1,6 @@
+"
+I represent tests for StereotypeVerification.
+"
 Class {
 	#name : #StereotypeVerificationTest,
 	#superclass : #AbstractVerificationTest,
@@ -6,40 +9,35 @@ Class {
 
 { #category : #constants }
 StereotypeVerificationTest >> getNotVerifiedClass [
-	^ OPUMLAssociation
+	^ OPUMLAssociation.
 ]
 
 { #category : #constants }
 StereotypeVerificationTest >> getTestedClass [
-	^ StereotypeVerification
+	^ StereotypeVerification.
 ]
 
 { #category : #constants }
 StereotypeVerificationTest >> getVerifiedClass [
-	^ OPUMLClass
+	^ OPUMLClass.
 ]
 
 { #category : #constants }
 StereotypeVerificationTest >> getVerifiedClassInstance [
-	^ super getVerifiedClassInstance
-		applyStereotype: (self getVerifiedStereotypes at: 1) new
+	^ super getVerifiedClassInstance applyStereotype: (self getVerifiedStereotypes at: 1) new.
 ]
 
 { #category : #constants }
 StereotypeVerificationTest >> getVerifiedStereotypes [
-	self subclassResponsibility
+	self subclassResponsibility.
 ]
 
 { #category : #tests }
 StereotypeVerificationTest >> testCanVerifyStereotype [
-	self
-		assert: (self getTestedClass canVerify: OPUMLClass new)
-		equals: false
+	self assert: (self getTestedClass canVerify: OPUMLClass new) equals: false.	
 ]
 
 { #category : #tests }
 StereotypeVerificationTest >> testVerifiedStereotypes [
-	self
-		assert: (self getTestedClass verifiedStereotypes isKindOf: Collection)
-		equals: true
+	self assert: (self getTestedClass verifiedStereotypes isKindOf: Collection) equals: true.	
 ]

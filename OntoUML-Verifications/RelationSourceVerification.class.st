@@ -1,129 +1,151 @@
+"
+I am verification for RelationSource rule. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:
+
+New methods: validSources.
+"
 Class {
 	#name : #RelationSourceVerification,
 	#superclass : #Verification,
+	#traits : 'TCodeInjectionChecker + TClassUpdater',
+	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : #'OntoUML-Verifications'
 }
 
+{ #category : #updating }
+RelationSourceVerification class >> getUpdatedMessageCode: aVerificationUpdater [
+	| validSourcesCode |
+	validSourcesCode := '"I return dictionary containing collections of allowed sources for each OntoUML relationship stereotype."
+validSources
+	| result |
+	result := Dictionary new.'.
+	aVerificationUpdater relationshipSpecifications
+		do: [ :relationshipSpecification | self checkStringForCodeInjection: relationshipSpecification name.
+			validSourcesCode := validSourcesCode , (String with: Character cr)
+				, '	result add: self validSourcesFor'
+				, relationshipSpecification name , '.' ].
+	validSourcesCode := validSourcesCode , (String with: Character cr)
+		, '	^ result.'.
+	^ validSourcesCode.
+]
+
+{ #category : #updating }
+RelationSourceVerification class >> getValidSourcesFor: aRelationship fromCollection: aCollection [
+	| methodTemplate |
+	self checkStringForCodeInjection: aRelationship.
+	methodTemplate := '"I return association between OntoUML relationship stereotype '
+		, aRelationship , ' and its allowed sources."'
+		, (String with: Character cr) , 'validSourcesFor' , aRelationship
+		, (String with: Character cr) , '	^ OntoUML' , aRelationship , ' -> { '.
+	aCollection
+		do: [ :item | self checkStringForCodeInjection: item.
+			 methodTemplate := methodTemplate , 'OntoUML' , item , '. '. ].
+	methodTemplate := methodTemplate , '}.'.
+	^ methodTemplate.
+]
+
+{ #category : #updating }
+RelationSourceVerification class >> setValidSourcesFor: aStereotype fromCollection: aCollection [
+	| validSourcesForCode |
+	validSourcesForCode := self getValidSourcesFor: aStereotype fromCollection: aCollection.
+	self updateMessage: validSourcesForCode withClassification: 'constants'.
+]
+
+{ #category : #updating }
+RelationSourceVerification class >> updateFrom: aVerificationUpdater [
+	| updatedMessageCode |
+	updatedMessageCode := self getUpdatedMessageCode: aVerificationUpdater.
+	aVerificationUpdater relationshipSpecifications do: [ :relationshipSpecification |
+		self setValidSourcesFor: relationshipSpecification name fromCollection: 
+		(self expandAllowedClassStereotypesIn: (relationshipSpecification allowedSources) from: aVerificationUpdater). ]. 	
+	self updateMessage: updatedMessageCode  withClassification: 'constants'.
+	
+]
+
 { #category : #constants }
 RelationSourceVerification class >> validSources [
-	| tmp1 |
-	tmp1 := Dictionary new.
-	tmp1
-		add:
-			OntoUMLFormal
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLMaterial
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add: OntoUMLMediation -> {OntoUMLRelator};
-		add:
-			OntoUMLCharacterization
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLDerivation
-				->
-					{OntoUMLSubKind.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLComponentOf
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add:
-			OntoUMLContainment
-				->
-					{OntoUMLKind.
-					OntoUMLSubKind.
-					OntoUMLCollective.
-					OntoUMLQuantity.
-					OntoUMLRelator.
-					OntoUMLPhase.
-					OntoUMLRole.
-					OntoUMLCategory.
-					OntoUMLRoleMixin.
-					OntoUMLMixin.
-					OntoUMLMode.
-					OntoUMLQuality};
-		add: OntoUMLMemberOf -> {OntoUMLCollective};
-		add:
-			OntoUMLSubCollectionOf
-				->
-					{OntoUMLSubKind.
-					OntoUMLCollective};
-		add: OntoUMLSubQuantityOf -> {OntoUMLQuality}.
-	^ tmp1
+	| result |
+	result := Dictionary new.
+	result add: self validSourcesForComponentOf.
+	result add: self validSourcesForContainment.
+	result add: self validSourcesForMemberOf.
+	result add: self validSourcesForSubCollectionOf.
+	result add: self validSourcesForSubQuantityOf.
+	result add: self validSourcesForCharacterization.
+	result add: self validSourcesForDerivation.
+	result add: self validSourcesForFormal.
+	result add: self validSourcesForMaterial.
+	result add: self validSourcesForMediation.
+	^ result.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForCharacterization [
+	^ OntoUMLCharacterization -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForComponentOf [
+	^ OntoUMLComponentOf -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForContainment [
+	^ OntoUMLContainment -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForDerivation [
+	^ OntoUMLDerivation -> { OntoUMLRelator. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForFormal [
+	^ OntoUMLFormal -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForMaterial [
+	^ OntoUMLMaterial -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForMediation [
+	^ OntoUMLMediation -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForMemberOf [
+	^ OntoUMLMemberOf -> { OntoUMLCollective. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForSubCollectionOf [
+	^ OntoUMLSubCollectionOf -> { OntoUMLCollective. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForSubQuantityOf [
+	^ OntoUMLSubQuantityOf -> { OntoUMLQuantity. }.
 ]
 
 { #category : #constants }
 RelationSourceVerification class >> verifiedClass [
-	^ OPUMLAssociation
+	^ OPUMLAssociation.
 ]
 
 { #category : #verification }
-RelationSourceVerification >> verifyObject: arg1 withModel: arg2 [
-	| tmp1 tmp2 tmp3 |
-	tmp3 := self class getStereotype: arg1.
-	tmp3 ifNil: [ ^ {} ].
-	tmp1 := arg1 memberEnds at: 1.
-	tmp2 := self class getStereotype: tmp1 type.
-	tmp2 ifNil: [ ^ {} ].
-	((self class validSources at: tmp3 class)
-		anySatisfy: [ :arg3 | tmp2 class = arg3 ])
-		ifFalse: [ ^ {(VerificationMessageError
-				createFor: arg1
-				withVerification: self
-				withText:
-					tmp2 class name , ' cannot be source of ' , tmp3 class name
-						, ' association')} ].
-	^ {}
+RelationSourceVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
+	| source sourceStereotype associationStereotype |
+	associationStereotype := self class getStereotype: aVerifiedAssociation.
+	associationStereotype ifNil: [ ^ {} ]. 
+	source := aVerifiedAssociation memberEnds at: 1.
+	sourceStereotype := self class getStereotype: source type.
+	sourceStereotype ifNil: [ ^ {} ]. 
+	((self class validSources at: associationStereotype class) anySatisfy: [ :validsource | sourceStereotype class = validsource  ])
+		ifFalse: [ ^ {VerificationMessageError createFor: aVerifiedAssociation
+			withVerification: self
+			withText: sourceStereotype class name , ' cannot be source of ' , associationStereotype class name , ' association'} ].
+	^ {}.
 ]
