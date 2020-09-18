@@ -1,7 +1,7 @@
 Class {
 	#name : #BaselineOfOntoUMLVerificationFramework,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfOntoUMLVerifications
+	#category : #BaselineOfOntoUMLVerificationFramework
 }
 
 { #category : #baselines }
