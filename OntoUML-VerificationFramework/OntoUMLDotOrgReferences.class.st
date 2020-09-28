@@ -8,7 +8,8 @@ Class {
 
 { #category : #constants }
 OntoUMLDotOrgReferences class >> getDefinitionRefereceFor: aOntoUMLObject [
-	^ self perform: ('getDefinitionRefereceFor' ,  (self getStereotype:  aOntoUMLObject) umlClassName) asSymbol
+	(self getStereotype:  aOntoUMLObject) ifNil: [ ^ '' ] 
+	ifNotNil: [ ^ self perform: ('getDefinitionRefereceFor' ,  (self getStereotype:  aOntoUMLObject) umlClassName) asSymbol]
 ]
 
 { #category : #'constants - class' }
