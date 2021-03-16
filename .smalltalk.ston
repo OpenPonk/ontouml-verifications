@@ -7,9 +7,6 @@ SmalltalkCISpec {
 			#baseline : 'OntoUMLVerificationFramework'
 		}
 	],
-	#postLoading : [
-		'scripts/script.st'
-	],
 	#testing : {
 		#coverage : {
 			#packages : [
