@@ -22,7 +22,7 @@ RoleMediationDependencyVerification class >> verifiedStereotypes [
 ]
 
 { #category : #verification }
-RoleMediationDependencyVerification >> fulfilsMediationDependency: aMediation [
+RoleMediationDependencyVerification >> fulfillsMediationDependency: aMediation [
 	^ (aMediation memberEnds at: 1) lower >= 1 and: (aMediation memberEnds at: 2) lower >= 1
 ]
 
@@ -44,7 +44,7 @@ RoleMediationDependencyVerification >> verifyObject: aVerifiedObject withModel: 
 	mediations := (aVerifiedModel select: [ :element | element isKindOf: OPUMLAssociation ])
 		select: [ :association | (self class getStereotype: association) class = OntoUMLMediation
 			and: (association memberEnds anySatisfy: [ :property | roleTree includes: (property type) ]) ].		
-	mediations := mediations select: [ :mediation | self fulfilsMediationDependency: mediation ].
+	mediations := mediations select: [ :mediation | self fulfillsMediationDependency: mediation ].
 	mediations size < 1 ifTrue: [ ^ {VerificationMessageError createFor: aVerifiedObject withVerification: self withText:
 			(self class getStereotype: aVerifiedObject) class name , ' has to have at least one mediation with multiplicities on both ends >= 1.'} ].
 	^ {}.

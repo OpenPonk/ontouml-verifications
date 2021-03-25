@@ -23,7 +23,40 @@ RoleMediationDependencyVerificationTest >> getVerifiedStereotypes [
 ]
 
 { #category : #tests }
-RoleMediationDependencyVerificationTest >> invalidObjectTest [
+RoleMediationDependencyVerificationTest >> testCanVerify [
+	self canVerifyTest.
+]
+
+{ #category : #tests }
+RoleMediationDependencyVerificationTest >> testFulfillsMediationDependency [
+	| kind role mediation |
+	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
+	role := OPUMLClass new applyStereotype: OntoUMLRole new.
+	mediation := self createAssociationFrom: kind to: role.
+	self assert: (self getTestedClass basicNew fulfillsMediationDependency: mediation) equals: true.
+	(mediation memberEnds at:1) lowerValue value: 0.
+	self assert: (self getTestedClass basicNew fulfillsMediationDependency: mediation) equals: false.
+	
+]
+
+{ #category : #tests }
+RoleMediationDependencyVerificationTest >> testInvalidModel [
+	| role model result |
+	role := OPUMLClass new.
+	role applyStereotype: OntoUMLRole new.	
+	model := { role. }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: role withModel: model).
+	self assert: (result results select: [ :message | message class = VerificationMessageError.]) size equals: 1.
+]
+
+{ #category : #tests }
+RoleMediationDependencyVerificationTest >> testNew [
+	self newTest.
+]
+
+{ #category : #tests }
+RoleMediationDependencyVerificationTest >> testValidModel [
 	| relator association role model result |
 	role := OPUMLClass new.
 	role applyStereotype: OntoUMLRole new.
@@ -38,28 +71,6 @@ RoleMediationDependencyVerificationTest >> invalidObjectTest [
 ]
 
 { #category : #tests }
-RoleMediationDependencyVerificationTest >> testCanVerify [
-	self canVerifyTest.
-]
-
-{ #category : #tests }
-RoleMediationDependencyVerificationTest >> testFulfilsMediationDependency [
-	| kind role mediation |
-	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
-	role := OPUMLClass new applyStereotype: OntoUMLRole new.
-	mediation := self createAssociationFrom: kind to: role.
-	self assert: (self getTestedClass basicNew fulfilsMediationDependency: mediation) equals: true.
-	(mediation memberEnds at:1) lowerValue value: 0.
-	self assert: (self getTestedClass basicNew fulfilsMediationDependency: mediation) equals: false.
-	
-]
-
-{ #category : #tests }
-RoleMediationDependencyVerificationTest >> testNew [
-	self newTest.
-]
-
-{ #category : #tests }
 RoleMediationDependencyVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
@@ -71,23 +82,12 @@ RoleMediationDependencyVerificationTest >> testVerifiedStereotypes [
 
 { #category : #tests }
 RoleMediationDependencyVerificationTest >> testVerifyObjectWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
+	self testInvalidModel.
+	self testValidModel.
 ]
 
 { #category : #tests }
 RoleMediationDependencyVerificationTest >> testVerifyWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
-]
-
-{ #category : #tests }
-RoleMediationDependencyVerificationTest >> validObjectTest [
-	| role model result |
-	role := OPUMLClass new.
-	role applyStereotype: OntoUMLRole new.	
-	model := { role. }.
-	result := VerificationResults new.
-	result addResults: (self getTestedClass verify: role withModel: model).
-	self assert: result results size equals: 1.
+	self testInvalidModel.
+	self testValidModel.
 ]

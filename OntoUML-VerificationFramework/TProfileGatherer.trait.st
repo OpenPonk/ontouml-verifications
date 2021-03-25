@@ -19,3 +19,10 @@ TProfileGatherer classSide >> getStereotype: aElement [
 	stereotypes := aElement appliedStereotypes select: [ :stereotype | stereotype isKindOf: OntoUMLElement ].
 	stereotypes isEmpty ifTrue: [ ^ nil ] ifFalse: [ ^ stereotypes at: 1 ].
 ]
+
+{ #category : #utilities }
+TProfileGatherer classSide >> getStereotypeClass: aElement [
+	| stereotype |
+	stereotype := self getStereotype: aElement.
+	stereotype ifNil: [ ^ nil. ] ifNotNil: [ ^ stereotype class. ].
+]

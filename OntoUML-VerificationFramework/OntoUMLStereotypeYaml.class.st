@@ -22,6 +22,13 @@ OntoUMLStereotypeYaml class >> tmpCorrectStereotypeCase: arg1 [
 	^ arg1
 ]
 
+{ #category : #correcting }
+OntoUMLStereotypeYaml class >> tmpCorrectStereotypeName: aName [
+	aName asLowercase = 'formal'
+		ifTrue: [ ^ 'DomainFormal' ].
+	^ aName.
+]
+
 { #category : #accessing }
 OntoUMLStereotypeYaml >> yaml [
 	^ yaml

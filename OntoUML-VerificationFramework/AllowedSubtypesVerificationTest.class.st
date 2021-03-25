@@ -47,22 +47,6 @@ AllowedSubtypesVerificationTest >> getVerifiedClass [
 ]
 
 { #category : #tests }
-AllowedSubtypesVerificationTest >> invalidObjectTest [
-	| kind subkind generalization model result |
-	kind := OPUMLClass new.
-	kind applyStereotype: OntoUMLKind new.
-	subkind := OPUMLClass new.
-	subkind applyStereotype: OntoUMLSubKind new.
-	generalization := OPUMLGeneralization new.
-	generalization general: kind.
-	generalization specific: subkind.
-	model := { kind. subkind. generalization. }.
-	result := VerificationResults new.
-	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
-	self assert: result results size equals: 0.
-]
-
-{ #category : #tests }
 AllowedSubtypesVerificationTest >> testCanVerify [
 	self canVerifyTest. 
 ]
@@ -83,8 +67,41 @@ AllowedSubtypesVerificationTest >> testGetValidSubtypesForCodeFromCollection [
 ]
 
 { #category : #tests }
+AllowedSubtypesVerificationTest >> testInvalidModel [
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: subkind.
+	generalization specific: kind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
+	self assert: result results size equals: 1.
+	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+]
+
+{ #category : #tests }
 AllowedSubtypesVerificationTest >> testNew [
 	self newTest.
+]
+
+{ #category : #tests }
+AllowedSubtypesVerificationTest >> testValidModel [
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: kind.
+	generalization specific: subkind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
+	self assert: result results size equals: 0.
 ]
 
 { #category : #tests }
@@ -111,29 +128,12 @@ AllowedSubtypesVerificationTest >> testVerifiedClass [
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> testVerifyObjectWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
+	self testInvalidModel.
+	self testValidModel.
 ]
 
 { #category : #tests }
 AllowedSubtypesVerificationTest >> testVerifyWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
-]
-
-{ #category : #tests }
-AllowedSubtypesVerificationTest >> validObjectTest [
-	| kind subkind generalization model result |
-	kind := OPUMLClass new.
-	kind applyStereotype: OntoUMLKind new.
-	subkind := OPUMLClass new.
-	subkind applyStereotype: OntoUMLSubKind new.
-	generalization := OPUMLGeneralization new.
-	generalization general: subkind.
-	generalization specific: kind.
-	model := { kind. subkind. generalization. }.
-	result := VerificationResults new.
-	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
-	self assert: result results size equals: 1.
-	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+	self testInvalidModel.
+	self testValidModel.
 ]

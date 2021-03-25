@@ -76,7 +76,7 @@ RelationSourceVerification class >> validSources [
 	result add: self validSourcesForSubQuantityOf.
 	result add: self validSourcesForCharacterization.
 	result add: self validSourcesForDerivation.
-	result add: self validSourcesForFormal.
+	result add: self validSourcesForDomainFormal.
 	result add: self validSourcesForMaterial.
 	result add: self validSourcesForMediation.
 	^ result.
@@ -100,6 +100,11 @@ RelationSourceVerification class >> validSourcesForContainment [
 { #category : #constants }
 RelationSourceVerification class >> validSourcesForDerivation [
 	^ OntoUMLDerivation -> { OntoUMLRelator. }.
+]
+
+{ #category : #constants }
+RelationSourceVerification class >> validSourcesForDomainFormal [
+	^ OntoUMLDomainFormal -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
 ]
 
 { #category : #constants }

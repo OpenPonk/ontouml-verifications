@@ -13,7 +13,7 @@ Class {
 VerificationController >> getVerifications [
 	^ (RPackageOrganizer default packageNamed: 'OntoUML-VerificationFramework')
 		definedClasses
-		select: [ :class | class tags asSet includes: 'Verification-Classes' ].
+		select: [ :class | (class tags asSet includes: 'Verification-Classes') or: (class tags asSet includes: 'Antipattern-Classes') ].
 ]
 
 { #category : #verification }

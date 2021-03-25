@@ -17,15 +17,15 @@ AbstractVerificationTest >> canVerifyTest [
 
 { #category : #'tests - utility' }
 AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd [
-	| association leftProp rightProp |
+	| association |
 	association := OPUMLAssociation new.
-	(leftProp := OPUMLProperty new)
+	OPUMLProperty new
 		name: '';
 		lowerValue: (OPUMLLiteralInteger new value: 1);
 		upperValue: (OPUMLLiteralUnlimitedNatural new value: 1);
 		owningAssociation: association;
 		type: aSource.
-	(rightProp := OPUMLProperty new)
+	OPUMLProperty new
 		name: '';
 		lowerValue: (OPUMLLiteralInteger new value: 1);
 		upperValue: (OPUMLLiteralUnlimitedNatural new value: 1);
@@ -33,6 +33,32 @@ AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd [
 		type: aEnd.
 	association memberEnds addAll: association ownedEnds asArray.
 	^ association
+]
+
+{ #category : #'tests - utility' }
+AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd with: aStereotype [ 
+	| association |
+	association := self createAssociationFrom: aSource to: aEnd.
+	association applyStereotype: aStereotype.
+	^ association.
+]
+
+{ #category : #'tests - utility' }
+AbstractVerificationTest >> createClass: aName withStereotype: aStereotype [
+	| result |
+	result := OPUMLClass new.
+	result applyStereotype: aStereotype new.
+	result name: aName.
+	^ result.
+]
+
+{ #category : #'tests - utility' }
+AbstractVerificationTest >> createGeneralizationFor: aGeneral withSpecific: aSpecific [
+	| generalization |
+	generalization := OPUMLGeneralization new.
+	generalization general: aGeneral;
+	specific: aSpecific.
+	^ generalization.
 ]
 
 { #category : #constants }

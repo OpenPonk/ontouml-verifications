@@ -26,7 +26,7 @@ OntoUMLRelationshipStereotypeYaml >> directed [
 
 { #category : #acccessing }
 OntoUMLRelationshipStereotypeYaml >> name [
-	^ (self yaml at: 'name') capitalized.
+	^ self class tmpCorrectStereotypeName: (self yaml at: 'name') capitalized.
 ]
 
 { #category : #acccessing }

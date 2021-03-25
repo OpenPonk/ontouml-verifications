@@ -48,7 +48,9 @@ OntoUMLVerificationUpdater >> getRelationshipSpecificationPaths [
 
 { #category : #updating }
 OntoUMLVerificationUpdater >> getVerifications [
-	^ (RPackageOrganizer default packageNamed:'OntoUML-Verifications') definedClasses.
+	^ (RPackageOrganizer default packageNamed: 'OntoUML-VerificationFramework')
+		definedClasses
+		select: [ :class | (class tags asSet includes: 'Verification-Classes') "or: (class tags asSet includes: 'Antipattern-Classes')" ].
 ]
 
 { #category : #constants }

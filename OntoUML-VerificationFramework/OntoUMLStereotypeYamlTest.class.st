@@ -68,3 +68,12 @@ OntoUMLStereotypeYamlTest >> testTmpCorrectStereotypeCase [
 	self assert: (self getTestedClass tmpCorrectStereotypeCase: 'kiNd') equals: 'kiNd'.
 	self assert: (self getTestedClass tmpCorrectStereotypeCase: 'sUb') equals: 'sUb'.
 ]
+
+{ #category : #tests }
+OntoUMLStereotypeYamlTest >> testTmpCorrectStereotypeName [
+	self assert: (self getTestedClass tmpCorrectStereotypeName: 'Formal') equals: 'DomainFormal'.
+	self assert: (self getTestedClass tmpCorrectStereotypeName: 'FoRmal') equals: 'DomainFormal'.
+	self assert: (self getTestedClass tmpCorrectStereotypeName: 'formal') equals: 'DomainFormal'.
+	self assert: (self getTestedClass tmpCorrectStereotypeName: 'kiNd') equals: 'kiNd'.
+	self assert: (self getTestedClass tmpCorrectStereotypeName: 'sUb') equals: 'sUb'.
+]

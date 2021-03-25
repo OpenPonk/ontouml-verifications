@@ -47,21 +47,6 @@ RelationSourceVerificationTest >> getVerifiedClass [
 ]
 
 { #category : #tests }
-RelationSourceVerificationTest >> invalidObjectTest [
-	| collective quality association model result |
-	collective := OPUMLClass new.
-	collective applyStereotype: OntoUMLCollective new.
-	quality := OPUMLClass new.
-	quality applyStereotype: OntoUMLQuality new.
-	association := self createAssociationFrom: collective to: quality.
-	association applyStereotype: OntoUMLMemberOf new.
-	model := { collective. quality. association. }.
-	result := VerificationResults new.
-	result addResults: (RelationSourceVerification verify: association withModel: model).
-	self assert: result results size equals: 0.
-]
-
-{ #category : #tests }
 RelationSourceVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
@@ -82,8 +67,39 @@ RelationSourceVerificationTest >> testGetValidSourcesForFromCollection [
 ]
 
 { #category : #tests }
+RelationSourceVerificationTest >> testInvalidModel [
+	| collective quality association model result |
+	collective := OPUMLClass new.
+	collective applyStereotype: OntoUMLCollective new.
+	quality := OPUMLClass new.
+	quality applyStereotype: OntoUMLQuality new.
+	association := self createAssociationFrom: quality to: collective.
+	association applyStereotype: OntoUMLMemberOf new.
+	model := { collective. quality. association. }.
+	result := VerificationResults new.
+	result addResults: (RelationSourceVerification verify: association withModel: model).
+	self assert: result results size equals: 1.
+	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+]
+
+{ #category : #tests }
 RelationSourceVerificationTest >> testNew [
 	self newTest.
+]
+
+{ #category : #tests }
+RelationSourceVerificationTest >> testValidModel [
+	| collective quality association model result |
+	collective := OPUMLClass new.
+	collective applyStereotype: OntoUMLCollective new.
+	quality := OPUMLClass new.
+	quality applyStereotype: OntoUMLQuality new.
+	association := self createAssociationFrom: collective to: quality.
+	association applyStereotype: OntoUMLMemberOf new.
+	model := { collective. quality. association. }.
+	result := VerificationResults new.
+	result addResults: (RelationSourceVerification verify: association withModel: model).
+	self assert: result results size equals: 0.
 ]
 
 { #category : #tests }
@@ -110,28 +126,12 @@ RelationSourceVerificationTest >> testVerifiedClass [
 
 { #category : #tests }
 RelationSourceVerificationTest >> testVerifyObjectWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
+	self testInvalidModel.
+	self testValidModel.
 ]
 
 { #category : #tests }
 RelationSourceVerificationTest >> testVerifyWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
-]
-
-{ #category : #tests }
-RelationSourceVerificationTest >> validObjectTest [
-	| collective quality association model result |
-	collective := OPUMLClass new.
-	collective applyStereotype: OntoUMLCollective new.
-	quality := OPUMLClass new.
-	quality applyStereotype: OntoUMLQuality new.
-	association := self createAssociationFrom: quality to: collective.
-	association applyStereotype: OntoUMLMemberOf new.
-	model := { collective. quality. association. }.
-	result := VerificationResults new.
-	result addResults: (RelationSourceVerification verify: association withModel: model).
-	self assert: result results size equals: 1.
-	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+	self testInvalidModel.
+	self testValidModel.
 ]

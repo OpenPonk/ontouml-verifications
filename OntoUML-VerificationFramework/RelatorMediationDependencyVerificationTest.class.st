@@ -23,7 +23,44 @@ RelatorMediationDependencyVerificationTest >> getVerifiedStereotypes [
 ]
 
 { #category : #tests }
-RelatorMediationDependencyVerificationTest >> invalidObjectTest [
+RelatorMediationDependencyVerificationTest >> testCanVerify [
+	self canVerifyTest.
+]
+
+{ #category : #tests }
+RelatorMediationDependencyVerificationTest >> testGetMultiplicityFor [
+	| kind relator mediation |
+	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
+	relator := OPUMLClass new applyStereotype: OntoUMLRelator new.
+	mediation := self createAssociationFrom: kind to: relator.
+	self assert: (self getTestedClass basicNew getUpperBoundMultiplicityOf: mediation for: relator) equals: 1.
+	(mediation memberEnds at:1) lowerValue value: 0.
+	self assert: (self getTestedClass basicNew getUpperBoundMultiplicityOf: mediation for: relator) equals: 0.
+	
+]
+
+{ #category : #tests }
+RelatorMediationDependencyVerificationTest >> testInvalidModel [
+	| relator association kind model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	relator := OPUMLClass new.
+	relator applyStereotype: OntoUMLRelator new.
+	association := self createAssociationFrom: relator to: kind.
+	association applyStereotype: OntoUMLMediation new.
+	model := { kind. relator. association. }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: relator withModel: model).
+	self assert: result results size equals: 1.
+]
+
+{ #category : #tests }
+RelatorMediationDependencyVerificationTest >> testNew [
+	self newTest.
+]
+
+{ #category : #tests }
+RelatorMediationDependencyVerificationTest >> testValidModel [
 	| relator association kind secondAssociation secondKind model result |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
@@ -42,28 +79,6 @@ RelatorMediationDependencyVerificationTest >> invalidObjectTest [
 ]
 
 { #category : #tests }
-RelatorMediationDependencyVerificationTest >> testCanVerify [
-	self canVerifyTest.
-]
-
-{ #category : #tests }
-RelatorMediationDependencyVerificationTest >> testGetMultiplicityFor [
-	| kind relator mediation |
-	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
-	relator := OPUMLClass new applyStereotype: OntoUMLRelator new.
-	mediation := self createAssociationFrom: kind to: relator.
-	self assert: (self getTestedClass basicNew getMultiplicity: mediation for: relator) equals: 1.
-	(mediation memberEnds at:1) lowerValue value: 0.
-	self assert: (self getTestedClass basicNew getMultiplicity: mediation for: relator) equals: 0.
-	
-]
-
-{ #category : #tests }
-RelatorMediationDependencyVerificationTest >> testNew [
-	self newTest.
-]
-
-{ #category : #tests }
 RelatorMediationDependencyVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
@@ -75,27 +90,12 @@ RelatorMediationDependencyVerificationTest >> testVerifiedStereotypes [
 
 { #category : #tests }
 RelatorMediationDependencyVerificationTest >> testVerifyObjectWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
+	self testInvalidModel.
+	self testValidModel.
 ]
 
 { #category : #tests }
 RelatorMediationDependencyVerificationTest >> testVerifyWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
-]
-
-{ #category : #tests }
-RelatorMediationDependencyVerificationTest >> validObjectTest [
-	| relator association kind model result |
-	kind := OPUMLClass new.
-	kind applyStereotype: OntoUMLKind new.
-	relator := OPUMLClass new.
-	relator applyStereotype: OntoUMLRelator new.
-	association := self createAssociationFrom: relator to: kind.
-	association applyStereotype: OntoUMLMediation new.
-	model := { kind. relator. association. }.
-	result := VerificationResults new.
-	result addResults: (self getTestedClass verify: relator withModel: model).
-	self assert: result results size equals: 1.
+	self testInvalidModel.
+	self testValidModel.
 ]

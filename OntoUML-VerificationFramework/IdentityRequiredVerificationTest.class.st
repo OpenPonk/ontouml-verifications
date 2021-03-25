@@ -42,22 +42,6 @@ IdentityRequiredVerificationTest >> getVerifiedStereotypes [
 ]
 
 { #category : #tests }
-IdentityRequiredVerificationTest >> invalidObjectTest [
-	| kind subkind generalization model result |
-	kind := OPUMLClass new.
-	kind applyStereotype: OntoUMLKind new.
-	subkind := OPUMLClass new.
-	subkind applyStereotype: OntoUMLSubKind new.
-	generalization := OPUMLGeneralization new.
-	generalization general: kind.
-	generalization specific: subkind.
-	model := { kind. subkind. generalization. }.
-	result := VerificationResults new.
-	result addResults: (self getTestedClass verify: subkind withModel: model).
-	self assert: result results size equals: 0.
-]
-
-{ #category : #tests }
 IdentityRequiredVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
@@ -113,8 +97,40 @@ IdentityRequiredVerificationTest >> testIdentityProviders [
 ]
 
 { #category : #tests }
+IdentityRequiredVerificationTest >> testInvalidModel [
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: subkind.
+	generalization specific: kind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: subkind withModel: model).
+	self assert: result results size equals: 1.
+]
+
+{ #category : #tests }
 IdentityRequiredVerificationTest >> testNew [
 	self newTest.
+]
+
+{ #category : #tests }
+IdentityRequiredVerificationTest >> testValidModel [
+	| kind subkind generalization model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new.
+	subkind applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: kind.
+	generalization specific: subkind.
+	model := { kind. subkind. generalization. }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: subkind withModel: model).
+	self assert: result results size equals: 0.
 ]
 
 { #category : #tests }
@@ -129,28 +145,12 @@ IdentityRequiredVerificationTest >> testVerifiedStereotypes [
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testVerifyObjectWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
+	self testInvalidModel.
+	self testValidModel.
 ]
 
 { #category : #tests }
 IdentityRequiredVerificationTest >> testVerifyWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
-]
-
-{ #category : #tests }
-IdentityRequiredVerificationTest >> validObjectTest [
-	| kind subkind generalization model result |
-	kind := OPUMLClass new.
-	kind applyStereotype: OntoUMLKind new.
-	subkind := OPUMLClass new.
-	subkind applyStereotype: OntoUMLSubKind new.
-	generalization := OPUMLGeneralization new.
-	generalization general: subkind.
-	generalization specific: kind.
-	model := { kind. subkind. generalization. }.
-	result := VerificationResults new.
-	result addResults: (self getTestedClass verify: subkind withModel: model).
-	self assert: result results size equals: 1.
+	self testInvalidModel.
+	self testValidModel.
 ]

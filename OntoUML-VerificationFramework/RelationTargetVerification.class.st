@@ -76,7 +76,7 @@ RelationTargetVerification class >> validTargets [
 	result add: self validTargetsForSubQuantityOf.
 	result add: self validTargetsForCharacterization.
 	result add: self validTargetsForDerivation.
-	result add: self validTargetsForFormal.
+	result add: self validTargetsForDomainFormal.
 	result add: self validTargetsForMaterial.
 	result add: self validTargetsForMediation.
 	^ result.
@@ -100,6 +100,11 @@ RelationTargetVerification class >> validTargetsForContainment [
 { #category : #constants }
 RelationTargetVerification class >> validTargetsForDerivation [
 	^ OntoUMLDerivation -> { OntoUMLMaterial. }.
+]
+
+{ #category : #constants }
+RelationTargetVerification class >> validTargetsForDomainFormal [
+	^ OntoUMLDomainFormal -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
 ]
 
 { #category : #constants }

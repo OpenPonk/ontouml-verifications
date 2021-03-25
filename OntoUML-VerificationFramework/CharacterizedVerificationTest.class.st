@@ -23,7 +23,30 @@ CharacterizedVerificationTest >> getVerifiedStereotypes [
 ]
 
 { #category : #tests }
-CharacterizedVerificationTest >> invalidObjectTest [
+CharacterizedVerificationTest >> testCanVerify [
+	self canVerifyTest.
+]
+
+{ #category : #tests }
+CharacterizedVerificationTest >> testInvalidModel [
+	| quality kind model result |
+	kind := OPUMLClass new.
+	kind applyStereotype: OntoUMLKind new.
+	quality := OPUMLClass new.
+	quality applyStereotype: OntoUMLQuality new.
+	model := { kind. quality. }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: quality withModel: model).
+	self assert: result results size equals: 1.
+]
+
+{ #category : #tests }
+CharacterizedVerificationTest >> testNew [
+	self newTest.
+]
+
+{ #category : #tests }
+CharacterizedVerificationTest >> testValidModel [
 	| quality association kind model result |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
@@ -35,16 +58,6 @@ CharacterizedVerificationTest >> invalidObjectTest [
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: quality withModel: model).
 	self assert: result results size equals: 0.
-]
-
-{ #category : #tests }
-CharacterizedVerificationTest >> testCanVerify [
-	self canVerifyTest.
-]
-
-{ #category : #tests }
-CharacterizedVerificationTest >> testNew [
-	self newTest.
 ]
 
 { #category : #tests }
@@ -70,25 +83,12 @@ CharacterizedVerificationTest >> testVerifyMultiplicityForCharacterization [
 
 { #category : #tests }
 CharacterizedVerificationTest >> testVerifyObjectWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
+	self testInvalidModel.
+	self testValidModel.
 ]
 
 { #category : #tests }
 CharacterizedVerificationTest >> testVerifyWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
-]
-
-{ #category : #tests }
-CharacterizedVerificationTest >> validObjectTest [
-	| quality kind model result |
-	kind := OPUMLClass new.
-	kind applyStereotype: OntoUMLKind new.
-	quality := OPUMLClass new.
-	quality applyStereotype: OntoUMLQuality new.
-	model := { kind. quality. }.
-	result := VerificationResults new.
-	result addResults: (self getTestedClass verify: quality withModel: model).
-	self assert: result results size equals: 1.
+	self testInvalidModel.
+	self testValidModel.
 ]

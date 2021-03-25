@@ -34,7 +34,6 @@ Verification class >> new [
 { #category : #updating }
 Verification class >> updateFrom: aVerificationUpdater [
 
-
 ]
 
 { #category : #constants }

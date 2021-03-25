@@ -47,21 +47,6 @@ RelationTargetVerificationTest >> getVerifiedClass [
 ]
 
 { #category : #tests }
-RelationTargetVerificationTest >> invalidObjectTest [
-	| mode quantity association model result |
-	mode := OPUMLClass new.
-	mode applyStereotype: OntoUMLMode new.
-	quantity := OPUMLClass new.
-	quantity applyStereotype: OntoUMLQuantity new.
-	association := self createAssociationFrom: mode to: quantity .
-	association applyStereotype: OntoUMLContainment new.
-	model := { mode. quantity. association. }.
-	result := VerificationResults new.
-	result addResults: (RelationTargetVerification verify: association withModel: model).
-	self assert: result results size equals: 0.
-]
-
-{ #category : #tests }
 RelationTargetVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
@@ -82,8 +67,39 @@ RelationTargetVerificationTest >> testGetValidTargetsForFromCollection [
 ]
 
 { #category : #tests }
+RelationTargetVerificationTest >> testInvalidModel [
+	| mode quality association model result |
+	mode := OPUMLClass new.
+	mode applyStereotype: OntoUMLMode new.
+	quality := OPUMLClass new.
+	quality applyStereotype: OntoUMLQuality new.
+	association := self createAssociationFrom: quality to: mode .
+	association applyStereotype: OntoUMLContainment new.
+	model := { mode. quality. association. }.
+	result := VerificationResults new.
+	result addResults: (RelationTargetVerification verify: association withModel: model).
+	self assert: result results size equals: 1.
+	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+]
+
+{ #category : #tests }
 RelationTargetVerificationTest >> testNew [
 	self newTest.
+]
+
+{ #category : #tests }
+RelationTargetVerificationTest >> testValidModel [
+	| mode quantity association model result |
+	mode := OPUMLClass new.
+	mode applyStereotype: OntoUMLMode new.
+	quantity := OPUMLClass new.
+	quantity applyStereotype: OntoUMLQuantity new.
+	association := self createAssociationFrom: mode to: quantity .
+	association applyStereotype: OntoUMLContainment new.
+	model := { mode. quantity. association. }.
+	result := VerificationResults new.
+	result addResults: (RelationTargetVerification verify: association withModel: model).
+	self assert: result results size equals: 0.
 ]
 
 { #category : #tests }
@@ -110,28 +126,12 @@ RelationTargetVerificationTest >> testVerifiedClass [
 
 { #category : #tests }
 RelationTargetVerificationTest >> testVerifyObjectWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
+	self testInvalidModel.
+	self testValidModel.
 ]
 
 { #category : #tests }
 RelationTargetVerificationTest >> testVerifyWithModel [
-	self validObjectTest.
-	self invalidObjectTest.
-]
-
-{ #category : #tests }
-RelationTargetVerificationTest >> validObjectTest [
-	| mode quality association model result |
-	mode := OPUMLClass new.
-	mode applyStereotype: OntoUMLMode new.
-	quality := OPUMLClass new.
-	quality applyStereotype: OntoUMLQuality new.
-	association := self createAssociationFrom: quality to: mode .
-	association applyStereotype: OntoUMLContainment new.
-	model := { mode. quality. association. }.
-	result := VerificationResults new.
-	result addResults: (RelationTargetVerification verify: association withModel: model).
-	self assert: result results size equals: 1.
-	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+	self testInvalidModel.
+	self testValidModel.
 ]

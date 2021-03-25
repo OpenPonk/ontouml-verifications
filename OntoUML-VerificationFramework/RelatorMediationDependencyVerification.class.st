@@ -22,7 +22,7 @@ RelatorMediationDependencyVerification class >> verifiedStereotypes [
 ]
 
 { #category : #verification }
-RelatorMediationDependencyVerification >> getMultiplicity: aMediation for: aVerifiedObject [
+RelatorMediationDependencyVerification >> getUpperBoundMultiplicityOf: aMediation for: aVerifiedObject [
 	| multiplicity |
 	multiplicity := (aMediation memberEnds
 		reject: [ :mediationProperty | mediationProperty type = aVerifiedObject ])
@@ -39,7 +39,7 @@ RelatorMediationDependencyVerification >> verifyObject: aVerifiedObject withMode
 				[ :property | property type = aVerifiedObject or: property owningClass = aVerifiedObject ] ]. 
 	mediations ifEmpty: [ ^ {(VerificationMessageError createFor: aVerifiedObject withVerification: self withText: (self class getStereotype: aVerifiedObject) class name , ' has to be part of at least one mediation.')} ].
 	totalMultiplicity := 0.
-	mediations do: [ :mediation | totalMultiplicity := totalMultiplicity + (self getMultiplicity: mediation for: aVerifiedObject ) ].
+	mediations do: [ :mediation | totalMultiplicity := totalMultiplicity + (self getUpperBoundMultiplicityOf: mediation for: aVerifiedObject ) ].
 	totalMultiplicity < 2 ifTrue: [ ^ {VerificationMessageError createFor: aVerifiedObject withVerification: self withText: (self class getStereotype: aVerifiedObject) class name , ' has to have total multiplicity on the other side of mediations equal or greater than 2.'} ].
 	^ {}.
 	

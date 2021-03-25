@@ -81,7 +81,7 @@ VerificationResultsUI >> initialize [
 
 { #category : #accessing }
 VerificationResultsUI >> notifySelectChanged: aSelection [
-	self highlightElement: aSelection objectReference.
+	aSelection ifNotNil: [ 	self highlightElement: aSelection objectReference. ].
 ]
 
 { #category : #accessing }
