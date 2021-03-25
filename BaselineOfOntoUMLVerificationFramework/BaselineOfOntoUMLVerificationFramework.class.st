@@ -11,12 +11,17 @@ BaselineOfOntoUMLVerificationFramework >> baseline: spec [
 		for: #common
 		do: [ spec
 				preLoadDoIt: #checkClassEditor;
-				package: 'OntoUML-ModelQuery'.
-			spec package: 'OntoUML-VerificationFramework' with: [ spec requires: #('OntoUML-ModelQuery') ].
+				package: 'OntoUML-Profile'.
+			spec
+				package: 'OntoUML-ModelQuery'
+				with: [ spec requires: #('OntoUML-Profile') ].
+			spec 
+				package: 'OntoUML-VerificationFramework' 
+				with: [ spec requires: #('OntoUML-ModelQuery OntoUML-Profile') ].
 			spec
 				group: 'default'
 				with:
-					#('OntoUML-VerificationFramework') ]
+					#('OntoUML-Profile OntoUML-ModelQuery OntoUML-VerificationFramework') ]
 ]
 
 { #category : #baselines }
