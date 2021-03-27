@@ -1,6 +1,6 @@
 Class {
 	#name : #MultDepAntipatternVerificationTest,
-	#superclass : #AbstractVerificationTest,
+	#superclass : #StereotypeVerificationTest,
 	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
 }
 
@@ -12,6 +12,11 @@ MultDepAntipatternVerificationTest >> getTestedClass [
 { #category : #constants }
 MultDepAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
+]
+
+{ #category : #constants }
+MultDepAntipatternVerificationTest >> getVerifiedStereotypes [
+	^ { OntoUMLKind. OntoUMLQuantity. OntoUMLCollective. OntoUMLRole. OntoUMLPhase. OntoUMLSubKind. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin.}.
 ]
 
 { #category : #tests }

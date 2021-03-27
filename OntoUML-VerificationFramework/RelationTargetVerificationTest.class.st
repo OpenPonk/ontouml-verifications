@@ -107,7 +107,7 @@ RelationTargetVerificationTest >> testValidTargets [
 	| dictionary |
 	dictionary  := self getTestedClass validTargets.
 	self assert: (dictionary isKindOf: Dictionary) equals: true.
-	self assert: ((dictionary at: OntoUMLFormal) isKindOf: Collection) equals: true.
+	self assert: ((dictionary at: OntoUMLDomainFormal) isKindOf: Collection) equals: true.
 ]
 
 { #category : #tests }
