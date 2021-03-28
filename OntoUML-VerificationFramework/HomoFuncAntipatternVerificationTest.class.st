@@ -31,13 +31,26 @@ HomoFuncAntipatternVerificationTest >> testGetSortalDescendantsForFrom [
 	kindA := self createClass: 'kindA' withStereotype: OntoUMLKind.
 	kindB := self createClass: 'kindB' withStereotype: OntoUMLKind.
 	mixin := self createClass: 'mixin' withStereotype: OntoUMLMixin.
-	roleMixin := self createClass: 'roleMixin' withStereotype: OntoUMLRoleMixin.
-	model := { ancestor. kindA. kindB. mixin. roleMixin. 
-		self createGeneralizationFor: ancestor withSpecific: kindA.
-		self createGeneralizationFor: ancestor withSpecific: mixin.
-		self createGeneralizationFor: mixin withSpecific: roleMixin.
-		self createGeneralizationFor: mixin withSpecific: kindB.}.
-	self assert: (self getTestedClass basicNew getSortalDescendantsFor: ancestor from: model) asOrderedCollection equals: { kindA. kindB. } asOrderedCollection.
+	roleMixin := self
+		createClass: 'roleMixin'
+		withStereotype: OntoUMLRoleMixin.
+	model := {ancestor.
+	kindA.
+	kindB.
+	mixin.
+	roleMixin.
+	(self createGeneralizationFor: ancestor withSpecific: kindA).
+	(self createGeneralizationFor: ancestor withSpecific: mixin).
+	(self createGeneralizationFor: mixin withSpecific: roleMixin).
+	(self createGeneralizationFor: mixin withSpecific: kindB)}.
+	self
+		assertCollection:
+			(self getTestedClass basicNew
+				getSortalDescendantsFor: ancestor
+				from: model) asOrderedCollection
+		hasSameElements:
+			{kindA.
+			kindB} asOrderedCollection
 ]
 
 { #category : #tests }

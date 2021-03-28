@@ -28,15 +28,25 @@ RepRelAntipatternVerificationTest >> testCanVerify [
 RepRelAntipatternVerificationTest >> testGetMediationsForFromModel [
 	| kind secondKind relator firstMediation secondMediation model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
-	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.
+	secondKind := self
+		createClass: 'secondKind'
+		withStereotype: OntoUMLKind.
 	relator := self createClass: 'relator' withStereotype: OntoUMLRelator.
 	firstMediation := self createAssociationFrom: kind to: relator.
 	firstMediation applyStereotype: OntoUMLMediation new.
 	secondMediation := self createAssociationFrom: secondKind to: relator.
 	secondMediation applyStereotype: OntoUMLMediation new.
-	model := { kind. secondKind. relator. firstMediation. secondMediation. }.
-	result := self getTestedClass basicNew getMediationsFor: { kind. } fromModel: model.
-	self assert: result asArray equals: { firstMediation. } .
+	model := {kind.
+	secondKind.
+	relator.
+	firstMediation.
+	secondMediation}.
+	result := self getTestedClass basicNew
+		getMediationsFor: {kind}
+		fromModel: model.
+	self
+		assertCollection: result asArray
+		hasSameElements: {firstMediation}
 ]
 
 { #category : #tests }

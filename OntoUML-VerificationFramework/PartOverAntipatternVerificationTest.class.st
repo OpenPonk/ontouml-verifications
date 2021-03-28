@@ -99,12 +99,33 @@ PartOverAntipatternVerificationTest >> testGetPartWholeAssociationsForFrom [
 	partA := self createClass: 'partA' withStereotype: OntoUMLKind.
 	partB := self createClass: 'partB' withStereotype: OntoUMLKind.
 	association := self createAssociationFrom: wholeA to: partA.
-	partWholeAssociationA := self createAssociationFrom: wholeA to: partA with: OntoUMLComponentOf new.
-	partWholeAssociationB := self createAssociationFrom: wholeB to: partA with: OntoUMLComponentOf new.
-	model := { wholeA. wholeB. partA. partB. association. partWholeAssociationA. partWholeAssociationB. }.
-	self assert: (testedClassInstance getPartWholeAssociationsFor: partA from: model) asOrderedCollection 
-			equals: { partWholeAssociationA. partWholeAssociationB. } asOrderedCollection.
-	self assert: (testedClassInstance getPartWholeAssociationsFor: partB from: model) size equals: 0.
+	partWholeAssociationA := self
+		createAssociationFrom: wholeA
+		to: partA
+		with: OntoUMLComponentOf new.
+	partWholeAssociationB := self
+		createAssociationFrom: wholeB
+		to: partA
+		with: OntoUMLComponentOf new.
+	model := {wholeA.
+	wholeB.
+	partA.
+	partB.
+	association.
+	partWholeAssociationA.
+	partWholeAssociationB}.
+	self
+		assertCollection:
+			(testedClassInstance getPartWholeAssociationsFor: partA from: model)
+				asOrderedCollection
+		hasSameElements:
+			{partWholeAssociationA.
+			partWholeAssociationB} asOrderedCollection.
+	self
+		assert:
+			(testedClassInstance getPartWholeAssociationsFor: partB from: model)
+				size
+		equals: 0
 ]
 
 { #category : #tests }
