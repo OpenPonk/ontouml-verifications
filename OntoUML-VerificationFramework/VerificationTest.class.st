@@ -39,5 +39,10 @@ VerificationTest >> testVerifiedClass [
 
 { #category : #tests }
 VerificationTest >> testVerifyObjectWithModel [
-	self assert: (self getTestedClass verify: self getVerifiedClassInstance withModel: 'dummyModel') equals: {}.
+	self
+		assertCollection:
+			(self getTestedClass
+				verify: self getVerifiedClassInstance
+				withModel: 'dummyModel')
+		hasSameElements: {}
 ]
