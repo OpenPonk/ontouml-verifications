@@ -43,9 +43,8 @@ MultDepAntipatternVerification >> relatorHierarchyExistsFor: aAssociationSet wit
 
 { #category : #verification }
 MultDepAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
-	| stereotype associations |
-	stereotype := (OntoUMLModelQuery getStereotype: aVerifiedObject).
-	(stereotype oclIsKindOf: 'Sortal') ifFalse: [ ^ {}. ].
+	| associations |
+	(OntoUMLModelQuery isStereotypeOf: aVerifiedObject oclKindOf: 'Sortal') ifFalse: [ ^ {}. ].
 	associations := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel withStereotype: OntoUMLMediation filterBy: 
 		[ :object | (object memberEnds first type == aVerifiedObject) or: (object memberEnds second type == aVerifiedObject)].
 	(associations size < 2) ifTrue: [ ^ {}. ].

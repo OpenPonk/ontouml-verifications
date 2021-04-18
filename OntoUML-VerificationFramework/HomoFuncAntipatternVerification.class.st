@@ -19,7 +19,7 @@ HomoFuncAntipatternVerification class >> verifiedStereotypes [
 { #category : #testing }
 HomoFuncAntipatternVerification >> getSortalDescendantsFor: aElement from: aModel [
 	^ (OntoUMLModelQuery getDescendantsFor: aElement from: aModel)
-	 		select: [ :descendant | (OntoUMLModelQuery getStereotype: descendant) oclIsKindOf: 'Sortal'. ].
+	 		select: [ :descendant | OntoUMLModelQuery isStereotypeOf: descendant oclKindOf: 'Sortal'. ].
 ]
 
 { #category : #testing }
@@ -39,7 +39,7 @@ HomoFuncAntipatternVerification >> isFunctionalComplex: aElement in: aModel [
 	({ OntoUMLSubKind. OntoUMLRole. OntoUMLPhase. } includes: stereotype class)
 		ifTrue: [ ^ self hasKindAsAncestor: aElement ].
 	"if aElement stereotype is non-sortal and all its sortal children fullfil previous two conditions -> return true"
-	^ ((stereotype oclIsKindOf: 'Sortal') not) 
+	^ ((OntoUMLModelQuery is: stereotype oclKindOf: 'Sortal') not) 
 		and: ((self getSortalDescendantsFor: aElement from: aModel) 
 			allSatisfy: [ :child | self isFunctionalComplex: child in: aModel. ] ).
 ]

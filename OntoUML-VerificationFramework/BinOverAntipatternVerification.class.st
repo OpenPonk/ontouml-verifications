@@ -36,14 +36,14 @@ BinOverAntipatternVerification >> checkBinOverFor: aSource and: aTarget from: aM
 	aSource = aTarget ifTrue: [ ^ true. ].
 	(sourceAndAncestors includes: aTarget) ifTrue: [ ^ true. ].
 	(targetAndAncestors includes: aSource) ifTrue: [ ^ true. ].
-	((sourceStereotype oclIsKindOf: 'Sortal') and: 
-		(targetStereotype oclIsKindOf: 'Sortal')) ifTrue:
+	((OntoUMLModelQuery is: sourceStereotype oclKindOf: 'Sortal') and: 
+		(OntoUMLModelQuery is: targetStereotype oclKindOf: 'Sortal')) ifTrue:
 			[ ^ self checkIdentityOverlapFor: aSource withAncestors: sourceAndAncestors and: aTarget withAncestors: targetAndAncestors. ].
 	(({ OntoUMLRelator. OntoUMLMode. } includes: sourceStereotype class) and: 
 		({ OntoUMLRelator. OntoUMLMode. } includes: targetStereotype)) ifTrue:
 			[ ^ self checkOverlapFor: sourceAndAncestors and: targetAndAncestors. ].
-	((sourceStereotype oclIsKindOf: 'MixinClass') and: 
-		(targetStereotype oclIsKindOf: 'MixinClass')) ifTrue:
+	((OntoUMLModelQuery is: sourceStereotype oclKindOf: 'MixinClass') and: 
+		(OntoUMLModelQuery is: targetStereotype oclKindOf: 'MixinClass')) ifTrue:
 			[ ^ self checkBinOverForMixins: aSource and: aTarget from: aModel. ].
 	^ false.
 ]
@@ -51,11 +51,13 @@ BinOverAntipatternVerification >> checkBinOverFor: aSource and: aTarget from: aM
 { #category : #verification }
 BinOverAntipatternVerification >> checkBinOverForMixins: aSource and: aTarget from: aModel [ 
 	| sourceChildren targetChildren sourceAncestors targetAncestors |
-	sourceChildren := (OntoUMLModelQuery getDescendantsFor: aSource from: aModel) select: [ :entity | entity oclIsKindOf: 'Sortal' ].
-	targetChildren := (OntoUMLModelQuery getDescendantsFor: aTarget from: aModel) select: [ :entity | entity oclIsKindOf: 'Sortal' ].
+	sourceChildren := (OntoUMLModelQuery getDescendantsFor: aSource from: aModel) 
+		select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'Sortal' ].
+	targetChildren := (OntoUMLModelQuery getDescendantsFor: aTarget from: aModel) 
+		select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'Sortal' ].
 	(sourceChildren anySatisfy: [ :source | targetChildren includes: source ]) ifTrue: [ ^ true. ].
-	sourceAncestors := (OntoUMLModelQuery getAncestorsFor: aSource) select: [ :entity | entity oclIsKindOf: 'MixinClass' ].
-	targetAncestors := (OntoUMLModelQuery getAncestorsFor: aSource) select: [ :entity | entity oclIsKindOf: 'MixinClass' ].
+	sourceAncestors := (OntoUMLModelQuery getAncestorsFor: aSource) select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'MixinClass' ].
+	targetAncestors := (OntoUMLModelQuery getAncestorsFor: aSource) select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'MixinClass' ].
 	^ sourceChildren isEmpty and: (targetChildren isEmpty and: (sourceAncestors anySatisfy: [ :source | targetAncestors includes: source ])).
 ]
 

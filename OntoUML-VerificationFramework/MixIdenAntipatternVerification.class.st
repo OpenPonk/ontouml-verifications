@@ -47,7 +47,7 @@ MixIdenAntipatternVerification >> providesIdentity: aElement [
 MixIdenAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| subtypes |
 	subtypes := OntoUMLModelQuery getDescendantsFor: aVerifiedObject from: aVerifiedModel.
-	((subtypes allSatisfy: [ :subtype | (self class getStereotype: subtype) oclIsKindOf: 'Sortal' ]) 
+	((subtypes allSatisfy: [ :subtype | OntoUMLModelQuery isStereotypeOf: subtype oclKindOf: 'Sortal' ]) 
 		and: (self checkForIdentityOverlapFor: subtypes))
 			ifFalse: [ ^ {}. ].
 	"else"
