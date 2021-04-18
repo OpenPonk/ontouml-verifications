@@ -5,6 +5,16 @@ Class {
 }
 
 { #category : #tests }
+VerificationControllerTest >> testGetAntiPatternVerifications [
+	| controller antiPatternVerifications  |
+	controller := VerificationController new.
+	antiPatternVerifications := controller getAntiPatternVerifications.
+	self assert: (antiPatternVerifications isKindOf: Collection).
+	self assert: (antiPatternVerifications isEmpty) equals: false.
+	self assert: (antiPatternVerifications allSatisfy: [ :verificationClass | verificationClass tags asSet includes: 'Antipattern-Classes'. ]) equals: true.
+]
+
+{ #category : #tests }
 VerificationControllerTest >> testGetVerifications [
 	| controller verifications |
 	controller := VerificationController new.
@@ -12,7 +22,7 @@ VerificationControllerTest >> testGetVerifications [
 	self assert: (verifications isKindOf: Collection).
 	self assert: (verifications isEmpty) equals: false.
 	self assert: (verifications anySatisfy: [ :verificationClass | verificationClass = Verification ]) equals: true.
-	self assert: (verifications allSatisfy: [ :verificationClass | (verificationClass tags asSet includes: 'Verification-Classes') or: (verificationClass tags asSet includes: 'Antipattern-Classes')]) equals: true.
+	self assert: (verifications allSatisfy: [ :verificationClass | verificationClass tags asSet includes: 'Verification-Classes'. ]) equals: true.
 ]
 
 { #category : #tests }
