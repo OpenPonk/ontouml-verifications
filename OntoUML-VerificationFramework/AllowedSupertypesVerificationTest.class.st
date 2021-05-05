@@ -109,7 +109,7 @@ AllowedSupertypesVerificationTest >> testValidSubtypesFor [
 	| methodList |
 	methodList := (AllowedSupertypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validSupertypesFor.*' ].
 	methodList do: [ :methodName | 
-		self assert: (AllowedSupertypesVerification class >>> (methodName asSymbol) isKindOf: Association). ].
+		self assert: (((AllowedSupertypesVerification class >> (methodName asSymbol)) valueWithReceiver: nil arguments: #()) isKindOf: Association) equals: true ].
 ]
 
 { #category : #tests }

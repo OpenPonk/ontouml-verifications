@@ -1,3 +1,10 @@
+"
+I am verification for MixIden anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for MixIden anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForMixIden.
+"
 Class {
 	#name : #MixIdenAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -30,10 +37,24 @@ MixIdenAntipatternVerification >> checkForIdentityOverlapFor: aElements [
 
 { #category : #verification }
 MixIdenAntipatternVerification >> getIdentityProviderFor: aElement [
-	| identityProvider | 	
+	| identityProvider accumulator | 
 	(self providesIdentity: aElement) ifTrue: [ ^ aElement. ].
+	accumulator := Set new.
+	accumulator add: self.
 	aElement generalizations do: [ :generalization | 
-		identityProvider := self getIdentityProviderFor: generalization general. 
+		identityProvider := self getIdentityProviderFor: generalization general withAccumulator: accumulator. 
+		identityProvider ifNotNil: [ ^ identityProvider. ]. ].
+	^ nil.
+]
+
+{ #category : #verification }
+MixIdenAntipatternVerification >> getIdentityProviderFor: aElement withAccumulator: aAccumulator [
+	| identityProvider | 		
+	(self providesIdentity: aElement) ifTrue: [ ^ aElement. ].	
+	(aAccumulator includes: self) ifTrue: [ ^nil ].
+	aAccumulator add: self.	
+	aElement generalizations do: [ :generalization | 
+		identityProvider := self getIdentityProviderFor: generalization general withAccumulator: aAccumulator. 
 		identityProvider ifNotNil: [ ^ identityProvider. ]. ].
 	^ nil.
 ]
@@ -46,7 +67,7 @@ MixIdenAntipatternVerification >> providesIdentity: aElement [
 { #category : #verification }
 MixIdenAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| subtypes |
-	subtypes := OntoUMLModelQuery getDescendantsFor: aVerifiedObject from: aVerifiedModel.
+	subtypes := OntoUMLModelQuery getChildrenOf: aVerifiedObject from: aVerifiedModel.
 	((subtypes allSatisfy: [ :subtype | OntoUMLModelQuery isStereotypeOf: subtype oclKindOf: 'Sortal' ]) 
 		and: (self checkForIdentityOverlapFor: subtypes))
 			ifFalse: [ ^ {}. ].
@@ -56,5 +77,5 @@ MixIdenAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVeri
 			withVerification: self 
 			withText: aVerifiedObject name,
 				' has only sortal subtypes that follow the same identity principle.'
-			documentationReference: ''. }
+			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForMixIden. }
 ]

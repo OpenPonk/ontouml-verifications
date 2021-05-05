@@ -1,3 +1,6 @@
+"
+I represent single documentation for single stereotype.
+"
 Class {
 	#name : #OntoUMLStereotypeYaml,
 	#superclass : #Object,

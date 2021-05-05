@@ -1,3 +1,6 @@
+"
+I am subclass of GLMTablePresentation and I implement option to add event handlers to onSelect event.
+"
 Class {
 	#name : #GLMTableSelectablePresentation,
 	#superclass : #GLMTablePresentation,

@@ -1,3 +1,10 @@
+"
+I am verification for HetColl anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for HetColl anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForHetColl.
+"
 Class {
 	#name : #HetCollAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -13,20 +20,41 @@ HetCollAntipatternVerification class >> verifiedClass [
 
 { #category : #constants }
 HetCollAntipatternVerification class >> verifiedStereotypes [
-	^ {OntoUMLCollective.}.
+	^ {OntoUMLCollective. OntoUMLSubKind. OntoUMLRole. OntoUMLPhase. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. OntoUMLCategory.}.
+]
+
+{ #category : #verification }
+HetCollAntipatternVerification >> isApplicableFor: aElement in: aModel [
+	| ancestors stereotype | 
+	stereotype := OntoUMLModelQuery getStereotypeClass: aElement.
+	stereotype = OntoUMLCollective ifTrue: [^true].
+	ancestors := OntoUMLModelQuery getAncestorsFor: aElement.
+	({ OntoUMLRole. OntoUMLPhase. OntoUMLSubKind. } includes: stereotype) ifTrue: 
+		[ (ancestors anySatisfy: [ :ancestor | 
+			(OntoUMLModelQuery getStereotypeClass: ancestor) = OntoUMLCollective. ]) ifTrue: [ ^true ]. ].
+	({ OntoUMLRoleMixin. OntoUMLMixin. OntoUMLCategory. OntoUMLPhaseMixin. } includes: stereotype) ifTrue: 
+		[ ^ ((OntoUMLModelQuery getChildrenOf: aElement from: aModel) select: [ :child |
+			 OntoUMLModelQuery isStereotypeOf: child oclKindOf: 'Sortal' ]) 
+				allSatisfy: [:child | self isApplicableFor: child in: aModel]. ].
+	^false.
 ]
 
 { #category : #verification }
 HetCollAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
-	| parts |
+	| parts ancestorsAndSelf |
+	(self isApplicableFor: aVerifiedObject in: aVerifiedModel) ifFalse:[ ^{}. ].
+	
+	ancestorsAndSelf := OntoUMLModelQuery getAncestorsFor: aVerifiedObject.
+	ancestorsAndSelf add: aVerifiedObject.
+	
 	parts := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel
-		withStereotype: OntoUMLComponentOf 
-		filterBy: [ :componentOf | (componentOf memberEnds second type == aVerifiedObject ) ].
+		withStereotype: OntoUMLMemberOf 
+		filterBy: [ :memberOf | ancestorsAndSelf includes: (memberOf memberEnds second type). ].
 		
 	parts size > 1 ifTrue: [ 
 		^ {VerificationMessageWarning createFor: aVerifiedObject 
 			withVerification: self 
 			withText: 'Collective ' , aVerifiedObject name , ' contains multiple different parts.'
-			documentationReference: ''} ].
+			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForHetColl. } ].
 	^{}.
 ]

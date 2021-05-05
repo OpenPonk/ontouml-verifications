@@ -1,3 +1,6 @@
+"
+I am class responsible for creating UI for VerificationRestults.
+"
 Class {
 	#name : #VerificationResultsUI,
 	#superclass : #Object,
@@ -53,11 +56,6 @@ VerificationResultsUI >> gtInspectorTableIn: composite [
 		column: 'Object' evaluated: #objectReference;
 		column: 'Reason' evaluated: #messageText;
 		column: 'Documentation' evaluated: #documentationReference.
-		"when: [ :table | table selection anySatisfy: [ :selected | (self highlighted includes: selected) not ] ]"
-		"selectionAct: [ :table | 
-			self highlightElement: table selection objectReference.
-			]
-			entitled: 'Highligh element'."
 ]
 
 { #category : #accessing }

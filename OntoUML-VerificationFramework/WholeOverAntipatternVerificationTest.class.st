@@ -1,3 +1,6 @@
+"
+I represent tests for WholeOverAntipatternVerification.
+"
 Class {
 	#name : #WholeOverAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,
@@ -63,7 +66,7 @@ WholeOverAntipatternVerificationTest >> testCheckForOverlapInModel [
 ]
 
 { #category : #tests }
-WholeOverAntipatternVerificationTest >> testCheckUpperCardinalitiesFor [
+WholeOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	| model testedAssociationEnds highUpperEndSet1 highUpperEndSet2 okUpperEndSet |
 	model := self getTestModelForMethods.
 	testedAssociationEnds := (model select: [ :object | object isKindOf: OPUMLAssociation. ])
@@ -71,9 +74,9 @@ WholeOverAntipatternVerificationTest >> testCheckUpperCardinalitiesFor [
 	highUpperEndSet1 := testedAssociationEnds select: [ :end | end type name = 'testedObject1' ].
 	highUpperEndSet2 := testedAssociationEnds reject: [ :end | end type name = 'testedObject1' ].
 	okUpperEndSet := testedAssociationEnds select: [ :end | end type name = 'testedObject3' ].
-	self assert: ((self getTestedClass basicNew) checkUpperCardinalitiesFor: highUpperEndSet1) equals: true.
-	self assert: ((self getTestedClass basicNew) checkUpperCardinalitiesFor: highUpperEndSet2) equals: true.
-	self assert: ((self getTestedClass basicNew) checkUpperCardinalitiesFor: okUpperEndSet) equals: false.
+	self assert: ((self getTestedClass basicNew) checkUpperMultiplicityFor: highUpperEndSet1) equals: true.
+	self assert: ((self getTestedClass basicNew) checkUpperMultiplicityFor: highUpperEndSet2) equals: true.
+	self assert: ((self getTestedClass basicNew) checkUpperMultiplicityFor: okUpperEndSet) equals: false.
 ]
 
 { #category : #tests }

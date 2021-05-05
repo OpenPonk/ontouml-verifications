@@ -1,3 +1,6 @@
+"
+I represent tests for RelOverAntipatternVerification.
+"
 Class {
 	#name : #RelOverAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,
@@ -70,18 +73,18 @@ RelOverAntipatternVerificationTest >> testCheckForOverlap [
 ]
 
 { #category : #tests }
-RelOverAntipatternVerificationTest >> testCheckUpperCardinalitiesFor [
+RelOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	| relator mediatedObjects model testedClass |
 	testedClass := self getTestedClass basicNew.
 	model := self getValidModel.
 	relator := ((model select: [ :object | object isKindOf: OPUMLClass. ]) select: [ :entity | entity name = 'relator' ]) first.
 	mediatedObjects := testedClass getMediatedEndsFor: relator from: model. 
-	self assert: (testedClass checkUpperCardinalitiesFor: mediatedObjects) equals: false.
+	self assert: (testedClass checkUpperMultiplicityFor: mediatedObjects) equals: false.
 	
 	model := self getInvalidModel.
 	relator := ((model select: [ :object | object isKindOf: OPUMLClass. ]) select: [ :entity | entity name = 'relator' ]) first.
 	mediatedObjects := testedClass getMediatedEndsFor: relator from: model. 
-	self assert: (testedClass checkUpperCardinalitiesFor: mediatedObjects) equals: true.
+	self assert: (testedClass checkUpperMultiplicityFor: mediatedObjects) equals: true.
 ]
 
 { #category : #tests }

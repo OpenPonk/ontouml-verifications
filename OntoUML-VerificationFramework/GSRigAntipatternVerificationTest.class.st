@@ -1,3 +1,6 @@
+"
+I represent tests for GSRigAntipatternVerification.
+"
 Class {
 	#name : #GSRigAntipatternVerificationTest,
 	#superclass : #AbstractVerificationTest,

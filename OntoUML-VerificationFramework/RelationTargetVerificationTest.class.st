@@ -116,7 +116,7 @@ RelationTargetVerificationTest >> testValidTargetsFor [
 	methodList := (RelationTargetVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validTargetsFor.*' ].
 	self assert: methodList isNotEmpty.
 	methodList do: [ :methodName | 
-		self assert: (RelationTargetVerification class >>> (methodName asSymbol) isKindOf: Association). ].
+		self assert: (((RelationTargetVerification class >> (methodName asSymbol)) valueWithReceiver: nil arguments: #()) isKindOf: Association) equals: true ].
 ]
 
 { #category : #tests }

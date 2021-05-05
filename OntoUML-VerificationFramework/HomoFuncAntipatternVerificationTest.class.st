@@ -1,3 +1,6 @@
+"
+I represent tests for HomoFuncAntipatternVerification.
+"
 Class {
 	#name : #HomoFuncAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,

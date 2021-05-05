@@ -1,3 +1,6 @@
+"
+I represent tests for PartOverAntipatternVerification.
+"
 Class {
 	#name : #PartOverAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,
@@ -74,19 +77,19 @@ PartOverAntipatternVerificationTest >> testCheckForOverlap [
 ]
 
 { #category : #tests }
-PartOverAntipatternVerificationTest >> testCheckUpperCardinalitiesFor [
+PartOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	| model part mediatedEnds testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
 	model := self getValidModel.
 	part := model first.
 	mediatedEnds := (testedClassInstance getPartWholeAssociationsFor: part from: model) select: [ :end | end memberEnds second upper = 1].
 	mediatedEnds := { mediatedEnds first. }.
-	self assert: (testedClassInstance checkUpperCardinalitiesFor: mediatedEnds) equals: false.
+	self assert: (testedClassInstance checkUpperMultiplicityFor: mediatedEnds) equals: false.
 	
 	model := self getInvalidModel.
 	part := model first.
 	mediatedEnds := testedClassInstance getPartWholeAssociationsFor: part from: model.
-	self assert: (testedClassInstance checkUpperCardinalitiesFor: mediatedEnds) equals: true.
+	self assert: (testedClassInstance checkUpperMultiplicityFor: mediatedEnds) equals: true.
 	
 ]
 

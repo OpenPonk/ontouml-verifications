@@ -1,3 +1,10 @@
+"
+I am verification for ImpAbs anti-pattern. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:
+
+Documentation for ImpAbs anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForImpAbs.
+"
 Class {
 	#name : #ImpAbsAntipatternVerification,
 	#superclass : #Verification,
@@ -35,5 +42,5 @@ ImpAbsAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: a
 		withVerification: self
 		withText: 'Association ' , (OntoUMLModelQuery getAssociationName: aVerifiedAssociation) , 
 		' is connected to element that has multiple subtypes and upper bound for its multiplicity is >= 2.'
-		documentationReference: ''. }.
+		documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForImpAbs. }.
 ]

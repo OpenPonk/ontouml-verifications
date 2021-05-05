@@ -1,3 +1,10 @@
+"
+I am verification for DepPhase anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for DepPhase anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForDepPhase.
+"
 Class {
 	#name : #DepPhaseAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -32,5 +39,5 @@ DepPhaseAntipatternVerification >> verifyObject: aVerifiedMediation withModel: a
 				VerificationMessageWarning createFor: phase
 					withVerification: self 
 					withText: 'Phase ' , phase name , ' is part of Mediation association.' 
-					documentationReference: ''. ].
+					documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForDepPhase. ].
 ]

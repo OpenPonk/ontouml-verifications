@@ -1,3 +1,6 @@
+"
+I represent tests for HetCollAntipatternVerification.
+"
 Class {
 	#name : #HetCollAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,
@@ -31,9 +34,9 @@ HetCollAntipatternVerificationTest >> testInvalidModel [
 	secondPart := self createClass: 'secondPart'  withStereotype: OntoUMLKind.
 	collective := self createClass: 'collective'  withStereotype: OntoUMLCollective .
 	firstComponentOf := self createAssociationFrom: firstPart to: collective.
-	firstComponentOf applyStereotype: OntoUMLComponentOf new.
+	firstComponentOf applyStereotype: OntoUMLMemberOf new.
 	secondComponentOf := self createAssociationFrom: secondPart to: collective.
-	secondComponentOf applyStereotype: OntoUMLComponentOf new.
+	secondComponentOf applyStereotype: OntoUMLMemberOf new.
 	
 	model := { firstPart. secondPart. collective. firstComponentOf. secondComponentOf. }.
 	result := VerificationResults new.

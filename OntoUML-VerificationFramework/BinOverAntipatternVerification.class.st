@@ -1,3 +1,10 @@
+"
+I am verification for BinOver anti-pattern. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:
+
+Documentation for BinOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForBinOver.
+"
 Class {
 	#name : #BinOverAntipatternVerification,
 	#superclass : #Verification,
@@ -133,11 +140,6 @@ BinOverAntipatternVerification >> isDistinctMissingFor: sourcePath and: targetPa
 ]
 
 { #category : #verification }
-BinOverAntipatternVerification >> possibleOverlapFor: aSourceSet and: aTargetSet [
-	^ aSourceSet anySatisfy: [ :source | aTargetSet includes: source ].
-]
-
-{ #category : #verification }
 BinOverAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
 	| source target |
 	source := OntoUMLModelQuery getSourceFrom: aVerifiedAssociation.
@@ -147,6 +149,6 @@ BinOverAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: 
 		withText: 'Both ends of the ' , 
 			(OntoUMLModelQuery getAssociationName:  aVerifiedAssociation) ,
 			 ' association are connected to the same element: ' , source name
-		documentationReference: ''. } ].
+		documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForBinOver. } ].
 	^ {}.
 ]

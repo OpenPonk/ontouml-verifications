@@ -1,3 +1,6 @@
+"
+I represent tests for RelRigAntipatternVerification.
+"
 Class {
 	#name : #RelRigAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,

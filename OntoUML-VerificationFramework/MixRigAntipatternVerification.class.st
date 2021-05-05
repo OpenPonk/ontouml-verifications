@@ -1,3 +1,10 @@
+"
+I am verification for MixRig anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for MixRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForMixRig.
+"
 Class {
 	#name : #MixRigAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -5,6 +12,11 @@ Class {
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
 }
+
+{ #category : #constants }
+MixRigAntipatternVerification class >> getAntiRigidTypes [
+	^ { OntoUMLRole. OntoUMLRoleMixin. OntoUMLPhase. OntoUMLPhaseMixin. }.
+]
 
 { #category : #constants }
 MixRigAntipatternVerification class >> getRigidTypes [
@@ -41,15 +53,30 @@ MixRigAntipatternVerification class >> verifiedStereotypes [
 ]
 
 { #category : #verification }
+MixRigAntipatternVerification >> getDescendansOfMixin: aMixin withModel: aModel into: aCollection [
+	| subtypes mixins |
+	subtypes := (OntoUMLModelQuery getChildrenOf: aMixin from: aModel) asSet.
+	mixins := subtypes select: [ :subtype | (OntoUMLModelQuery getStereotypeClass: subtype) = OntoUMLMixin. ].
+	mixins := mixins reject: [ :mixin | aCollection includes: mixin ].
+	aCollection addAll: subtypes.
+	mixins do: [ :mixin | self getDescendansOfMixin: mixin withModel: aModel into: aCollection ].
+]
+
+{ #category : #verification }
 MixRigAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
-	| subtypes |
+	| subtypes hasRigidSubtypes hasAntiRigidSubtypes |
 	subtypes := OntoUMLModelQuery getChildrenOf: aVerifiedObject from: aVerifiedModel.
-	subtypes := subtypes collect: [ :element |
-		self class getRigidTypes anySatisfy: [ :stereotypeClass |
-			stereotypeClass = (OntoUMLModelQuery getStereotype: element) class ]. ].
-	subtypes asSet size = 1 ifFalse: [ ^{}. ].
-	^ { VerificationMessageWarning createFor: aVerifiedObject 
-			withVerification: self 
-			withText: 'All subtypes of Mixin ' , aVerifiedObject name , ' have same rigidity.'
-			documentationReference: '' }.
+	(subtypes select: [ :subtype |
+		 (OntoUMLModelQuery getStereotypeClass: subtype) = OntoUMLMixin. ]) do:
+		[ :mixin | self getDescendansOfMixin: mixin withModel: aVerifiedModel into: subtypes ].
+	hasRigidSubtypes := subtypes anySatisfy: [ :element |
+		self class getRigidTypes includes: (OntoUMLModelQuery getStereotypeClass: element) ].
+	hasAntiRigidSubtypes := subtypes anySatisfy: [ :element |
+		self class getAntiRigidTypes includes: (OntoUMLModelQuery getStereotypeClass: element) ].
+	((subtypes asSet size = 1) or: (hasRigidSubtypes and: hasAntiRigidSubtypes) not) ifTrue: 
+		[ ^ { VerificationMessageWarning createFor: aVerifiedObject 
+				withVerification: self 
+				withText: 'All subtypes of Mixin ' , aVerifiedObject name , ' have same rigidity.'
+				documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForMixRig. }. ].
+	"else" ^{}.
 ]

@@ -1,3 +1,6 @@
+"
+I am responsible for aquiring name of object referenced in VerificationMessage.
+"
 Class {
 	#name : #VerificationMessageUI,
 	#superclass : #Object,

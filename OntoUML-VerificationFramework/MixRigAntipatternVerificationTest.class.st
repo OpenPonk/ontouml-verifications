@@ -1,3 +1,6 @@
+"
+I represent tests for MixRigAntipatternVerification.
+"
 Class {
 	#name : #MixRigAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,

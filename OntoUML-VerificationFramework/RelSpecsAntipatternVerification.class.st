@@ -1,3 +1,10 @@
+"
+I am verification for RelSpecs anti-pattern. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:
+
+Documentation for RelSpecs anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForRelSpecs.
+"
 Class {
 	#name : #RelSpecsAntipatternVerification,
 	#superclass : #Verification,
@@ -28,7 +35,7 @@ RelSpecsAntipatternVerification >> createWarningMessageFor: aVerifiedObject and:
 				(OntoUMLModelQuery getAssociationName: aVerifiedObject) ,
 				' is in RelSpecs anti-pattern with  ' ,
 				(OntoUMLModelQuery getAssociationName: aAssociation)
-			documentationReference: ''.
+			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForRelSpec.
 ]
 
 { #category : #verification }

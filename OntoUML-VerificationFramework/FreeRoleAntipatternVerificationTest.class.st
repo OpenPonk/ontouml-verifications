@@ -1,3 +1,6 @@
+"
+I represent tests for FreeRoleAntipatternVerification.
+"
 Class {
 	#name : #FreeRoleAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,

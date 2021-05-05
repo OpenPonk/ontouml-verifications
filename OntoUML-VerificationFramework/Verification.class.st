@@ -16,12 +16,12 @@ Verification class >> canVerify: aVerifiedObject [
 
 { #category : #updating }
 Verification class >> expandAllowedClassStereotypesIn: aCollection from: aUpdater [
-	 aCollection isString ifTrue: [ ^ self expandClassStereotype: aCollection fromUpdater: aUpdater. ]
-			ifFalse: [ ^ (aCollection collect: [ :item | self expandClassStereotype: item fromUpdater: aUpdater ]) flattened asSet. ].
+	 aCollection isString ifTrue: [ ^ self expandClassStereotype: aCollection from: aUpdater. ]
+			ifFalse: [ ^ (aCollection collect: [ :item | self expandClassStereotype: item from: aUpdater ]) flattened asSet. ].
 ]
 
 { #category : #updating }
-Verification class >> expandClassStereotype: aString fromUpdater: aUpdater [
+Verification class >> expandClassStereotype: aString from: aUpdater [
 	(aString = '*' or: aString = 'Functional complex') ifTrue: [ ^ aUpdater classSpecifications collect: [ :spec | spec name ] ]
 		ifFalse: [ ^ { aString. }. ]. 
 ]

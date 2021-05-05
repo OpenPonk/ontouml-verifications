@@ -1,3 +1,10 @@
+"
+I am verification for UndefFormal anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for UndefFormal anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForUndefFormal.
+"
 Class {
 	#name : #UndefFormalAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -49,6 +56,6 @@ UndefFormalAntipatternVerification >> verifyObject: aVerifiedAssociation withMod
 			withText: 'Formal association ' ,
 				(OntoUMLModelQuery getAssociationName: aVerifiedAssociation) ,
 				' joins two elements and one or both of the elements don''t have attribute/quality.'
-			documentationReference: ''. }
+			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForUndefFormal. }
 
 ]

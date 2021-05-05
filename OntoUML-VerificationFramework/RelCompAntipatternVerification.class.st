@@ -1,3 +1,10 @@
+"
+I am verification for RelComp anti-pattern. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:
+
+Documentation for RelComp anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForRelComp.
+"
 Class {
 	#name : #RelCompAntipatternVerification,
 	#superclass : #Verification,
@@ -38,7 +45,7 @@ RelCompAntipatternVerification >> createWarningMessageFor: aVerifiedObject and: 
 				(OntoUMLModelQuery getAssociationName: aVerifiedObject) ,
 				' is in RelComp anti-pattern with  ' ,
 				(OntoUMLModelQuery getAssociationName: aAssociation)
-			documentationReference: ''.
+			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForRelOver.
 ]
 
 { #category : #verification }

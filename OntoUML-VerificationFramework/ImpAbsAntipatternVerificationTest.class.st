@@ -1,3 +1,6 @@
+"
+I represent tests for ImpAbsAntipatternVerification.
+"
 Class {
 	#name : #ImpAbsAntipatternVerificationTest,
 	#superclass : #AbstractVerificationTest,
