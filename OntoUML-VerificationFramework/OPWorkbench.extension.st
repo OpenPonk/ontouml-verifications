@@ -15,8 +15,16 @@ OPWorkbench >> getAntiPatternSettingMessageFor: aAntiPattern [
 
 { #category : #'*OntoUML-VerificationFramework' }
 OPWorkbench class >> verificationFrameworkSettingsGroups: aBuilder [
-	<systemsettings>
+
 	"I create groups for anti-patterns and verifications."
-	(aBuilder group: #antipatterns) label: 'Anti-patterns'.
-	(aBuilder group: #verifications) label: 'Verifications'.
+
+	<systemsettings>
+	(aBuilder group: #antipatterns)
+		label: 'Anti-patterns';
+		parent: #openponk;
+		order: 250.
+	(aBuilder group: #verifications)
+		label: 'Verifications';
+		parent: #openponk;
+		order: 240
 ]
