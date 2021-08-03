@@ -62,8 +62,7 @@ VerificationFrameworkSettings class >> settingsOnAllowedSubtypesVerification: aB
 		parent: #verifications;
 		target: self settingsInstance;
 		label: 'AllowedSubtypesVerification';
-		description: 'Allow or deny detection of this verification. For more information see documentation on: ';
-		default: true
+		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
 ]
 
 { #category : #'settings-verifications' }
@@ -85,8 +84,7 @@ VerificationFrameworkSettings class >> settingsOnBinOverAntipatternVerification:
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'BinOverAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/BinOver/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/BinOver/index.html'.
 ]
 
 { #category : #'settings-verifications' }
@@ -97,8 +95,7 @@ VerificationFrameworkSettings class >> settingsOnCharacterizedVerification: aBui
 		parent: #verifications;
 		target: self settingsInstance;
 		label: 'CharacterizedVerification';
-		description: 'Allow or deny detection of this verification. For more information see documentation on: ';
-		default: true
+		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -109,8 +106,7 @@ VerificationFrameworkSettings class >> settingsOnDecIntAntipatternVerification: 
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'DecIntAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/DecInt/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/DecInt/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -121,8 +117,7 @@ VerificationFrameworkSettings class >> settingsOnDepPhaseAntipatternVerification
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'DepPhaseAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/DepPhase/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/DepPhase/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -133,8 +128,7 @@ VerificationFrameworkSettings class >> settingsOnFreeRoleAntipatternVerification
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'FreeRoleAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/FreeRole/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/FreeRole/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -145,8 +139,7 @@ VerificationFrameworkSettings class >> settingsOnGSRigAntipatternVerification: a
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'GSRigAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/GSRig/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/GSRig/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -157,8 +150,7 @@ VerificationFrameworkSettings class >> settingsOnHetCollAntipatternVerification:
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'HetCollAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/HetColl/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/HetColl/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -169,8 +161,7 @@ VerificationFrameworkSettings class >> settingsOnHomoFuncAntipatternVerification
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'HomoFuncAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/HomoFunc/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/HomoFunc/index.html'.
 ]
 
 { #category : #'settings-verifications' }
@@ -181,8 +172,7 @@ VerificationFrameworkSettings class >> settingsOnIdentityRequiredVerification: a
 		parent: #verifications;
 		target: self settingsInstance;
 		label: 'IdentityRequiredVerification';
-		description: 'Allow or deny detection of this verification. For more information see documentation on: ';
-		default: true
+		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -193,8 +183,7 @@ VerificationFrameworkSettings class >> settingsOnImpAbsAntipatternVerification: 
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'ImpAbsAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/ImpAbs/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/ImpAbs/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -205,8 +194,7 @@ VerificationFrameworkSettings class >> settingsOnMixIdenAntipatternVerification:
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'MixIdenAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/MixIden/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/MixIden/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -217,8 +205,7 @@ VerificationFrameworkSettings class >> settingsOnMixRigAntipatternVerification: 
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'MixRigAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/MixRig/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/MixRig/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -229,8 +216,7 @@ VerificationFrameworkSettings class >> settingsOnMultDepAntipatternVerification:
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'MultDepAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/MultDep/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/MultDep/index.html'.
 ]
 
 { #category : #'settings-verifications' }
@@ -241,8 +227,7 @@ VerificationFrameworkSettings class >> settingsOnPartOfGeneralizationSetVerifica
 		parent: #verifications;
 		target: self settingsInstance;
 		label: 'PartOfGeneralizationSetVerification';
-		description: 'Allow or deny detection of this verification. For more information see documentation on: ';
-		default: true
+		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -253,8 +238,7 @@ VerificationFrameworkSettings class >> settingsOnPartOverAntipatternVerification
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'PartOverAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/PartOver/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/PartOver/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -265,8 +249,7 @@ VerificationFrameworkSettings class >> settingsOnRelCompAntipatternVerification:
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'RelCompAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelComp/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelComp/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -277,8 +260,7 @@ VerificationFrameworkSettings class >> settingsOnRelOverAntipatternVerification:
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'RelOverAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelOver/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelOver/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -289,8 +271,7 @@ VerificationFrameworkSettings class >> settingsOnRelRigAntipatternVerification: 
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'RelRigAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelRig/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelRig/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -301,8 +282,7 @@ VerificationFrameworkSettings class >> settingsOnRelSpecAntipatternVerification:
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'RelSpecAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelSpec/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelSpec/index.html'.
 ]
 
 { #category : #'settings-verifications' }
@@ -313,8 +293,7 @@ VerificationFrameworkSettings class >> settingsOnRelationSourceVerification: aBu
 		parent: #verifications;
 		target: self settingsInstance;
 		label: 'RelationSourceVerification';
-		description: 'Allow or deny detection of this verification. For more information see documentation on: ';
-		default: true
+		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
 ]
 
 { #category : #'settings-verifications' }
@@ -325,8 +304,7 @@ VerificationFrameworkSettings class >> settingsOnRelationTargetVerification: aBu
 		parent: #verifications;
 		target: self settingsInstance;
 		label: 'RelationTargetVerification';
-		description: 'Allow or deny detection of this verification. For more information see documentation on: ';
-		default: true
+		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
 ]
 
 { #category : #'settings-verifications' }
@@ -337,8 +315,7 @@ VerificationFrameworkSettings class >> settingsOnRelatorMediationDependencyVerif
 		parent: #verifications;
 		target: self settingsInstance;
 		label: 'RelatorMediationDependencyVerification';
-		description: 'Allow or deny detection of this verification. For more information see documentation on: ';
-		default: true
+		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -349,8 +326,7 @@ VerificationFrameworkSettings class >> settingsOnRepRelAntipatternVerification: 
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'RepRelAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RepRel/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RepRel/index.html'.
 ]
 
 { #category : #'settings-verifications' }
@@ -361,8 +337,7 @@ VerificationFrameworkSettings class >> settingsOnRoleMediationDependencyVerifica
 		parent: #verifications;
 		target: self settingsInstance;
 		label: 'RoleMediationDependencyVerification';
-		description: 'Allow or deny detection of this verification. For more information see documentation on: ';
-		default: true
+		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -373,8 +348,7 @@ VerificationFrameworkSettings class >> settingsOnUndefFormalAntipatternVerificat
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'UndefFormalAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/UndefFormal/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/UndefFormal/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -385,8 +359,7 @@ VerificationFrameworkSettings class >> settingsOnUndefPhaseAntipatternVerificati
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'UndefPhaseAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/UndefPhase/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/UndefPhase/index.html'.
 ]
 
 { #category : #'settings-antipatterns' }
@@ -397,8 +370,7 @@ VerificationFrameworkSettings class >> settingsOnWholeOverAntipatternVerificatio
 		parent: #antipatterns;
 		target: self settingsInstance;
 		label: 'WholeOverAntipatternVerification';
-		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/WholeOver/index.html';
-		default: true
+		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/WholeOver/index.html'.
 ]
 
 { #category : #updating }
