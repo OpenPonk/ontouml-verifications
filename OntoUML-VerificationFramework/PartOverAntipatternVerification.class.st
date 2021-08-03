@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+PartOverAntipatternVerification class >> abbreviation [
+	^ 'PartOver'.
+]
+
+{ #category : #constants }
 PartOverAntipatternVerification class >> partWholeAssociations [
 	^ { OntoUMLSubCollectionOf. OntoUMLSubQuantityOf. OntoUMLMemberOf. OntoUMLComponentOf. }.
 ]

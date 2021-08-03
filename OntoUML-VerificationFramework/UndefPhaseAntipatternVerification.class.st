@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+UndefPhaseAntipatternVerification class >> abbreviation [
+	^ 'UndefPhase'.
+]
+
+{ #category : #constants }
 UndefPhaseAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]

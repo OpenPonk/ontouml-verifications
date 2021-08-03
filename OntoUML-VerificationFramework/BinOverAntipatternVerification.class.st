@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+BinOverAntipatternVerification class >> abbreviation [
+	^ 'BinOver'.
+]
+
+{ #category : #constants }
 BinOverAntipatternVerification class >> identityProviders [
 	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLMode. OntoUMLQuality. }
 ]

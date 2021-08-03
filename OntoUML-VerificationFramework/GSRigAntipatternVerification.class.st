@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+GSRigAntipatternVerification class >> abbreviation [
+	^ 'GSRig'.
+]
+
+{ #category : #constants }
 GSRigAntipatternVerification class >> getAntiRigidTypes [
 	^ { OntoUMLRole. OntoUMLRoleMixin. OntoUMLPhase. OntoUMLPhaseMixin. }.
 ]

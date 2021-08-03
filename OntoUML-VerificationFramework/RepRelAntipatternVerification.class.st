@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+RepRelAntipatternVerification class >> abbreviation [
+	^ 'RepRel'.
+]
+
+{ #category : #constants }
 RepRelAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]

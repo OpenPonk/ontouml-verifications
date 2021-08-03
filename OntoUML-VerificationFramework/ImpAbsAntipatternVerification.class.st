@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+ImpAbsAntipatternVerification class >> abbreviation [
+	^ 'ImpAbs'.
+]
+
+{ #category : #constants }
 ImpAbsAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]

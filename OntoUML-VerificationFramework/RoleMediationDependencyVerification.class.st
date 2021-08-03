@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #constants }
+RoleMediationDependencyVerification class >> abbreviation [
+	^ 'RoleMediationDependency'.
+]
+
+{ #category : #constants }
 RoleMediationDependencyVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]

@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #constants }
+CharacterizedVerification class >> abbreviation [
+	^ 'Characterized'.
+]
+
+{ #category : #constants }
 CharacterizedVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]

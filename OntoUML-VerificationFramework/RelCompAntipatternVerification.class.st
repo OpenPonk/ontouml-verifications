@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+RelCompAntipatternVerification class >> abbreviation [
+	^ 'RelComp'.
+]
+
+{ #category : #constants }
 RelCompAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]

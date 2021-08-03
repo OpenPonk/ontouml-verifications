@@ -13,6 +13,11 @@ Class {
 	#category : #'OntoUML-VerificationFramework-Verification-Classes'
 }
 
+{ #category : #constants }
+RelationSourceVerification class >> abbreviation [
+	^ 'RelationSource'.
+]
+
 { #category : #updating }
 RelationSourceVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| validSourcesCode |

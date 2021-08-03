@@ -13,6 +13,11 @@ Class {
 	#category : #'OntoUML-VerificationFramework-Verification-Classes'
 }
 
+{ #category : #constants }
+AllowedSubtypesVerification class >> abbreviation [
+	^ 'AllowedSubtypes'.
+]
+
 { #category : #updating }
 AllowedSubtypesVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| validSubtypesCode |

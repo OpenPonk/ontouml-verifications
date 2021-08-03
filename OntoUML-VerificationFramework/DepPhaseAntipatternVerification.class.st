@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+DepPhaseAntipatternVerification class >> abbreviation [
+	^ 'DepPhase'.
+]
+
+{ #category : #constants }
 DepPhaseAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]

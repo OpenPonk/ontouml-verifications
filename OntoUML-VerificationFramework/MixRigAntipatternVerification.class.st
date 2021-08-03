@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+MixRigAntipatternVerification class >> abbreviation [
+	^ 'MixRig'.
+]
+
+{ #category : #constants }
 MixRigAntipatternVerification class >> getAntiRigidTypes [
 	^ { OntoUMLRole. OntoUMLRoleMixin. OntoUMLPhase. OntoUMLPhaseMixin. }.
 ]

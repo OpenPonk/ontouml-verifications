@@ -13,6 +13,11 @@ Class {
 	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
 }
 
+{ #category : #updating }
+HetCollAntipatternVerification class >> abbreviation [
+	^ 'HetColl'.
+]
+
 { #category : #constants }
 HetCollAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.

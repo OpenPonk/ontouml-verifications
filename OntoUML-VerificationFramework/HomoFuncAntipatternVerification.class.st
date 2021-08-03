@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+HomoFuncAntipatternVerification class >> abbreviation [
+	^ 'HomoFunc'.
+]
+
+{ #category : #constants }
 HomoFuncAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]

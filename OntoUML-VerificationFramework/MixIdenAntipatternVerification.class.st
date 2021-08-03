@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+MixIdenAntipatternVerification class >> abbreviation [
+	^ 'MixIden'.
+]
+
+{ #category : #constants }
 MixIdenAntipatternVerification class >> identityProviders [
 	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLMode. OntoUMLQuality. }
 ]

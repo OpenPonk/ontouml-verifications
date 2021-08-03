@@ -13,6 +13,11 @@ Class {
 	#category : #'OntoUML-VerificationFramework-Verification-Classes'
 }
 
+{ #category : #constants }
+IdentityRequiredVerification class >> abbreviation [
+	^ 'IdentityRequired'.
+]
+
 { #category : #updating }
 IdentityRequiredVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| identityProvidersCode |

@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #constants }
+RelatorMediationDependencyVerification class >> abbreviation [
+	^ 'RelatorMediationDependency'.
+]
+
+{ #category : #constants }
 RelatorMediationDependencyVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]

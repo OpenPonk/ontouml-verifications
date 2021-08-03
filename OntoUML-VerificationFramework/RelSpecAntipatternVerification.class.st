@@ -6,7 +6,7 @@ Overriden methods: verifiedClass, verifyObject:withModel:
 Documentation for RelSpecs anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForRelSpecs.
 "
 Class {
-	#name : #RelSpecsAntipatternVerification,
+	#name : #RelSpecAntipatternVerification,
 	#superclass : #Verification,
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
@@ -14,12 +14,17 @@ Class {
 }
 
 { #category : #checking }
-RelSpecsAntipatternVerification class >> verifiedClass [
+RelSpecAntipatternVerification class >> abbreviation [
+	^ 'RelSpec'.
+]
+
+{ #category : #checking }
+RelSpecAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation .
 ]
 
 { #category : #testing }
-RelSpecsAntipatternVerification >> contains: aOriginSet ancestorOrSelfOf: aTarget [
+RelSpecAntipatternVerification >> contains: aOriginSet ancestorOrSelfOf: aTarget [
 	| ancestorSet |
 	(aOriginSet includes: aTarget) ifTrue: [ ^ true ].
 	ancestorSet := OntoUMLModelQuery getAncestorsFor: aTarget.
@@ -27,7 +32,7 @@ RelSpecsAntipatternVerification >> contains: aOriginSet ancestorOrSelfOf: aTarge
 ]
 
 { #category : #verification }
-RelSpecsAntipatternVerification >> createWarningMessageFor: aVerifiedObject and: aAssociation [
+RelSpecAntipatternVerification >> createWarningMessageFor: aVerifiedObject and: aAssociation [
 	^ VerificationMessageWarning 
 			createFor: aVerifiedObject 
 			withVerification: self 
@@ -39,7 +44,7 @@ RelSpecsAntipatternVerification >> createWarningMessageFor: aVerifiedObject and:
 ]
 
 { #category : #verification }
-RelSpecsAntipatternVerification >> relSpecsExistsBetween: aAssociationA and: aAssociationB [
+RelSpecAntipatternVerification >> relSpecsExistsBetween: aAssociationA and: aAssociationB [
 	| sourceA targetA sourceB targetB sourceAncestorsB targetAncestorsB |
 	sourceA := OntoUMLModelQuery getSourceFrom: aAssociationA.
 	targetA := OntoUMLModelQuery getTargetFrom: aAssociationA.
@@ -55,7 +60,7 @@ RelSpecsAntipatternVerification >> relSpecsExistsBetween: aAssociationA and: aAs
 ]
 
 { #category : #verification }
-RelSpecsAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
+RelSpecAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	(aVerifiedModel select: [ :element | (element isKindOf: OPUMLAssociation) and: element ~= aVerifiedObject])
 			do: [ :association |
 				(self relSpecsExistsBetween: aVerifiedObject and: association )

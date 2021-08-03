@@ -25,7 +25,7 @@ RelSpecsAntipatternVerificationTest >> getInvalidModel [
 
 { #category : #constants }
 RelSpecsAntipatternVerificationTest >> getTestedClass [
-	^ RelSpecsAntipatternVerification.
+	^ RelSpecAntipatternVerification.
 ]
 
 { #category : #tests }

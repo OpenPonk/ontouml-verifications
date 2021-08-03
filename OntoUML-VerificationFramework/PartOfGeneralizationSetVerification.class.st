@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #constants }
+PartOfGeneralizationSetVerification class >> abbreviation [
+	^ 'PartOfGenSet'.
+]
+
+{ #category : #constants }
 PartOfGeneralizationSetVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]

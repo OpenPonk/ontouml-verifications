@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+DecIntAntipatternVerification class >> abbreviation [
+	^ 'DecInt'.
+]
+
+{ #category : #constants }
 DecIntAntipatternVerification class >> allowedSupertypes [
 	^ { OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory. }
 ]

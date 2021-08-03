@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+StereotypeVerification class >> abbreviation [
+	^ 'StereotypeVerification'.
+]
+
+{ #category : #'instance creation' }
 StereotypeVerification class >> canVerify: aVerifiedObject [
 	^ (super canVerify: aVerifiedObject) and: (self canVerifyStereotype: aVerifiedObject).
 ]

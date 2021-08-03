@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #checking }
+RelRigAntipatternVerification class >> abbreviation [
+	^ 'RelRig'.
+]
+
+{ #category : #checking }
 RelRigAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]

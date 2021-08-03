@@ -13,9 +13,10 @@ Class {
 VerificationController >> detectAntiPatternsIn: aVerifiedModel [
 	| verifiedObjects antiPatternVerifications results |
 	verifiedObjects := self getVerifiedObjects: aVerifiedModel.
-	antiPatternVerifications := self getAntiPatternVerifications.
+	antiPatternVerifications := self getAntiPatternVerifications select: [ :antipattern | VerificationFrameworkSettings getInstance getSettingFor: antipattern ].
 	results := VerificationResults new.
-	(verifiedObjects do: [ :verifiedObject | (self verifySingleObject: verifiedObject withVerifications: antiPatternVerifications withModel: verifiedObjects withResults: results) ]).
+	(verifiedObjects do: 
+		[ :verifiedObject | (self verifySingleObject: verifiedObject withVerifications: antiPatternVerifications withModel: verifiedObjects withResults: results) ]).
 	^ results.
 ]
 
@@ -36,7 +37,7 @@ VerificationController >> getVerifications [
 { #category : #verification }
 VerificationController >> getVerifiedObjects: aVerifiedModel [
 	| verifiedObjects generalizations |
-	verifiedObjects := aVerifiedModel packagedElements select:	[ :element | element isKindOf: OPUMLElement. ].
+	verifiedObjects := aVerifiedModel packagedElements select:	[ :element | (element isKindOf: OPUMLElement) and: (element isKindOf: OPUMLGeneralization) not].
 	generalizations := (verifiedObjects flatCollect: [ :object | object generalizations ]).
 	verifiedObjects addAll: generalizations.
 	verifiedObjects addAll: (generalizations flatCollect: [ :generalization | generalization generalizationSets ]).	
@@ -48,7 +49,7 @@ VerificationController >> getVerifiedObjects: aVerifiedModel [
 VerificationController >> verify: aVerifiedModel [
 	| verifiedObjects verifications results |
 	verifiedObjects := self getVerifiedObjects: aVerifiedModel.
-	verifications := self getVerifications.
+	verifications := self getVerifications select: [ :verification | VerificationFrameworkSettings getInstance getSettingFor: verification ].
 	results := VerificationResults new.
 	(verifiedObjects do: [ :verifiedObject | (self verifySingleObject: verifiedObject withVerifications: verifications withModel: verifiedObjects withResults: results) ]).
 	^ results.

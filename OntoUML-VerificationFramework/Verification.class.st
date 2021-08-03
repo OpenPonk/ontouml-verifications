@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+Verification class >> abbreviation [
+	^ 'Verification'.
+]
+
+{ #category : #'instance creation' }
 Verification class >> canVerify: aVerifiedObject [
 	^ aVerifiedObject class = self verifiedClass.
 ]

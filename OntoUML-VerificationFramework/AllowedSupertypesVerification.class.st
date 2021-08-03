@@ -13,6 +13,11 @@ Class {
 	#category : #'OntoUML-VerificationFramework-Verification-Classes'
 }
 
+{ #category : #constants }
+AllowedSupertypesVerification class >> abbreviation [
+	^ 'AllowedSupertypes'.
+]
+
 { #category : #updating }
 AllowedSupertypesVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| validSupertypesCode |

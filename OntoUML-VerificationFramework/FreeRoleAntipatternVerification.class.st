@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+FreeRoleAntipatternVerification class >> abbreviation [
+	^ 'FreeRole'.
+]
+
+{ #category : #constants }
 FreeRoleAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]

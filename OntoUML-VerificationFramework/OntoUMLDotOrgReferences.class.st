@@ -13,6 +13,16 @@ OntoUMLDotOrgReferences class >> getDefinitionRefereceFor: aOntoUMLObject [
 ]
 
 { #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForAllowedSubtypes [
+	^ '' .
+]
+
+{ #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForAllowedSupertypes [
+	^ '' .
+]
+
+{ #category : #'constants - antipattern' }
 OntoUMLDotOrgReferences class >> getDefinitionRefereceForBinOver [
 	^ 'https://ontouml.readthedocs.io/en/latest/anti-patterns/BinOver/index.html' .
 ]
@@ -25,6 +35,16 @@ OntoUMLDotOrgReferences class >> getDefinitionRefereceForCategory [
 { #category : #'constants - relationship' }
 OntoUMLDotOrgReferences class >> getDefinitionRefereceForCharacterization [
 	^ 'https://ontouml.readthedocs.io/en/latest/relationships/characterization/index.html' .
+]
+
+{ #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForCharacterized [
+	^ '' .
+]
+
+{ #category : #constants }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForClass: aVerificationClass [
+	^ self perform: ('getDefinitionRefereceFor' ,  aVerificationClass abbreviation) asSymbol.
 ]
 
 { #category : #'constants - class' }
@@ -83,6 +103,11 @@ OntoUMLDotOrgReferences class >> getDefinitionRefereceForHomoFunc [
 ]
 
 { #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForIdentityRequired [
+	^ '' .
+]
+
+{ #category : #'constants - antipattern' }
 OntoUMLDotOrgReferences class >> getDefinitionRefereceForImpAbs [
 	^ 'https://ontouml.readthedocs.io/en/latest/anti-patterns/ImpAbs/index.html' .
 ]
@@ -133,6 +158,11 @@ OntoUMLDotOrgReferences class >> getDefinitionRefereceForMultDep [
 ]
 
 { #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForPartOfGenSet [
+	^ '' .
+]
+
+{ #category : #'constants - antipattern' }
 OntoUMLDotOrgReferences class >> getDefinitionRefereceForPartOver [
 	^ 'https://ontouml.readthedocs.io/en/latest/anti-patterns/PartOver/index.html' .
 ]
@@ -163,6 +193,11 @@ OntoUMLDotOrgReferences class >> getDefinitionRefereceForRealtor [
 ]
 
 { #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForRelComp [
+	^ 'https://ontouml.readthedocs.io/en/latest/anti-patterns/RelComp/index.html' .
+]
+
+{ #category : #'constants - antipattern' }
 OntoUMLDotOrgReferences class >> getDefinitionRefereceForRelOver [
 	^ 'https://ontouml.readthedocs.io/en/latest/anti-patterns/RelOver/index.html' .
 ]
@@ -177,9 +212,24 @@ OntoUMLDotOrgReferences class >> getDefinitionRefereceForRelSpec [
 	^ 'https://ontouml.readthedocs.io/en/latest/anti-patterns/RelSpec/index.html' .
 ]
 
+{ #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForRelationSource [
+	^ '' .
+]
+
+{ #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForRelationTarget [
+	^ '' .
+]
+
 { #category : #'constants - class' }
 OntoUMLDotOrgReferences class >> getDefinitionRefereceForRelator [
 	^ 'https://ontouml.readthedocs.io/en/latest/classes/sortals/relator/index.html'
+]
+
+{ #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForRelatorMediationDependency [
+	^ '' .
 ]
 
 { #category : #'constants - antipattern' }
@@ -190,6 +240,11 @@ OntoUMLDotOrgReferences class >> getDefinitionRefereceForRepRel [
 { #category : #'constants - class' }
 OntoUMLDotOrgReferences class >> getDefinitionRefereceForRole [
 	^ 'https://ontouml.readthedocs.io/en/latest/classes/sortals/role/index.html' .
+]
+
+{ #category : #'constants - antipattern' }
+OntoUMLDotOrgReferences class >> getDefinitionRefereceForRoleMediationDependency [
+	^ '' .
 ]
 
 { #category : #'constants - class' }

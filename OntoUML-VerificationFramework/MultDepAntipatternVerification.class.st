@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+MultDepAntipatternVerification class >> abbreviation [
+	^ 'MultDep'.
+]
+
+{ #category : #constants }
 MultDepAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]

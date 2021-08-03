@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #constants }
+UndefFormalAntipatternVerification class >> abbreviation [
+	^ 'UndefFormal'.
+]
+
+{ #category : #constants }
 UndefFormalAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]
