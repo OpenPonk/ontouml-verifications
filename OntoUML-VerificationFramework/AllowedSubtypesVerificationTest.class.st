@@ -115,10 +115,12 @@ AllowedSubtypesVerificationTest >> testValidSubtypes [
 { #category : #tests }
 AllowedSubtypesVerificationTest >> testValidSubtypesFor [
 	| methodList |
-	methodList := (AllowedSubtypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validSubtypesFor.*' ].
+	methodList := (AllowedSubtypesVerification class localMethods 
+		collect: [ :method | method selector ]) 
+			select: [ :methodName | 	methodName matchesRegex: 'validSubtypesFor.*' ].
 	self assert: methodList isNotEmpty.
 	methodList do: [ :methodName | 
-		self assert: (AllowedSubtypesVerification class >>> (methodName asSymbol) isKindOf: Association). ].
+		self assert: (((AllowedSubtypesVerification class >> (methodName asSymbol)) valueWithReceiver: nil arguments: #()) isKindOf: Association) equals: true ].
 ]
 
 { #category : #tests }

@@ -1,3 +1,10 @@
+"
+I am verification for GSRig anti-pattern. 
+
+Overriden methods: verifiedClass, verifyObject:withModel:
+
+Documentation for GSRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForGSRig.
+"
 Class {
 	#name : #GSRigAntipatternVerification,
 	#superclass : #Verification,
@@ -7,8 +14,13 @@ Class {
 }
 
 { #category : #constants }
+GSRigAntipatternVerification class >> abbreviation [
+	^ 'GSRig'.
+]
+
+{ #category : #constants }
 GSRigAntipatternVerification class >> getAntiRigidTypes [
-	^ {  OntoUMLRole. OntoUMLRoleMixin. }.
+	^ { OntoUMLRole. OntoUMLRoleMixin. OntoUMLPhase. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
@@ -28,7 +40,7 @@ GSRigAntipatternVerification >> createWarningMessagesFor: aGenSet [
 			withVerification: self 
 			withText: 'Generalization set ', aGenSet name,
 				' contains rigid subtype that has both rigid and anti-rigid subtype.'
-			documentationReference: ''. ]
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForGSRig. ]
 ]
 
 { #category : #verification }

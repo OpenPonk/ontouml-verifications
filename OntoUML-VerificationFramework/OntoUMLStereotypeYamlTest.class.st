@@ -1,3 +1,6 @@
+"
+I represent tests for OntoUMLStereotypeYaml.
+"
 Class {
 	#name : #OntoUMLStereotypeYamlTest,
 	#superclass : #TestCase,

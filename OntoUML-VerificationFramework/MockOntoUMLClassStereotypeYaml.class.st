@@ -1,3 +1,6 @@
+"
+I represent mock class used for for tests instead of OntoUMLClassStereotypeYaml.
+"
 Class {
 	#name : #MockOntoUMLClassStereotypeYaml,
 	#superclass : #OntoUMLClassStereotypeYaml,

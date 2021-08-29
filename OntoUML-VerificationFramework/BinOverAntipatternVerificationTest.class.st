@@ -1,3 +1,6 @@
+"
+I represent tests for BinOverAntipatternVerification.
+"
 Class {
 	#name : #BinOverAntipatternVerificationTest,
 	#superclass : #AbstractVerificationTest,
@@ -20,11 +23,19 @@ BinOverAntipatternVerificationTest >> testCanVerify [
 ]
 
 { #category : #tests }
+BinOverAntipatternVerificationTest >> testCheckOverlapForAnd [
+	| kind subkind role |
+	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
+ 	subkind := self createClass: 'subkind' withStereotype: OntoUMLSubKind.
+	role := self createClass: 'role' withStereotype: OntoUMLRole.
+	self assert:  (self getTestedClass basicNew checkOverlapFor: { kind. } asSet and: { subkind. role. } asSet ) equals: false.
+	self assert:  (self getTestedClass basicNew checkOverlapFor: { kind.  subkind. } asSet and: { subkind. role. } asSet ) equals: true.
+]
+
+{ #category : #tests }
 BinOverAntipatternVerificationTest >> testInvalidModel [
 	| kind association model result |
-	kind := OPUMLClass new.
-	kind applyStereotype: OntoUMLKind new.
-	kind name: 'kind'.
+	kind := self createClass: 'kind' withStereotype:  OntoUMLKind.
 	association := self createAssociationFrom: kind to: kind.
 	model := { kind. association. }.
 	result := VerificationResults new.
@@ -41,12 +52,8 @@ BinOverAntipatternVerificationTest >> testNew [
 { #category : #tests }
 BinOverAntipatternVerificationTest >> testValidModel [
 	| kind secondKind association model result |
-	kind := OPUMLClass new.
-	kind applyStereotype: OntoUMLKind new.
-	kind name: 'kind'.
-	secondKind := OPUMLClass new.
-	secondKind applyStereotype: OntoUMLKind new.
-	secondKind name: 'secondKind'.
+	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
+	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.
 	association := self createAssociationFrom: kind to: secondKind.
 	model := { kind. secondKind. association. }.
 	result := VerificationResults new.

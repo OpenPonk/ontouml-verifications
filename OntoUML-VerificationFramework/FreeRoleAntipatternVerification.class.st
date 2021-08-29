@@ -1,3 +1,10 @@
+"
+I am verification for FreeRole anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for FreeRole anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForFreeRole.
+"
 Class {
 	#name : #FreeRoleAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -5,6 +12,11 @@ Class {
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
 }
+
+{ #category : #constants }
+FreeRoleAntipatternVerification class >> abbreviation [
+	^ 'FreeRole'.
+]
 
 { #category : #constants }
 FreeRoleAntipatternVerification class >> verifiedClass [
@@ -27,15 +39,23 @@ FreeRoleAntipatternVerification >> fulfillsMediationDependency: aMediation [
 
 { #category : #verification }
 FreeRoleAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
-	| mediations |
+	| mediations roleAncestors ancestorsAndSelf |
+	roleAncestors := (OntoUMLModelQuery getAncestorsFor: aVerifiedObject) select: [ :ancestor |
+		 (OntoUMLModelQuery isStereotypeOf: ancestor oclKindOf: 'Role')].
+	ancestorsAndSelf := roleAncestors.
+	ancestorsAndSelf add: aVerifiedObject.
+	
 	mediations := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel
 		withStereotype: OntoUMLMediation
 		filterBy: [ :association |
-			association memberEnds anySatisfy: [ :property | property type = aVerifiedObject ] ].
+			association memberEnds anySatisfy: [ :end | ancestorsAndSelf includes: end type ]. ].
 	mediations := mediations select: [ :mediation | self fulfillsMediationDependency: mediation ].
-	mediations size < 1 ifTrue: [ 
+	
+	(mediations anySatisfy: [ :mediation | mediation memberEnds anySatisfy: [ :end | end type = aVerifiedObject ] ]) ifTrue: [ ^{ }. ].
+	(mediations anySatisfy: [ :mediation | mediation memberEnds anySatisfy: [ :end | roleAncestors includes: end type ] ]) ifTrue: [ 
 		^ { VerificationMessageWarning createFor: aVerifiedObject 
 				withVerification: self 
-				withText: 'Role ' , aVerifiedObject name , ' should be directly connected with at least one mediation.'. } ].
+				withText: 'Role ' , aVerifiedObject name , ' should be directly connected with at least one mediation.'
+				documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForFreeRole. } ].
 	^ {}.
 ]

@@ -1,3 +1,8 @@
+"
+I represent UI for verification framework. 
+I define items in menu that are responsible for starting anti-pattern detection, applying verification and removing higlights.
+I am also responsible for displaying results and highliting elements in the model.
+"
 Class {
 	#name : #VerificationUI,
 	#superclass : #ComposablePresenter,
@@ -35,6 +40,9 @@ VerificationUI class >> toolbarMenuItemFor: aBuilder [
 	(aBuilder item: 'Verify model')
 		action: [ self updateVerifiedElements: 
 			(VerificationController new verify: aBuilder model diagramController model) using: aBuilder model diagramController. ].
+	(aBuilder item: 'Detect anti-patterns')
+		action: [ self updateVerifiedElements: 
+			(VerificationController new detectAntiPatternsIn: aBuilder model diagramController model) using: aBuilder model diagramController. ].
 	(aBuilder item: 'Remove highlights')
 		action: [ self removeHighlightsFromElementsIn: aBuilder model diagramController. ].
 ]
@@ -43,7 +51,7 @@ VerificationUI class >> toolbarMenuItemFor: aBuilder [
 VerificationUI class >> updateVerifiedElementStyle: aVerificationResults using: aController [
 	| color |
 	color := Color black.
-	(aVerificationResults hasWarnings: aController model) ifTrue: [ color := Color yellow. ].
+	(aVerificationResults hasWarnings: aController model) ifTrue: [ color := Color orange. ].
 	(aVerificationResults hasErrors: aController model) ifTrue: [ color := Color red. ].
 	aController diagramElement style strokeColor: color.
 	aController diagramElement update.

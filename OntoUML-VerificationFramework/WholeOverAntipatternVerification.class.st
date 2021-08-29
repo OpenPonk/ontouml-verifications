@@ -1,3 +1,10 @@
+"
+I am verification for WholeOver anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for WholeOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForWholeOver.
+"
 Class {
 	#name : #WholeOverAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -5,6 +12,11 @@ Class {
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait + TAncestorGartherer classTrait',
 	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
 }
+
+{ #category : #constants }
+WholeOverAntipatternVerification class >> abbreviation [
+	^ 'WholeOver'.
+]
 
 { #category : #constants }
 WholeOverAntipatternVerification class >> partWholeAssociations [
@@ -40,7 +52,18 @@ WholeOverAntipatternVerification >> checkForOverlap: aPartEnds inModel: aModel [
 ]
 
 { #category : #verification }
-WholeOverAntipatternVerification >> checkUpperCardinalitiesFor: aPartEnds [
+WholeOverAntipatternVerification >> checkOverlapForMixins: aMixinCollection from: aModel [
+	| children accumulator |
+	accumulator := Set new.
+	aMixinCollection do: [ :mixin | 
+		children := (OntoUMLModelQuery getDescendantsFor: mixin from: aModel) 
+			select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'Sortal' ].
+		children do: [ :child | (accumulator includes: child) ifTrue: [ ^ true. ] ifFalse: [ accumulator add: child. ]. ]. ].	
+	^ false.
+]
+
+{ #category : #verification }
+WholeOverAntipatternVerification >> checkUpperMultiplicityFor: aPartEnds [
 	^ (aPartEnds collect: [ :end | end upper = '*' ifTrue: [ Float infinity ] ifFalse: [ end upper ]]) sumNumbers >= 2.
 ]
 
@@ -54,9 +77,11 @@ WholeOverAntipatternVerification >> getPartEndsFor: aWhole from: aModel [
 
 { #category : #verification }
 WholeOverAntipatternVerification >> verifyObject: aVerifiedWhole withModel: aVerifiedModel [
-	| partEnds |
+	| partEnds mixins |
 	partEnds :=  self getPartEndsFor: aVerifiedWhole from: aVerifiedModel.
-	((self checkUpperCardinalitiesFor: partEnds) and: (self checkForOverlap: partEnds inModel: aVerifiedModel)) ifFalse: [ ^ {}. ].
+	mixins := partEnds select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'MixinClass'. ].
+	((self checkUpperMultiplicityFor: partEnds) and: 
+		((self checkForOverlap: partEnds inModel: aVerifiedModel) or: (self checkOverlapForMixins: mixins from: aVerifiedModel))) ifFalse: [ ^ {}. ].
 	"else"
 	^ { VerificationMessageWarning 
 			createFor: aVerifiedWhole 
@@ -64,5 +89,5 @@ WholeOverAntipatternVerification >> verifyObject: aVerifiedWhole withModel: aVer
 			withText: 'Whole ' ,
 				aVerifiedWhole name,
 				' has multiple parts with possible overlap.'
-			documentationReference: ''. }
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForWholeOver. }
 ]

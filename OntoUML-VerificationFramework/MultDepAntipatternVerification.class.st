@@ -1,3 +1,10 @@
+"
+I am verification for MultDep anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for MultDep anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForMultDep.
+"
 Class {
 	#name : #MultDepAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -5,6 +12,11 @@ Class {
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
 }
+
+{ #category : #constants }
+MultDepAntipatternVerification class >> abbreviation [
+	^ 'MultDep'.
+]
 
 { #category : #constants }
 MultDepAntipatternVerification class >> verifiedClass [
@@ -43,9 +55,8 @@ MultDepAntipatternVerification >> relatorHierarchyExistsFor: aAssociationSet wit
 
 { #category : #verification }
 MultDepAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
-	| stereotype associations |
-	stereotype := (OntoUMLModelQuery getStereotype: aVerifiedObject).
-	(stereotype oclIsKindOf: 'Sortal') ifFalse: [ ^ {}. ].
+	| associations |
+	(OntoUMLModelQuery isStereotypeOf: aVerifiedObject oclKindOf: 'Sortal') ifFalse: [ ^ {}. ].
 	associations := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel withStereotype: OntoUMLMediation filterBy: 
 		[ :object | (object memberEnds first type == aVerifiedObject) or: (object memberEnds second type == aVerifiedObject)].
 	(associations size < 2) ifTrue: [ ^ {}. ].
@@ -53,5 +64,5 @@ MultDepAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVeri
 	^ {VerificationMessageWarning createFor: aVerifiedObject 
 			withVerification: self
 			withText:  'Sortal ' , aVerifiedObject name , ' is directly connected to two or more mediations.'
-			documentationReference: ''}.
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForMultDep. }.
 ]

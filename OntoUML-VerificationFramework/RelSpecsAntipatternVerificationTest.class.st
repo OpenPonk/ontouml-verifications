@@ -1,3 +1,6 @@
+"
+I represent tests for RelSpecsAntipatternVerification.
+"
 Class {
 	#name : #RelSpecsAntipatternVerificationTest,
 	#superclass : #AbstractVerificationTest,
@@ -22,7 +25,7 @@ RelSpecsAntipatternVerificationTest >> getInvalidModel [
 
 { #category : #constants }
 RelSpecsAntipatternVerificationTest >> getTestedClass [
-	^ RelSpecsAntipatternVerification.
+	^ RelSpecAntipatternVerification.
 ]
 
 { #category : #tests }

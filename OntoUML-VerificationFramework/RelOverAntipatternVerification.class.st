@@ -1,3 +1,10 @@
+"
+I am verification for RelOver anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for RelOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRelOver.
+"
 Class {
 	#name : #RelOverAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -5,6 +12,11 @@ Class {
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait + TAncestorGartherer classTrait',
 	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
 }
+
+{ #category : #constants }
+RelOverAntipatternVerification class >> abbreviation [
+	^ 'RelOver'.
+]
 
 { #category : #constants }
 RelOverAntipatternVerification class >> verifiedClass [
@@ -34,7 +46,18 @@ RelOverAntipatternVerification >> checkForOverlap: aMediatedEnds [
 ]
 
 { #category : #verification }
-RelOverAntipatternVerification >> checkUpperCardinalitiesFor: aMediatedEnds [
+RelOverAntipatternVerification >> checkOverlapForMixins: aMixinCollection from: aModel [
+	| children accumulator |
+	accumulator := Set new.
+	aMixinCollection do: [ :mixin | 
+		children := (OntoUMLModelQuery getDescendantsFor: mixin from: aModel) 
+			select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'Sortal' ].
+		children do: [ :child | (accumulator includes: child) ifTrue: [ ^ true. ] ifFalse: [ accumulator add: child. ]. ]. ].	
+	^ false.
+]
+
+{ #category : #verification }
+RelOverAntipatternVerification >> checkUpperMultiplicityFor: aMediatedEnds [
 	^ (aMediatedEnds collect: [ :end | end upper = '*' ifTrue: [ Float infinity ] ifFalse: [ end upper ]]) sumNumbers > 2.
 	
 ]
@@ -52,9 +75,12 @@ RelOverAntipatternVerification >> getMediatedEndsFor: aRelator from: aModel [
 
 { #category : #verification }
 RelOverAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVerifiedModel [
-	| mediatedEnds |
-	mediatedEnds :=  self getMediatedEndsFor: aVerifiedRelator from: aVerifiedModel.
-	((self checkUpperCardinalitiesFor: mediatedEnds) and: (self checkForOverlap: mediatedEnds)) ifFalse: [ ^ {}. ].
+	| mediatedEnds mixins |
+	mediatedEnds := self getMediatedEndsFor: aVerifiedRelator from: aVerifiedModel.
+	mediatedEnds ifEmpty: [ ^{} ].
+	mixins := mediatedEnds select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'MixinClass'. ].
+	((self checkUpperMultiplicityFor: mediatedEnds) and: 
+		((self checkForOverlap: mediatedEnds) or:(self checkOverlapForMixins: mixins from: aVerifiedModel))) ifFalse: [ ^ {}. ].
 	"else"
 	^ { VerificationMessageWarning 
 			createFor: aVerifiedRelator 
@@ -62,5 +88,5 @@ RelOverAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVer
 			withText: 'Relator ' ,
 				aVerifiedRelator name,
 				' is mediated by multiple elements with possible overlap.'
-			documentationReference: ''. }
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRelOver. }
 ]

@@ -1,3 +1,6 @@
+"
+I represent single documentation for single relationship stereotype and provide access to its properties.
+"
 Class {
 	#name : #OntoUMLRelationshipStereotypeYaml,
 	#superclass : #OntoUMLStereotypeYaml,

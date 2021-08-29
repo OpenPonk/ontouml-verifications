@@ -1,3 +1,6 @@
+"
+I represent tests for UndefPhaseAntipatternVerification.
+"
 Class {
 	#name : #UndefPhaseAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,
@@ -17,6 +20,20 @@ UndefPhaseAntipatternVerificationTest >> getVerifiedClass [
 { #category : #constants }
 UndefPhaseAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLPhase. }.
+]
+
+{ #category : #constants }
+UndefPhaseAntipatternVerificationTest >> testAspectsExistForInModel [
+	| kind quality characterisation model |
+	kind := self createClass: 'kind' withStereotype: OntoUMLKind.	
+	model := { kind. }.
+	self assert: (self getTestedClass basicNew aspectsExistFor: kind inModel: model) equals: false.
+	
+	quality := self createClass: 'quality' withStereotype: OntoUMLQuality.	
+	characterisation := self createAssociationFrom: kind to: quality.
+	characterisation applyStereotype: OntoUMLCharacterization new.	
+	model := { kind. characterisation. quality. }.
+	self assert: (self getTestedClass basicNew aspectsExistFor: kind inModel: model) equals: true.
 ]
 
 { #category : #constants }
@@ -48,20 +65,6 @@ UndefPhaseAntipatternVerificationTest >> testInvalidModel [
 { #category : #constants }
 UndefPhaseAntipatternVerificationTest >> testNew [
 	self newTest.
-]
-
-{ #category : #constants }
-UndefPhaseAntipatternVerificationTest >> testQualitiesExistForInModel [
-	| kind quality characterisation model |
-	kind := self createClass: 'kind' withStereotype: OntoUMLKind.	
-	model := { kind. }.
-	self assert: (self getTestedClass basicNew qualitiesExistFor: kind inModel: model) equals: false.
-	
-	quality := self createClass: 'quality' withStereotype: OntoUMLQuality.	
-	characterisation := self createAssociationFrom: kind to: quality.
-	characterisation applyStereotype: OntoUMLCharacterization new.	
-	model := { kind. characterisation. quality. }.
-	self assert: (self getTestedClass basicNew qualitiesExistFor: kind inModel: model) equals: true.
 ]
 
 { #category : #constants }

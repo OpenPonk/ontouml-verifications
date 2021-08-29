@@ -13,6 +13,11 @@ Class {
 	#category : #'OntoUML-VerificationFramework-Verification-Classes'
 }
 
+{ #category : #constants }
+AllowedSubtypesVerification class >> abbreviation [
+	^ 'AllowedSubtypes'.
+]
+
 { #category : #updating }
 AllowedSubtypesVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| validSubtypesCode |
@@ -156,6 +161,6 @@ AllowedSubtypesVerification >> verifyObject: aVerifiedGeneralization withModel: 
 	(generalStereotype isNil or: specificStereotype isNil) ifTrue: [ ^ {} ].
 	((self class validSubtypes at: generalStereotype class) 
 		anySatisfy: [ :class | specificStereotype class = class ])
-			ifFalse:[ ^ {VerificationMessageError createFor: aVerifiedGeneralization withVerification: self withText: (specificStereotype class name , ' cannot be subtype of ' , generalStereotype class name ,'.') documentationReference: (OntoUMLDotOrgReferences getDefinitionRefereceFor: aVerifiedGeneralization specific) } ].
+			ifFalse:[ ^ {VerificationMessageError createFor: aVerifiedGeneralization withVerification: self withText: (specificStereotype class name , ' cannot be subtype of ' , generalStereotype class name ,'.') documentationReference: (OntoUMLDotOrgReferences getDefinitionReferenceFor: aVerifiedGeneralization specific) } ].
 	^ {}.
 ]

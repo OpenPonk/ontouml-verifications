@@ -13,6 +13,11 @@ Class {
 	#category : #'OntoUML-VerificationFramework-Verification-Classes'
 }
 
+{ #category : #constants }
+AllowedSupertypesVerification class >> abbreviation [
+	^ 'AllowedSupertypes'.
+]
+
 { #category : #updating }
 AllowedSupertypesVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| validSupertypesCode |
@@ -156,6 +161,6 @@ AllowedSupertypesVerification >> verifyObject: aVerifiedGeneralization withModel
 	(generalStereotype isNil or: specificStereotype isNil) ifTrue: [ ^ {} ].
 	((self class validSupertypes at: specificStereotype class) 
 		anySatisfy: [ :class | generalStereotype class = class ])
-			ifFalse:[ ^ {VerificationMessageError createFor: aVerifiedGeneralization withVerification: self withText: (generalStereotype class name , ' cannot be supertype of ' , specificStereotype class name ,'.') documentationReference: (OntoUMLDotOrgReferences getDefinitionRefereceFor: aVerifiedGeneralization general ) } ].
+			ifFalse:[ ^ {VerificationMessageError createFor: aVerifiedGeneralization withVerification: self withText: (generalStereotype class name , ' cannot be supertype of ' , specificStereotype class name ,'.') documentationReference: (OntoUMLDotOrgReferences getDefinitionReferenceFor: aVerifiedGeneralization general ) } ].
 	^ {}.
 ]

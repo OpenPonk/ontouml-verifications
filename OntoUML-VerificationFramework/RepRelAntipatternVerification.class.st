@@ -1,3 +1,10 @@
+"
+I am verification for RepRel anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for RepRel anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRepRel.
+"
 Class {
 	#name : #RepRelAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -5,6 +12,11 @@ Class {
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait + TAncestorGartherer classTrait',
 	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
 }
+
+{ #category : #constants }
+RepRelAntipatternVerification class >> abbreviation [
+	^ 'RepRel'.
+]
 
 { #category : #constants }
 RepRelAntipatternVerification class >> verifiedClass [
@@ -20,7 +32,8 @@ RepRelAntipatternVerification class >> verifiedStereotypes [
 RepRelAntipatternVerification >> createWarningMessageFor: aVerifiedObject [
  	^ {VerificationMessageWarning createFor: aVerifiedObject
 		withVerification: self
-		withText: (self class getStereotype: aVerifiedObject) class name , ' may exist in two identical instances.'}.
+		withText: (self class getStereotype: aVerifiedObject) class name , ' may exist in two identical instances.'
+		documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRepRel.}.
 	
 ]
 
@@ -53,7 +66,7 @@ RepRelAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerif
 	verifiedObjectAndAncestors add: aVerifiedObject.
 	mediations := self getMediationsFor: verifiedObjectAndAncestors fromModel: aVerifiedModel. 
 	mediations ifEmpty: [ ^ {} ].
-	mediations do: [ :mediation | (self getUpperBoundMultiplicityOf: mediation for: verifiedObjectAndAncestors ) > 1 ifTrue: [ ^ self createWarningMessageFor: aVerifiedObject ] ].
+	(mediations allSatisfy: [ :mediation | (self getUpperBoundMultiplicityOf: mediation for: verifiedObjectAndAncestors ) > 1]) ifTrue: [ ^ self createWarningMessageFor: aVerifiedObject ].
 	^ {}.
 	
 ]

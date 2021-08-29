@@ -13,6 +13,11 @@ Class {
 	#category : #'OntoUML-VerificationFramework-Verification-Classes'
 }
 
+{ #category : #constants }
+RelationTargetVerification class >> abbreviation [
+	^ 'RelationTarget'.
+]
+
 { #category : #updating }
 RelationTargetVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| validTargetsCode |

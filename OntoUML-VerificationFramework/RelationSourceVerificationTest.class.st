@@ -116,7 +116,7 @@ RelationSourceVerificationTest >> testValidSourcesFor [
 	methodList := (RelationSourceVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validSourcesFor.*' ].
 	self assert: methodList isNotEmpty.
 	methodList do: [ :methodName | 
-		self assert: (RelationSourceVerification class >>> (methodName asSymbol) isKindOf: Association). ].
+		self assert: (((RelationSourceVerification class >> (methodName asSymbol)) valueWithReceiver: nil arguments: #()) isKindOf: Association) equals: true ].
 ]
 
 { #category : #tests }

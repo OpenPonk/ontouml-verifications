@@ -1,3 +1,6 @@
+"
+I represent tests for DecIntAntipatternVerification.
+"
 Class {
 	#name : #DecIntAntipatternVerificationTest,
 	#superclass : #StereotypeVerificationTest,
@@ -26,12 +29,15 @@ DecIntAntipatternVerificationTest >> testCanVerify [
 
 { #category : #tests }
 DecIntAntipatternVerificationTest >> testInvalidModel [
-	| firstKind secondKind subKind firstGeneralization secondGeneralization model result |
+	| firstKind secondKind subKind firstGeneralization secondGeneralization generalizationSet model result |
 	firstKind := self createClass: 'firstKind'  withStereotype: OntoUMLKind.
 	secondKind := self createClass: 'secondKind'  withStereotype: OntoUMLKind.
 	subKind := self createClass: 'subKind'  withStereotype: OntoUMLSubKind.	
 	firstGeneralization := self createGeneralizationFor: firstKind withSpecific: subKind.
 	secondGeneralization := self createGeneralizationFor: secondKind withSpecific: subKind.
+	generalizationSet :=  OPUMLGeneralizationSet new.
+	generalizationSet generalizations: { firstGeneralization. secondGeneralization. }.
+	generalizationSet isCovering: false.
 		
 	model := { firstKind. secondKind. subKind. firstGeneralization. secondGeneralization. }.
 	result := VerificationResults new.

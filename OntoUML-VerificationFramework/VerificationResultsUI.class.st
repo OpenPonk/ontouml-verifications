@@ -1,3 +1,6 @@
+"
+I am class responsible for creating UI for VerificationRestults.
+"
 Class {
 	#name : #VerificationResultsUI,
 	#superclass : #Object,
@@ -53,11 +56,6 @@ VerificationResultsUI >> gtInspectorTableIn: composite [
 		column: 'Object' evaluated: #objectReference;
 		column: 'Reason' evaluated: #messageText;
 		column: 'Documentation' evaluated: #documentationReference.
-		"when: [ :table | table selection anySatisfy: [ :selected | (self highlighted includes: selected) not ] ]"
-		"selectionAct: [ :table | 
-			self highlightElement: table selection objectReference.
-			]
-			entitled: 'Highligh element'."
 ]
 
 { #category : #accessing }
@@ -79,9 +77,30 @@ VerificationResultsUI >> initialize [
 	highlighted := Dictionary new.
 ]
 
+{ #category : #'gt-inspector-extension' }
+VerificationResultsUI >> inspectorTableIn: composite [
+
+	<inspectorPresentationOrder: -15 title: 'Results'>
+	^ SpTablePresenter new
+		  items: self verificationResults results asArray;
+		  whenSelectedDo: [ :item | self notifySelectChanged: item ];
+		  addColumn: (SpStringTableColumn new
+				   title: 'Severity';
+				   evaluated: #severity;
+				   width: 55);
+		  addColumn:
+		  (SpStringTableColumn title: 'Object' evaluated: #objectReference);
+		  addColumn:
+		  (SpStringTableColumn title: 'Reason' evaluated: #messageText);
+		  addColumn: (SpLinkTableColumn
+				   title: 'Documentation'
+				   evaluated: #documentationReference
+				   url: #documentationReference)
+]
+
 { #category : #accessing }
 VerificationResultsUI >> notifySelectChanged: aSelection [
-	aSelection ifNotNil: [ 	self highlightElement: aSelection objectReference. ].
+	aSelection ifNotNil: [ self highlightElement: aSelection objectReference. ].
 ]
 
 { #category : #accessing }

@@ -1,3 +1,10 @@
+"
+I am verification for RelRig anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for RelRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRelRig.
+"
 Class {
 	#name : #RelRigAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -5,6 +12,11 @@ Class {
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
 }
+
+{ #category : #checking }
+RelRigAntipatternVerification class >> abbreviation [
+	^ 'RelRig'.
+]
 
 { #category : #checking }
 RelRigAntipatternVerification class >> verifiedClass [
@@ -23,12 +35,12 @@ RelRigAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVeri
 		[ :association | association memberEnds anySatisfy: [ :end | end type = aVerifiedRelator ] ].
 	
 	(associations anySatisfy: [ :association |	association memberEnds anySatisfy: [ :end |
-			 end type ~= aVerifiedRelator and: ((self class getStereotype: end type) oclIsKindOf: 'RigidSortal')]])
+			 (end type ~= aVerifiedRelator and: (OntoUMLModelQuery isStereotypeOf: end type oclKindOf: 'RigidSortal')) and: (end isReadOnly not)]])
 		ifFalse: [ ^ {} ].
 		
 	^ { VerificationMessageWarning
 		createFor: aVerifiedRelator
 		withVerification: self
 		withText: 'Relator ' , aVerifiedRelator name , ' is directly conected to rigid element'
-		documentationReference: ''. }
+		documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRelRig. }
 ]

@@ -1,3 +1,10 @@
+"
+I am verification for HomoFunc anti-pattern. 
+
+Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
+
+Documentation for HomoFunc anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForHomoFunc.
+"
 Class {
 	#name : #HomoFuncAntipatternVerification,
 	#superclass : #StereotypeVerification,
@@ -5,6 +12,11 @@ Class {
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
 }
+
+{ #category : #constants }
+HomoFuncAntipatternVerification class >> abbreviation [
+	^ 'HomoFunc'.
+]
 
 { #category : #constants }
 HomoFuncAntipatternVerification class >> verifiedClass [
@@ -19,7 +31,7 @@ HomoFuncAntipatternVerification class >> verifiedStereotypes [
 { #category : #testing }
 HomoFuncAntipatternVerification >> getSortalDescendantsFor: aElement from: aModel [
 	^ (OntoUMLModelQuery getDescendantsFor: aElement from: aModel)
-	 		select: [ :descendant | (OntoUMLModelQuery getStereotype: descendant) oclIsKindOf: 'Sortal'. ].
+	 		select: [ :descendant | OntoUMLModelQuery isStereotypeOf: descendant oclKindOf: 'Sortal'. ].
 ]
 
 { #category : #testing }
@@ -39,14 +51,14 @@ HomoFuncAntipatternVerification >> isFunctionalComplex: aElement in: aModel [
 	({ OntoUMLSubKind. OntoUMLRole. OntoUMLPhase. } includes: stereotype class)
 		ifTrue: [ ^ self hasKindAsAncestor: aElement ].
 	"if aElement stereotype is non-sortal and all its sortal children fullfil previous two conditions -> return true"
-	^ ((stereotype oclIsKindOf: 'Sortal') not) 
-		and: ((self getSortalDescendantsFor: aElement from: aModel) 
+	^ ((OntoUMLModelQuery is: stereotype oclKindOf: 'Sortal') not) 
+		and: ((OntoUMLModelQuery getDescendantsFor: aElement from: aModel) 
 			allSatisfy: [ :child | self isFunctionalComplex: child in: aModel. ] ).
 ]
 
 { #category : #verification }
 HomoFuncAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
-	| whole partEnd wholeAndChildren |
+	| whole partEnd wholeAncestorsAndDescendants |
 	whole :=	OntoUMLModelQuery getSourceFrom: aVerifiedAssociation.
 	partEnd := OntoUMLModelQuery getTargetEndFrom: aVerifiedAssociation.	
 	"lowerBound multiplicity for part must be >= 2"
@@ -54,10 +66,11 @@ HomoFuncAntipatternVerification >> verifyObject: aVerifiedAssociation withModel:
 	"whole has to be functional complex"
 	(self isFunctionalComplex: whole in: aVerifiedModel) ifFalse: [ ^ {}. ].
 	"whole cannot have any other direct or indirect componentOf connections"
-	wholeAndChildren := OntoUMLModelQuery getDescendantsFor: whole from: aVerifiedModel.
-	wholeAndChildren add: whole.
+	wholeAncestorsAndDescendants := self getSortalDescendantsFor: whole from: aVerifiedModel.
+	wholeAncestorsAndDescendants addAll: (OntoUMLModelQuery getAncestorsFor: whole).
+	wholeAncestorsAndDescendants add: whole.
 	((OntoUMLModelQuery getAssociationsFrom: aVerifiedModel  withStereotype: OntoUMLComponentOf)
-			anySatisfy: [ :componentOf | (wholeAndChildren includes: componentOf memberEnds first type)
+			anySatisfy: [ :componentOf | (wholeAncestorsAndDescendants includes: componentOf memberEnds first type)
 				 and: (componentOf memberEnds second type ~= partEnd type). ])
 		ifTrue: [ ^ {}. ].
 	"else"
@@ -67,5 +80,5 @@ HomoFuncAntipatternVerification >> verifyObject: aVerifiedAssociation withModel:
 			withText: 'Functional complex ' ,
 				whole name,
 				' is composed from single unique type of part.'
-			documentationReference: ''. }.
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForHomoFunc. }.
 ]

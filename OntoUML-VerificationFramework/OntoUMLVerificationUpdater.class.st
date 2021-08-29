@@ -1,3 +1,7 @@
+"
+I am responsible for updating verification framework using sepcifitactions from https://github.com/OntoUML/OntoUML
+First I read references from updatingIndex.yaml and then update all classes tagged as Verification-Classes and class OntoUMLDotOrgReferences.
+"
 Class {
 	#name : #OntoUMLVerificationUpdater,
 	#superclass : #Object,
@@ -19,6 +23,11 @@ OntoUMLVerificationUpdater class >> updateVerifications [
 	updater loadDocumentationReferences.
 	updater updateReferences.	
 	updater updateVerifications.
+]
+
+{ #category : #acccessing }
+OntoUMLVerificationUpdater >> antipatternDocumentationReferences [
+	^ (documentationReferences at: 'anti-patterns') associations .
 ]
 
 { #category : #acccessing }
