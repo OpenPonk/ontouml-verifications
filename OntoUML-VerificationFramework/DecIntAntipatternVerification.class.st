@@ -3,7 +3,7 @@ I am verification for DecInt anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for DecInt anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForDecInt.
+Documentation for DecInt anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForDecInt.
 "
 Class {
 	#name : #DecIntAntipatternVerification,
@@ -55,5 +55,5 @@ DecIntAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerif
 	^ { VerificationMessageWarning createFor: aVerifiedObject 
 			withVerification: self 
 			withText: 'Element ' , aVerifiedObject name , ' has more than one non-abstract parent.' 
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForDecInt. }.
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForDecInt. }.
 ]

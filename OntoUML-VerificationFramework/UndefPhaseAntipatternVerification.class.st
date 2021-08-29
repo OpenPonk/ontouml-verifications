@@ -3,7 +3,7 @@ I am verification for UndefPhase anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for UndefPhase anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForUndefPhase.
+Documentation for UndefPhase anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForUndefPhase.
 "
 Class {
 	#name : #UndefPhaseAntipatternVerification,
@@ -58,6 +58,6 @@ UndefPhaseAntipatternVerification >> verifyObject: aVerifiedPhase withModel: aVe
 			withVerification: self 
 			withText: 'Parents of ',  aVerifiedPhase name,
 				' phase don''t have any attributes or qualities.'
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForUndefPhase. }
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForUndefPhase. }
 
 ]

@@ -3,7 +3,7 @@ I am verification for RepRel anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for RepRel anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForRepRel.
+Documentation for RepRel anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRepRel.
 "
 Class {
 	#name : #RepRelAntipatternVerification,
@@ -33,7 +33,7 @@ RepRelAntipatternVerification >> createWarningMessageFor: aVerifiedObject [
  	^ {VerificationMessageWarning createFor: aVerifiedObject
 		withVerification: self
 		withText: (self class getStereotype: aVerifiedObject) class name , ' may exist in two identical instances.'
-		documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForRepRel.}.
+		documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRepRel.}.
 	
 ]
 

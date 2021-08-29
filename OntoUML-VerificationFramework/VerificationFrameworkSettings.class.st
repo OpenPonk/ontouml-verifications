@@ -26,7 +26,7 @@ VerificationFrameworkSettings class >> getSettingsOnMessageCodeFor: aVerificatio
 		parent: #', aGroupSymbol ,';
 		target: self settingsInstance;
 		label: ''', aVerification name , ''';
-		description: ''Allow or deny detection of this ', aClassType ,'. For more information see documentation on: ', (OntoUMLDotOrgReferences getDefinitionRefereceForClass: aVerification) , '''.'.
+		description: ''Allow or deny detection of this ', aClassType ,'. For more information see documentation on: ', (OntoUMLDotOrgReferences getDefinitionReferenceForClass: aVerification) , '''.'.
 ]
 
 { #category : #'updating-access' }

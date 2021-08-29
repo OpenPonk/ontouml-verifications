@@ -3,7 +3,7 @@ I am verification for MixIden anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for MixIden anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForMixIden.
+Documentation for MixIden anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForMixIden.
 "
 Class {
 	#name : #MixIdenAntipatternVerification,
@@ -82,5 +82,5 @@ MixIdenAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVeri
 			withVerification: self 
 			withText: aVerifiedObject name,
 				' has only sortal subtypes that follow the same identity principle.'
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForMixIden. }
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForMixIden. }
 ]

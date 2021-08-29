@@ -44,7 +44,7 @@ VerificationMessage class >> new [
 
 { #category : #accessing }
 VerificationMessage >> documentationReference [
-	documentationReference ifNil: [ documentationReference := OntoUMLDotOrgReferences getDefinitionRefereceFor: objectReference ].
+	documentationReference ifNil: [ documentationReference := OntoUMLDotOrgReferences getDefinitionReferenceFor: objectReference ].
 	^ documentationReference.
 ]
 

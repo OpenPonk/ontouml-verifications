@@ -3,7 +3,7 @@ I am verification for HomoFunc anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for HomoFunc anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForHomoFunc.
+Documentation for HomoFunc anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForHomoFunc.
 "
 Class {
 	#name : #HomoFuncAntipatternVerification,
@@ -80,5 +80,5 @@ HomoFuncAntipatternVerification >> verifyObject: aVerifiedAssociation withModel:
 			withText: 'Functional complex ' ,
 				whole name,
 				' is composed from single unique type of part.'
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForHomoFunc. }.
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForHomoFunc. }.
 ]

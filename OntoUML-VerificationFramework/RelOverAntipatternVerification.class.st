@@ -3,7 +3,7 @@ I am verification for RelOver anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for RelOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForRelOver.
+Documentation for RelOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRelOver.
 "
 Class {
 	#name : #RelOverAntipatternVerification,
@@ -88,5 +88,5 @@ RelOverAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVer
 			withText: 'Relator ' ,
 				aVerifiedRelator name,
 				' is mediated by multiple elements with possible overlap.'
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForRelOver. }
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRelOver. }
 ]

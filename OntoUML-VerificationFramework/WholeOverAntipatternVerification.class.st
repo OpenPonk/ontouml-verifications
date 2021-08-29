@@ -3,7 +3,7 @@ I am verification for WholeOver anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for WholeOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForWholeOver.
+Documentation for WholeOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForWholeOver.
 "
 Class {
 	#name : #WholeOverAntipatternVerification,
@@ -89,5 +89,5 @@ WholeOverAntipatternVerification >> verifyObject: aVerifiedWhole withModel: aVer
 			withText: 'Whole ' ,
 				aVerifiedWhole name,
 				' has multiple parts with possible overlap.'
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForWholeOver. }
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForWholeOver. }
 ]

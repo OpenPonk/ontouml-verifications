@@ -3,7 +3,7 @@ I am verification for GSRig anti-pattern.
 
 Overriden methods: verifiedClass, verifyObject:withModel:
 
-Documentation for GSRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForGSRig.
+Documentation for GSRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForGSRig.
 "
 Class {
 	#name : #GSRigAntipatternVerification,
@@ -40,7 +40,7 @@ GSRigAntipatternVerification >> createWarningMessagesFor: aGenSet [
 			withVerification: self 
 			withText: 'Generalization set ', aGenSet name,
 				' contains rigid subtype that has both rigid and anti-rigid subtype.'
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForGSRig. ]
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForGSRig. ]
 ]
 
 { #category : #verification }

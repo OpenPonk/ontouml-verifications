@@ -3,7 +3,7 @@ I am verification for PartOver anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for PartOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForPartOver.
+Documentation for PartOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForPartOver.
 "
 Class {
 	#name : #PartOverAntipatternVerification,
@@ -90,5 +90,5 @@ PartOverAntipatternVerification >> verifyObject: aVerifiedPart withModel: aVerif
 			withVerification: self 
 			withText: aVerifiedPart name,
 				' is part of multiple wholes that have possible overlap.'
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForPartOver. }
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForPartOver. }
 ]

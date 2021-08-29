@@ -3,7 +3,7 @@ I am verification for MultDep anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for MultDep anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForMultDep.
+Documentation for MultDep anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForMultDep.
 "
 Class {
 	#name : #MultDepAntipatternVerification,
@@ -64,5 +64,5 @@ MultDepAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVeri
 	^ {VerificationMessageWarning createFor: aVerifiedObject 
 			withVerification: self
 			withText:  'Sortal ' , aVerifiedObject name , ' is directly connected to two or more mediations.'
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForMultDep. }.
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForMultDep. }.
 ]

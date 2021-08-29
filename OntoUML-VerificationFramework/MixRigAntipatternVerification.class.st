@@ -3,7 +3,7 @@ I am verification for MixRig anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for MixRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForMixRig.
+Documentation for MixRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForMixRig.
 "
 Class {
 	#name : #MixRigAntipatternVerification,
@@ -82,6 +82,6 @@ MixRigAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerif
 		[ ^ { VerificationMessageWarning createFor: aVerifiedObject 
 				withVerification: self 
 				withText: 'All subtypes of Mixin ' , aVerifiedObject name , ' have same rigidity.'
-				documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForMixRig. }. ].
+				documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForMixRig. }. ].
 	"else" ^{}.
 ]

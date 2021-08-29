@@ -7,30 +7,30 @@ Class {
 { #category : #tests }
 OntoUMLDotOrgReferencesTest >> getExpectedUpdatedMessageCode [
 	^ '"I return documentation reference for: Mock"
-getDefinitionRefereceForMock
+getDefinitionReferenceForMock
 	^ ''https://ontouml.readthedocs.io/en/latest/mock/index.html'' .'.
 ]
 
 { #category : #tests }
-OntoUMLDotOrgReferencesTest >> testGetDefinitionRefereceFor [
+OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceFor [
 	| kind class |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
 	class := OPUMLClass new.
-	self assert: ((OntoUMLDotOrgReferences getDefinitionRefereceFor: kind) isKindOf: String) equals: true.
-	self assert: (OntoUMLDotOrgReferences getDefinitionRefereceFor: class) equals: ''. 
+	self assert: ((OntoUMLDotOrgReferences getDefinitionReferenceFor: kind) isKindOf: String) equals: true.
+	self assert: (OntoUMLDotOrgReferences getDefinitionReferenceFor: class) equals: ''. 
 ]
 
 { #category : #tests }
-OntoUMLDotOrgReferencesTest >> testGetDefinitionRefereceForStereotype [
+OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceForStereotype [
 
 	| methodList |
 	methodList := (OntoUMLDotOrgReferences class localMethods collect: [ 
 		               :method | method selector ]) select: [ :methodName | 
-		              methodName matchesRegex: 'getDefinitionRefereceFor.+' ].
+		              methodName matchesRegex: 'getDefinitionReferenceFor.+' ].
 	methodList := methodList reject: [ :methodName | 
 		              methodName matchesRegex:
-			              'getDefinitionRefereceFor.*\:' ].
+			              'getDefinitionReferenceFor.*\:' ].
 	self assert: methodList isNotEmpty.
 	methodList do: [ :methodName | 
 		| url |

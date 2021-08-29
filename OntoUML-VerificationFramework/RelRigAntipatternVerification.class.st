@@ -3,7 +3,7 @@ I am verification for RelRig anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for RelRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForRelRig.
+Documentation for RelRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRelRig.
 "
 Class {
 	#name : #RelRigAntipatternVerification,
@@ -42,5 +42,5 @@ RelRigAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVeri
 		createFor: aVerifiedRelator
 		withVerification: self
 		withText: 'Relator ' , aVerifiedRelator name , ' is directly conected to rigid element'
-		documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForRelRig. }
+		documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRelRig. }
 ]

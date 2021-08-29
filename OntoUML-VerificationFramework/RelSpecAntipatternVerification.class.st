@@ -3,7 +3,7 @@ I am verification for RelSpecs anti-pattern.
 
 Overriden methods: verifiedClass, verifyObject:withModel:
 
-Documentation for RelSpecs anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForRelSpecs.
+Documentation for RelSpecs anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRelSpecs.
 "
 Class {
 	#name : #RelSpecAntipatternVerification,
@@ -40,7 +40,7 @@ RelSpecAntipatternVerification >> createWarningMessageFor: aVerifiedObject and: 
 				(OntoUMLModelQuery getAssociationName: aVerifiedObject) ,
 				' is in RelSpecs anti-pattern with  ' ,
 				(OntoUMLModelQuery getAssociationName: aAssociation)
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForRelSpec.
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRelSpec.
 ]
 
 { #category : #verification }

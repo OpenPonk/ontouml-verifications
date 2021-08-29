@@ -3,7 +3,7 @@ I am verification for ImpAbs anti-pattern.
 
 Overriden methods: verifiedClass, verifyObject:withModel:
 
-Documentation for ImpAbs anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForImpAbs.
+Documentation for ImpAbs anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForImpAbs.
 "
 Class {
 	#name : #ImpAbsAntipatternVerification,
@@ -47,5 +47,5 @@ ImpAbsAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: a
 		withVerification: self
 		withText: 'Association ' , (OntoUMLModelQuery getAssociationName: aVerifiedAssociation) , 
 		' is connected to element that has multiple subtypes and upper bound for its multiplicity is >= 2.'
-		documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForImpAbs. }.
+		documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForImpAbs. }.
 ]

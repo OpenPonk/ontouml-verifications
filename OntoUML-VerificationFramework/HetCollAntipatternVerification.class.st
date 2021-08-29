@@ -3,7 +3,7 @@ I am verification for HetColl anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for HetColl anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForHetColl.
+Documentation for HetColl anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForHetColl.
 "
 Class {
 	#name : #HetCollAntipatternVerification,
@@ -60,6 +60,6 @@ HetCollAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVeri
 		^ {VerificationMessageWarning createFor: aVerifiedObject 
 			withVerification: self 
 			withText: 'Collective ' , aVerifiedObject name , ' contains multiple different parts.'
-			documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForHetColl. } ].
+			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForHetColl. } ].
 	^{}.
 ]

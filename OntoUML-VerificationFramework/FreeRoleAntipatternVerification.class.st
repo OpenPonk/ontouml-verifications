@@ -3,7 +3,7 @@ I am verification for FreeRole anti-pattern.
 
 Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 
-Documentation for FreeRole anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForFreeRole.
+Documentation for FreeRole anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForFreeRole.
 "
 Class {
 	#name : #FreeRoleAntipatternVerification,
@@ -56,6 +56,6 @@ FreeRoleAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVer
 		^ { VerificationMessageWarning createFor: aVerifiedObject 
 				withVerification: self 
 				withText: 'Role ' , aVerifiedObject name , ' should be directly connected with at least one mediation.'
-				documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForFreeRole. } ].
+				documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForFreeRole. } ].
 	^ {}.
 ]

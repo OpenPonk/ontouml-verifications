@@ -3,7 +3,7 @@ I am verification for BinOver anti-pattern.
 
 Overriden methods: verifiedClass, verifyObject:withModel:
 
-Documentation for BinOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionRefereceForBinOver.
+Documentation for BinOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForBinOver.
 "
 Class {
 	#name : #BinOverAntipatternVerification,
@@ -154,6 +154,6 @@ BinOverAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: 
 		withText: 'Both ends of the ' , 
 			(OntoUMLModelQuery getAssociationName:  aVerifiedAssociation) ,
 			 ' association are connected to the same element: ' , source name
-		documentationReference: OntoUMLDotOrgReferences getDefinitionRefereceForBinOver. } ].
+		documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForBinOver. } ].
 	^ {}.
 ]
