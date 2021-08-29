@@ -23,14 +23,26 @@ OntoUMLDotOrgReferencesTest >> testGetDefinitionRefereceFor [
 
 { #category : #tests }
 OntoUMLDotOrgReferencesTest >> testGetDefinitionRefereceForStereotype [
+
 	| methodList |
-	methodList := (OntoUMLDotOrgReferences  class localMethods 
-		collect: [ :method | method selector ]) 
-			select: [ :methodName | 	methodName matchesRegex: 'getDefinitionRefereceFor.+' ].
-	methodList := methodList reject: [ :methodName | 	methodName = 'getDefinitionRefereceFor:' ].
+	methodList := (OntoUMLDotOrgReferences class localMethods collect: [ 
+		               :method | method selector ]) select: [ :methodName | 
+		              methodName matchesRegex: 'getDefinitionRefereceFor.+' ].
+	methodList := methodList reject: [ :methodName | 
+		              methodName matchesRegex:
+			              'getDefinitionRefereceFor.*\:' ].
 	self assert: methodList isNotEmpty.
 	methodList do: [ :methodName | 
-		self assert: (((OntoUMLDotOrgReferences class >> (methodName asSymbol)) valueWithReceiver: nil arguments: #())  findString: 'http://') equals: 0. ].
+		| url |
+		url := (Message selector: methodName) sendTo:
+			       OntoUMLDotOrgReferences.
+		self
+			assert: (url isEmpty or: [ 
+					 url matchesRegex:
+						 'https?\:\/\/(www\.)?[-a-zA-Z0-9@%._:+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@%_:+.~#?&//=]*)' ])
+			description: 'Method ' , methodName asString
+				, ' did not return an url, but returned this instead: '
+				, url asString ]
 ]
 
 { #category : #tests }
