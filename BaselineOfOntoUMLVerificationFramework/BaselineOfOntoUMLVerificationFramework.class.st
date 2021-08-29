@@ -6,24 +6,24 @@ Class {
 
 { #category : #baselines }
 BaselineOfOntoUMLVerificationFramework >> baseline: spec [
+
 	<baseline>
-	spec
-		for: #common
-		do: [ spec
-				baseline: 'OntoUMLModelQuery-Plugin'
-				with: [ spec
-						className: 'BaselineOfOntoUMLModelQuery';
-						repository: 'github://openponk/ontouml-modelquery:v2.1.x';
-						loads: 'plugin' ].
+	spec for: #common do: [ 
+		spec baseline: 'OntoUMLModelQuery-Plugin' with: [ 
 			spec
-				project: 'OntoUMLModelQuery'
-				copyFrom: 'OntoUMLModelQuery-Plugin'
-				with: [ spec loads: 'default' ].
-			spec package: 'OntoUML-VerificationFramework'.
-			spec
-				group: 'plugin'
-				with: #('OntoUMLModelQuery-Plugin' 'OntoUML-VerificationFramework').
-			spec
-				group: 'default'
-				with: #(OntoUMLModelQuery 'OntoUML-VerificationFramework') ]
+				className: 'BaselineOfOntoUMLModelQuery';
+				repository: 'github://openponk/ontouml-modelquery:v3.0.x';
+				loads: 'plugin' ].
+		spec
+			project: 'OntoUMLModelQuery'
+			copyFrom: 'OntoUMLModelQuery-Plugin'
+			with: [ spec loads: 'default' ].
+		spec package: 'OntoUML-VerificationFramework'.
+		spec
+			group: 'plugin'
+			with:
+			#( 'OntoUMLModelQuery-Plugin' 'OntoUML-VerificationFramework' ).
+		spec
+			group: 'default'
+			with: #( OntoUMLModelQuery 'OntoUML-VerificationFramework' ) ]
 ]
