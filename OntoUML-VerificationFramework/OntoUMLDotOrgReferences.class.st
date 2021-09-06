@@ -257,6 +257,16 @@ OntoUMLDotOrgReferences class >> getDefinitionReferenceForRolemixin [
 	^ 'https://ontouml.readthedocs.io/en/latest/classes/nonsortals/rolemixin/index.html' .
 ]
 
+{ #category : #updating }
+OntoUMLDotOrgReferences class >> getDefinitionReferenceForStereotypeCode: aReferenceAssociation [
+	| methodCode |
+ 	self checkStringForCodeInjection: aReferenceAssociation key.
+	methodCode := '"I return documentation reference for: ' , aReferenceAssociation key , '"
+getDefinitionReferenceFor' , aReferenceAssociation key , '
+	^ ''' , aReferenceAssociation value , ''' .'.
+	^ methodCode.
+]
+
 { #category : #'constants - relationship' }
 OntoUMLDotOrgReferences class >> getDefinitionReferenceForStructuration [
 	^ 'https://ontouml.readthedocs.io/en/latest/relationships/structuration/index.html'
@@ -295,16 +305,6 @@ OntoUMLDotOrgReferences class >> getDefinitionReferenceForUndefPhase [
 { #category : #'constants - antipattern' }
 OntoUMLDotOrgReferences class >> getDefinitionReferenceForWholeOver [
 	^ 'https://ontouml.readthedocs.io/en/latest/anti-patterns/WholeOver/index.html' .
-]
-
-{ #category : #updating }
-OntoUMLDotOrgReferences class >> getDefinitionReferenceForStereotypeCode: aReferenceAssociation [
-	| methodCode |
- 	self checkStringForCodeInjection: aReferenceAssociation key.
-	methodCode := '"I return documentation reference for: ' , aReferenceAssociation key , '"
-getDefinitionReferenceFor' , aReferenceAssociation key , '
-	^ ''' , aReferenceAssociation value , ''' .'.
-	^ methodCode.
 ]
 
 { #category : #updating }
