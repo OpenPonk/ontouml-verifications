@@ -31,11 +31,11 @@ ImpAbsAntipatternVerificationTest >> testCheckNumberOfChildrenForFrom [
 	directChildB := self createClass: 'directChildB' withStereotype: OntoUMLSubKind.
 	indirectChild := self createClass: 'targetB' withStereotype: OntoUMLSubKind.
 	directGenA := self createGeneralizationFor: source withSpecific: directChildA.
-	directGenB := self createGeneralizationFor: source withSpecific: directChildB.
 	indirectGen := self createGeneralizationFor: directChildA withSpecific: indirectChild.	
 	association := self createAssociationFrom: source to: taget.
 	model := { source. taget. directChildA. directChildB. indirectChild. association. directGenA. indirectGen. }.
 	self assert: (self getTestedClass basicNew checkNumberOfChildrenFor: association memberEnds first from: model) equals: false.
+	directGenB := self createGeneralizationFor: source withSpecific: directChildB.
 	model := { source. taget. directChildA. directChildB. indirectChild. association. directGenA. directGenB. indirectGen. }. 
 	self assert: (self getTestedClass basicNew checkNumberOfChildrenFor: association memberEnds first from: model) equals: true.
 ]
