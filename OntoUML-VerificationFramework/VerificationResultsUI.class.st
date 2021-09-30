@@ -45,19 +45,6 @@ VerificationResultsUI >> getElementColor: aElement [
 		do: [ :aController | ^ aController diagramElement style strokeColor. ].
 ]
 
-{ #category : #'gt-inspector-extension' }
-VerificationResultsUI >> gtInspectorTableIn: composite [ 
-	<gtInspectorPresentationOrder: -15>
-	(composite custom: GLMTableSelectablePresentation new)
-		addOnSelectChangedHandler: self;
-		title: 'Results';
-		display: [ self verificationResults results ];
-		column: 'Severity' evaluated: #severity;
-		column: 'Object' evaluated: #objectReference;
-		column: 'Reason' evaluated: #messageText;
-		column: 'Documentation' evaluated: #documentationReference.
-]
-
 { #category : #accessing }
 VerificationResultsUI >> highlightElement: aElement [
 	(highlighted includes: aElement) ifTrue: [ ^ self ].
