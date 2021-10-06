@@ -145,7 +145,7 @@ AllowedSupertypesVerification class >> validSupertypesForRoleMixin [
 
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForSubKind [
-	^ OntoUMLSubKind -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLCategory. OntoUMLMixin. }.
+	^ OntoUMLSubKind -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLCategory. OntoUMLMixin. OntoUMLMode. OntoUMLQuality. }.
 ]
 
 { #category : #constants }
