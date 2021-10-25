@@ -38,7 +38,7 @@ VerificationController >> getVerifications [
 VerificationController >> getVerifiedObjects: aVerifiedModel [
 	| verifiedObjects generalizations |
 	verifiedObjects := aVerifiedModel packagedElements select:	[ :element | (element isKindOf: OPUMLElement) and: (element isKindOf: OPUMLGeneralization) not].
-	generalizations := (verifiedObjects flatCollect: [ :object | object generalizations ]).
+	generalizations := (verifiedObjects flatCollect: [ :object | object generalizations ]) asSet.
 	verifiedObjects addAll: generalizations.
 	verifiedObjects addAll: (generalizations flatCollect: [ :generalization | generalization generalizationSets ]).	
 	^ verifiedObjects.
