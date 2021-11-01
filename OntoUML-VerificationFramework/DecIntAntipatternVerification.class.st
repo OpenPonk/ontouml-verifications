@@ -20,7 +20,7 @@ DecIntAntipatternVerification class >> abbreviation [
 
 { #category : #constants }
 DecIntAntipatternVerification class >> allowedSupertypes [
-	^ { OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory. }
+	^ { OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory. OntoUMLPhaseMixin. }
 ]
 
 { #category : #constants }
