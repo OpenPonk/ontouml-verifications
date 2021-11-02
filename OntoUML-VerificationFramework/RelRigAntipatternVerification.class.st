@@ -31,7 +31,7 @@ RelRigAntipatternVerification class >> verifiedStereotypes [
 { #category : #verification }
 RelRigAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVerifiedModel [
 	| associations |
-	associations := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel filterBy: 
+	associations := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel withStereotype: OntoUMLMediation filterBy: 
 		[ :association | association memberEnds anySatisfy: [ :end | end type = aVerifiedRelator ] ].
 	
 	(associations anySatisfy: [ :association |	association memberEnds anySatisfy: [ :end |
