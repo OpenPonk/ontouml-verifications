@@ -85,6 +85,7 @@ AllowedSubtypesVerification class >> validSubtypes [
 	result add: self validSubtypesForCategory.
 	result add: self validSubtypesForMixin.
 	result add: self validSubtypesForRoleMixin.
+	result add: self validSubtypesForPhaseMixin.
 	^ result.
 ]
 
@@ -119,6 +120,11 @@ AllowedSubtypesVerification class >> validSubtypesForPhase [
 ]
 
 { #category : #constants }
+AllowedSubtypesVerification class >> validSubtypesForPhaseMixin [
+	^ OntoUMLPhaseMixin -> { OntoUMLPhase. OntoUMLPhaseMixin. }.
+]
+
+{ #category : #constants }
 AllowedSubtypesVerification class >> validSubtypesForQuality [
 	^ OntoUMLQuality -> { OntoUMLSubKind. OntoUMLRole. OntoUMLPhase. }.
 ]
@@ -135,7 +141,7 @@ AllowedSubtypesVerification class >> validSubtypesForRelator [
 
 { #category : #constants }
 AllowedSubtypesVerification class >> validSubtypesForRole [
-	^ OntoUMLRole -> { OntoUMLRole. }.
+	^ OntoUMLRole -> { OntoUMLRole. OntoUMLPhase. }.
 ]
 
 { #category : #constants }

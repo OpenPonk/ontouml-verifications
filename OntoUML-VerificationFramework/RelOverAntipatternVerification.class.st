@@ -58,7 +58,7 @@ RelOverAntipatternVerification >> checkOverlapForMixins: aMixinCollection from: 
 
 { #category : #verification }
 RelOverAntipatternVerification >> checkUpperMultiplicityFor: aMediatedEnds [
-	^ (aMediatedEnds collect: [ :end | end upper = '*' ifTrue: [ Float infinity ] ifFalse: [ end upper ]]) sumNumbers > 2.
+	^ (aMediatedEnds collect: [ :end | end upper = '*' ifTrue: [ Float infinity. ] ifFalse: [ end upper. ]. ]) sumNumbers > 2.
 	
 ]
 
@@ -80,7 +80,7 @@ RelOverAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVer
 	mediatedEnds ifEmpty: [ ^{} ].
 	mixins := mediatedEnds select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'MixinClass'. ].
 	((self checkUpperMultiplicityFor: mediatedEnds) and: 
-		((self checkForOverlap: mediatedEnds) or:(self checkOverlapForMixins: mixins from: aVerifiedModel))) ifFalse: [ ^ {}. ].
+		((self checkForOverlap: mediatedEnds) "or: [self checkOverlapForMixins: mixins from: aVerifiedModel]")) ifFalse: [ ^ {}. ].
 	"else"
 	^ { VerificationMessageWarning 
 			createFor: aVerifiedRelator 

@@ -94,7 +94,7 @@ RelationTargetVerification class >> validTargetsForCharacterization [
 
 { #category : #constants }
 RelationTargetVerification class >> validTargetsForComponentOf [
-	^ OntoUMLComponentOf -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLComponentOf -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
@@ -109,7 +109,7 @@ RelationTargetVerification class >> validTargetsForDerivation [
 
 { #category : #constants }
 RelationTargetVerification class >> validTargetsForDomainFormal [
-	^ OntoUMLDomainFormal -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLDomainFormal -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
@@ -119,17 +119,17 @@ RelationTargetVerification class >> validTargetsForFormal [
 
 { #category : #constants }
 RelationTargetVerification class >> validTargetsForMaterial [
-	^ OntoUMLMaterial -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLMaterial -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
 RelationTargetVerification class >> validTargetsForMediation [
-	^ OntoUMLMediation -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLMediation -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
 RelationTargetVerification class >> validTargetsForMemberOf [
-	^ OntoUMLMemberOf -> { OntoUMLPhase. OntoUMLRelator. OntoUMLRole. OntoUMLSubKind. OntoUMLCategory. OntoUMLRoleMixin. OntoUMLMode. OntoUMLQuality. OntoUMLQuantity. OntoUMLMixin. OntoUMLCollective. OntoUMLKind. }.
+	^ OntoUMLMemberOf -> { OntoUMLQuantity. OntoUMLQuality. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. OntoUMLRelator. OntoUMLCategory. OntoUMLSubKind. OntoUMLMode. OntoUMLRole. OntoUMLPhase. OntoUMLCollective. OntoUMLKind. }.
 ]
 
 { #category : #constants }

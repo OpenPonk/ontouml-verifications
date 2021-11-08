@@ -89,17 +89,17 @@ RelationSourceVerification class >> validSources [
 
 { #category : #constants }
 RelationSourceVerification class >> validSourcesForCharacterization [
-	^ OntoUMLCharacterization -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLCharacterization -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
 RelationSourceVerification class >> validSourcesForComponentOf [
-	^ OntoUMLComponentOf -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLComponentOf -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
 RelationSourceVerification class >> validSourcesForContainment [
-	^ OntoUMLContainment -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLContainment -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
@@ -109,7 +109,7 @@ RelationSourceVerification class >> validSourcesForDerivation [
 
 { #category : #constants }
 RelationSourceVerification class >> validSourcesForDomainFormal [
-	^ OntoUMLDomainFormal -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLDomainFormal -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
@@ -119,12 +119,12 @@ RelationSourceVerification class >> validSourcesForFormal [
 
 { #category : #constants }
 RelationSourceVerification class >> validSourcesForMaterial [
-	^ OntoUMLMaterial -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLMaterial -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
 RelationSourceVerification class >> validSourcesForMediation [
-	^ OntoUMLMediation -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLMediation -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }

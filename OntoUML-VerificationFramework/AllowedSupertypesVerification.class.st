@@ -85,6 +85,7 @@ AllowedSupertypesVerification class >> validSupertypes [
 	result add: self validSupertypesForCategory.
 	result add: self validSupertypesForMixin.
 	result add: self validSupertypesForRoleMixin.
+	result add: self validSupertypesForPhaseMixin.
 	^ result.
 ]
 
@@ -116,6 +117,11 @@ AllowedSupertypesVerification class >> validSupertypesForMode [
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForPhase [
 	^ OntoUMLPhase -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLPhase. OntoUMLRole. OntoUMLMixin. }.
+]
+
+{ #category : #constants }
+AllowedSupertypesVerification class >> validSupertypesForPhaseMixin [
+	^ OntoUMLPhaseMixin -> { OntoUMLMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
