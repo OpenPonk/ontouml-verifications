@@ -35,7 +35,7 @@ RelRigAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVeri
 		[ :association | association memberEnds anySatisfy: [ :end | end type = aVerifiedRelator ] ].
 	
 	(associations anySatisfy: [ :association |	association memberEnds anySatisfy: [ :end |
-			 (end type ~= aVerifiedRelator and: (OntoUMLModelQuery isStereotypeOf: end type oclKindOf: 'RigidSortal')) and: (end isReadOnly not)]])
+			 end type ~= aVerifiedRelator and: [ (OntoUMLModelQuery isStereotypeOf: end type oclKindOf: 'RigidSortal') and: [ end isReadOnly not. ]. ]. ]. ])
 		ifFalse: [ ^ {} ].
 		
 	^ { VerificationMessageWarning
