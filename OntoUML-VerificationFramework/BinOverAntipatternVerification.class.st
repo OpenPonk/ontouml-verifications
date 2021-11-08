@@ -86,7 +86,7 @@ BinOverAntipatternVerification >> checkIdentityOverlapFor: aSource withAncestors
 	^ overlap anySatisfy: [ :identityProvider | 
 		sourcePath := self calculateIdentityPathFor: aSource withProvider: identityProvider.
 		targetPath := self calculateIdentityPathFor: aTarget withProvider: identityProvider.
-		self isDistinctMissingFor: sourcePath and: targetPath withIdentityProvider: identityProvider. ].
+		self isDisjointMissingFor: sourcePath and: targetPath withIdentityProvider: identityProvider. ].
 ]
 
 { #category : #verification }
@@ -130,18 +130,18 @@ BinOverAntipatternVerification >> getIdentityPathFor: aSource withProvider: aIde
 ]
 
 { #category : #verification }
-BinOverAntipatternVerification >> isDistinctMissingFor: sourcePath and: targetPath withIdentityProvider: identityProvider [
+BinOverAntipatternVerification >> isDisjointMissingFor: sourcePath and: targetPath withIdentityProvider: identityProvider [
 	| sourceGeneralization targetGeneralization commonGeneralizationSets |
 	sourceGeneralization := sourcePath at: identityProvider.
 	targetGeneralization := targetPath at: identityProvider.
-	[sourceGeneralization = targetGeneralization] whileTrue: [ 
+	[ sourceGeneralization = targetGeneralization ] whileTrue: [ 
 		sourceGeneralization := sourcePath at: sourceGeneralization specific.
 		targetGeneralization := targetPath at: targetGeneralization specific. ].
 	commonGeneralizationSets := sourceGeneralization generalizationSets select: [ :genSet |
 		 targetGeneralization generalizationSets includes: genSet ].
 	commonGeneralizationSets isEmpty ifTrue: [ ^ true. ].
 	"else"
-	^ commonGeneralizationSets anySatisfy: [ :genSet | (genSet isDistinct) not. ].
+	^ commonGeneralizationSets anySatisfy: [ :genSet | (genSet isDisjoint) not. ].
 ]
 
 { #category : #verification }
