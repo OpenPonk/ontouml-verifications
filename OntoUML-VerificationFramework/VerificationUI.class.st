@@ -50,6 +50,7 @@ VerificationUI class >> toolbarMenuItemFor: aBuilder [
 { #category : #specs }
 VerificationUI class >> updateVerifiedElementStyle: aVerificationResults using: aController [
 	| color |
+	(VerificationController isVerifiable: aController model includeGeneralizations: true) ifFalse: [ ^ self. ].
 	color := Color black.
 	(aVerificationResults hasWarnings: aController model) ifTrue: [ color := Color orange. ].
 	(aVerificationResults hasErrors: aController model) ifTrue: [ color := Color red. ].

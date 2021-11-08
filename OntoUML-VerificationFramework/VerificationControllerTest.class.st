@@ -27,14 +27,19 @@ VerificationControllerTest >> testGetVerifications [
 
 { #category : #tests }
 VerificationControllerTest >> testGetVerifiedObjects [
-	| model kind subkind controller array |
+	| model kind subkind generalization note controller collection |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
 	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new.
+	generalization general: kind.
+	generalization specific: subkind.
+	note := OPUMLNode new.
 	model := OPUMLModel new.
-	array := {kind. subkind}.
-	model packagedElements: array.
+	collection  := {kind. subkind. generalization. note.} asOrderedCollection.
+	model packagedElements: collection.
+	collection := {kind. subkind. generalization.} asOrderedCollection.
 	controller := VerificationController new.
-	self assert: (controller getVerifiedObjects: model) equals: array.
+	self assert: (controller getVerifiedObjects: model) equals: collection.
 ]
 
 { #category : #tests }

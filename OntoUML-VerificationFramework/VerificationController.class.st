@@ -9,6 +9,14 @@ Class {
 	#category : #'OntoUML-VerificationFramework-Controllers'
 }
 
+{ #category : #testing }
+VerificationController class >> isVerifiable: aObject includeGeneralizations: aBoolean [
+	(aObject isKindOf: OPUMLClass) ifTrue: [ ^ true. ].
+	(aObject isKindOf: OPUMLAssociation) ifTrue: [ ^ true. ].
+	(aBoolean and: [ aObject isKindOf: OPUMLAssociation. ]) ifTrue: [ ^ true. ].
+	^ false.
+]
+
 { #category : #verification }
 VerificationController >> detectAntiPatternsIn: aVerifiedModel [
 	| verifiedObjects antiPatternVerifications results |
@@ -37,7 +45,7 @@ VerificationController >> getVerifications [
 { #category : #verification }
 VerificationController >> getVerifiedObjects: aVerifiedModel [
 	| verifiedObjects generalizations |
-	verifiedObjects := aVerifiedModel packagedElements select:	[ :element | (element isKindOf: OPUMLElement) and: (element isKindOf: OPUMLGeneralization) not].
+	verifiedObjects := aVerifiedModel packagedElements select:	[ :element | self class isVerifiable: element includeGeneralizations: false. ].
 	generalizations := (verifiedObjects flatCollect: [ :object | object generalizations ]) asSet.
 	verifiedObjects addAll: generalizations.
 	verifiedObjects addAll: (generalizations flatCollect: [ :generalization | generalization generalizationSets ]).	
