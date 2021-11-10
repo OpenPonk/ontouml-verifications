@@ -106,7 +106,7 @@ AllowedSubtypesVerification class >> validSubtypesForKind [
 
 { #category : #constants }
 AllowedSubtypesVerification class >> validSubtypesForMixin [
-	^ OntoUMLMixin -> { OntoUMLSubKind. OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLCategory. OntoUMLMixin. OntoUMLRole. OntoUMLPhase. OntoUMLRoleMixin. OntoUMLRelator. }.
+	^ OntoUMLMixin -> { OntoUMLSubKind. OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLCategory. OntoUMLMixin. OntoUMLRole. OntoUMLPhase. OntoUMLRoleMixin. OntoUMLRelator. OntoUMLQuality. OntoUMLMode. }.
 ]
 
 { #category : #constants }
