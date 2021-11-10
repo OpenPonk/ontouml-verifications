@@ -116,7 +116,7 @@ AllowedSupertypesVerification class >> validSupertypesForMode [
 
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForPhase [
-	^ OntoUMLPhase -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLPhase. OntoUMLRole. OntoUMLMixin. }.
+	^ OntoUMLPhase -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLPhase. OntoUMLRole. OntoUMLMixin. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
