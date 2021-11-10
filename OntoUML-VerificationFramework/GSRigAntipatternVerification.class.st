@@ -38,7 +38,7 @@ GSRigAntipatternVerification >> createWarningMessagesFor: aGenSet [
 	^ aGenSet generalizations collect: [ :generalization | VerificationMessageWarning 
 			createFor: generalization 
 			withVerification: self 
-			withText: 'Generalization set ', aGenSet name,
+			withText: 'Generalization set ', (aGenSet name ifNil: [ 'unnamed'. ]),
 				' contains rigid subtype that has both rigid and anti-rigid subtype.'
 			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForGSRig. ]
 ]
