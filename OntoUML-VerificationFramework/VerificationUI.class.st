@@ -11,8 +11,10 @@ Class {
 
 { #category : #specs }
 VerificationUI class >> changeElementColorTo: aColor using: aController [
+
+	(aController respondsTo: #diagramElement) ifFalse: [ ^ self ].
 	aController diagramElement style strokeColor: aColor.
-	aController diagramElement update.
+	aController diagramElement update
 ]
 
 { #category : #specs }
