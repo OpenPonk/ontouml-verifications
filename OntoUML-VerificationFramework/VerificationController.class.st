@@ -48,7 +48,7 @@ VerificationController >> getVerifiedObjects: aVerifiedModel [
 	verifiedObjects := aVerifiedModel packagedElements select:	[ :element | self class isVerifiable: element includeGeneralizations: false. ].
 	generalizations := (verifiedObjects flatCollect: [ :object | object generalizations ]) asSet.
 	verifiedObjects addAll: generalizations.
-	verifiedObjects addAll: (generalizations flatCollect: [ :generalization | generalization generalizationSets ]).	
+	verifiedObjects addAll: (OntoUMLModelQuery getGeneralizationSetsFrom: aVerifiedModel packagedElements) asSet.
 	^ verifiedObjects.
 	
 ]
