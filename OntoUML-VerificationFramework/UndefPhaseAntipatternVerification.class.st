@@ -94,5 +94,6 @@ UndefPhaseAntipatternVerification >> verifyPhasesIn: aVerifiedGenSet withModel: 
 "Checks if all phases in the generalization set have either attribute or aspect connected to them."
 	| results |
 	results := aVerifiedGenSet generalizations collect: [ :generalization | self verifyPhase: generalization specific withModel: aVerifiedModel ].
-	^ (results reject: [ :result | result. "all values are boolean so we can just reject" ]) size <= 1. "One phase without attribute/aspect is allowed." 
+	((results size = 1) and: [ results first = false ]) ifTrue: [ ^ false. ].
+	^  (results reject: [ :result | result. "all values are boolean so we can just reject" ]) size <= 1. "One phase without attribute/aspect is allowed." 
 ]
