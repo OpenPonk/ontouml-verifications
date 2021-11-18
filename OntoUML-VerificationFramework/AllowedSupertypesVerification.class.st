@@ -116,7 +116,7 @@ AllowedSupertypesVerification class >> validSupertypesForMode [
 
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForPhase [
-	^ OntoUMLPhase -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLPhase. OntoUMLRole. OntoUMLMixin. OntoUMLPhaseMixin. }.
+	^ OntoUMLPhase -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLPhase. OntoUMLRole. OntoUMLMixin. OntoUMLPhaseMixin. OntoUMLMode. OntoUMLQuality. }.
 ]
 
 { #category : #constants }
@@ -141,7 +141,7 @@ AllowedSupertypesVerification class >> validSupertypesForRelator [
 
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForRole [
-	^ OntoUMLRole -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLRoleMixin. OntoUMLMixin. }.
+	^ OntoUMLRole -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLRoleMixin. OntoUMLMixin. OntoUMLMode. OntoUMLQuality. }.
 ]
 
 { #category : #constants }

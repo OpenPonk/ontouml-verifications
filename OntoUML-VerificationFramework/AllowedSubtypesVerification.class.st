@@ -91,7 +91,7 @@ AllowedSubtypesVerification class >> validSubtypes [
 
 { #category : #constants }
 AllowedSubtypesVerification class >> validSubtypesForCategory [
-	^ OntoUMLCategory -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLCategory. }.
+	^ OntoUMLCategory -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLCategory. OntoUMLMode. OntoUMLQuality. }.
 ]
 
 { #category : #constants }
@@ -106,12 +106,12 @@ AllowedSubtypesVerification class >> validSubtypesForKind [
 
 { #category : #constants }
 AllowedSubtypesVerification class >> validSubtypesForMixin [
-	^ OntoUMLMixin -> { OntoUMLSubKind. OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLCategory. OntoUMLMixin. OntoUMLRole. OntoUMLPhase. OntoUMLRoleMixin. OntoUMLRelator. OntoUMLQuality. OntoUMLMode. }.
+	^ OntoUMLMixin -> { OntoUMLSubKind. OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLCategory. OntoUMLMixin. OntoUMLRole. OntoUMLPhase. OntoUMLRoleMixin. OntoUMLPhaseMixin. OntoUMLRelator. OntoUMLQuality. OntoUMLMode. }.
 ]
 
 { #category : #constants }
 AllowedSubtypesVerification class >> validSubtypesForMode [
-	^ OntoUMLMode -> { OntoUMLSubKind. OntoUMLRole. OntoUMLPhase. OntoUMLMode. }.
+	^ OntoUMLMode -> { OntoUMLSubKind. OntoUMLRole. OntoUMLPhase. }.
 ]
 
 { #category : #constants }
@@ -141,7 +141,7 @@ AllowedSubtypesVerification class >> validSubtypesForRelator [
 
 { #category : #constants }
 AllowedSubtypesVerification class >> validSubtypesForRole [
-	^ OntoUMLRole -> { OntoUMLRole. OntoUMLPhase. }.
+	^ OntoUMLRole -> { OntoUMLRole. }.
 ]
 
 { #category : #constants }
