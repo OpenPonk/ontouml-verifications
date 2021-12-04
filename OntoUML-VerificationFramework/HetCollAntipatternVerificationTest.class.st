@@ -33,9 +33,9 @@ HetCollAntipatternVerificationTest >> testInvalidModel [
 	firstPart := self createClass: 'firstPart'  withStereotype: OntoUMLKind.
 	secondPart := self createClass: 'secondPart'  withStereotype: OntoUMLKind.
 	collective := self createClass: 'collective'  withStereotype: OntoUMLCollective .
-	firstComponentOf := self createAssociationFrom: firstPart to: collective.
+	firstComponentOf := self createAssociationFrom: collective to: firstPart.
 	firstComponentOf applyStereotype: OntoUMLMemberOf new.
-	secondComponentOf := self createAssociationFrom: secondPart to: collective.
+	secondComponentOf := self createAssociationFrom: collective to:  secondPart.
 	secondComponentOf applyStereotype: OntoUMLMemberOf new.
 	
 	model := { firstPart. secondPart. collective. firstComponentOf. secondComponentOf. }.
