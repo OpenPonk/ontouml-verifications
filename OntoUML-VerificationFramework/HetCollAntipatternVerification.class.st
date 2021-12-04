@@ -32,7 +32,7 @@ HetCollAntipatternVerification class >> verifiedStereotypes [
 HetCollAntipatternVerification >> isApplicableFor: aElement in: aModel [
 	| ancestors stereotype | 
 	stereotype := OntoUMLModelQuery getStereotypeClass: aElement.
-	stereotype = OntoUMLCollective ifTrue: [^true].
+	stereotype = OntoUMLCollective ifTrue: [ ^ true. ].
 	ancestors := OntoUMLModelQuery getAncestorsFor: aElement.
 	({ OntoUMLRole. OntoUMLPhase. OntoUMLSubKind. } includes: stereotype) ifTrue: 
 		[ (ancestors anySatisfy: [ :ancestor | 
@@ -47,14 +47,14 @@ HetCollAntipatternVerification >> isApplicableFor: aElement in: aModel [
 { #category : #verification }
 HetCollAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| parts ancestorsAndSelf |
-	(self isApplicableFor: aVerifiedObject in: aVerifiedModel) ifFalse:[ ^{}. ].
+	(self isApplicableFor: aVerifiedObject in: aVerifiedModel) ifFalse:[ ^ {}. ].
 	
 	ancestorsAndSelf := OntoUMLModelQuery getAncestorsFor: aVerifiedObject.
 	ancestorsAndSelf add: aVerifiedObject.
 	
 	parts := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel
 		withStereotype: OntoUMLMemberOf 
-		filterBy: [ :memberOf | ancestorsAndSelf includes: (memberOf memberEnds second type). ].
+		filterBy: [ :memberOf | ancestorsAndSelf includes: (memberOf memberEnds first type). ].
 		
 	parts size > 1 ifTrue: [ 
 		^ {VerificationMessageWarning createFor: aVerifiedObject 

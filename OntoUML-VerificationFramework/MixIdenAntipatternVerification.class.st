@@ -30,7 +30,7 @@ MixIdenAntipatternVerification class >> verifiedClass [
 
 { #category : #constants }
 MixIdenAntipatternVerification class >> verifiedStereotypes [
-	^ {OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory.}.
+	^ {OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #verification }

@@ -39,14 +39,15 @@ VerificationUI class >> toolbarMenu: aBuilder [
 
 { #category : #specs }
 VerificationUI class >> toolbarMenuItemFor: aBuilder [
-	(aBuilder item: 'Verify model')
-		action: [ self updateVerifiedElements: 
-			(VerificationController new verify: aBuilder model diagramController model) using: aBuilder model diagramController. ].
-	(aBuilder item: 'Detect anti-patterns')
-		action: [ self updateVerifiedElements: 
-			(VerificationController new detectAntiPatternsIn: aBuilder model diagramController model) using: aBuilder model diagramController. ].
-	(aBuilder item: 'Remove highlights')
-		action: [ self removeHighlightsFromElementsIn: aBuilder model diagramController. ].
+	(aBuilder item: 'Verification') with: [ 
+		(aBuilder item: 'Verify model')
+			action: [ self updateVerifiedElements: 
+				(VerificationController new verify: aBuilder model diagramController model) using: aBuilder model diagramController. ].
+		(aBuilder item: 'Detect anti-patterns')
+			action: [ self updateVerifiedElements: 
+				(VerificationController new detectAntiPatternsIn: aBuilder model diagramController model) using: aBuilder model diagramController. ].
+		(aBuilder item: 'Remove highlights')
+			action: [ self removeHighlightsFromElementsIn: aBuilder model diagramController. ]. ].
 ]
 
 { #category : #specs }
