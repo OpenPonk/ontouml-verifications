@@ -5,7 +5,7 @@ I am also responsible for displaying results and highliting elements in the mode
 "
 Class {
 	#name : #VerificationUI,
-	#superclass : #ComposablePresenter,
+	#superclass : #Object,
 	#category : #'OntoUML-VerificationFramework-UI'
 }
 
@@ -15,10 +15,6 @@ VerificationUI class >> changeElementColorTo: aColor using: aController [
 	(aController respondsTo: #diagramElement) ifFalse: [ ^ self ].
 	aController diagramElement style strokeColor: aColor.
 	aController diagramElement update
-]
-
-{ #category : #specs }
-VerificationUI class >> defaultSpec [
 ]
 
 { #category : #specs }
@@ -66,9 +62,4 @@ VerificationUI class >> updateVerifiedElements: aVerificationResults using: aDia
 	aDiagramController controllers do: [ :controller | self updateVerifiedElementStyle: aVerificationResults using: controller ].
 	aDiagramController updateView.
 	(VerificationResultsUI createUIFor: aVerificationResults withControllers: aDiagramController) inspect.
-]
-
-{ #category : #initialization }
-VerificationUI >> initializeWidgets [
-	"We don't need to initialize anything."
 ]
