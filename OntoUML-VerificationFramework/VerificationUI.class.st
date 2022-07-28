@@ -39,6 +39,7 @@ VerificationUI class >> toolbarMenu: aBuilder [
 VerificationUI class >> toolbarMenuItemFor: aBuilder [
 
 	(aBuilder item: 'Verification')
+		icon: OntoUMLIcons ontoumlIcon;
 		action: [  ];
 		with: [ 
 			(aBuilder item: 'Verify model') action: [ 
