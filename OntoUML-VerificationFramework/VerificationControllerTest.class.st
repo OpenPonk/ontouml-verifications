@@ -34,7 +34,7 @@ VerificationControllerTest >> testGetVerifiedObjects [
 	generalization general: kind.
 	generalization specific: subkind.
 	note := OPUMLNode new.
-	model := OPUMLModel new.
+	model := OPUMLPackage new.
 	collection  := {kind. subkind. generalization. note.} asOrderedCollection.
 	model packagedElements: collection.
 	collection := {kind. subkind. generalization.} asOrderedCollection.
@@ -48,7 +48,7 @@ VerificationControllerTest >> testVerify [
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
 	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.	
 	array := {kind. subkind}.
-	model := OPUMLModel new.
+	model := OPUMLPackage new.
 	model packagedElements: array.
 	controller := VerificationController new.
 	results := controller verify:model.
