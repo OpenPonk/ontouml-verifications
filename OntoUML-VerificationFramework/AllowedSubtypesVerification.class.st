@@ -91,7 +91,7 @@ AllowedSubtypesVerification class >> validSubtypes [
 
 { #category : #constants }
 AllowedSubtypesVerification class >> validSubtypesForCategory [
-	^ OntoUMLCategory -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLCategory. OntoUMLMode. OntoUMLQuality. }.
+	^ OntoUMLCategory -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLCategory. OntoUMLMode. OntoUMLQuality. OntoUMLRole. OntoUMLPhase. OntoUMLRoleMixin. OntoUMLPhaseMixin. OntoUMLMixin. }.
 ]
 
 { #category : #constants }
@@ -121,7 +121,7 @@ AllowedSubtypesVerification class >> validSubtypesForPhase [
 
 { #category : #constants }
 AllowedSubtypesVerification class >> validSubtypesForPhaseMixin [
-	^ OntoUMLPhaseMixin -> { OntoUMLPhase. OntoUMLPhaseMixin. }.
+	^ OntoUMLPhaseMixin -> { OntoUMLPhase. OntoUMLPhaseMixin. OntoUMLRole. OntoUMLRoleMixin. }.
 ]
 
 { #category : #constants }

@@ -106,7 +106,7 @@ AllowedSupertypesVerification class >> validSupertypesForKind [
 
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForMixin [
-	^ OntoUMLMixin -> { OntoUMLMixin. }.
+	^ OntoUMLMixin -> { OntoUMLMixin. OntoUMLCategory. }.
 ]
 
 { #category : #constants }
@@ -116,12 +116,12 @@ AllowedSupertypesVerification class >> validSupertypesForMode [
 
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForPhase [
-	^ OntoUMLPhase -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLPhase. OntoUMLRole. OntoUMLMixin. OntoUMLPhaseMixin. OntoUMLMode. OntoUMLQuality. }.
+	^ OntoUMLPhase -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLPhase. OntoUMLMixin. OntoUMLPhaseMixin. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. }.
 ]
 
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForPhaseMixin [
-	^ OntoUMLPhaseMixin -> { OntoUMLMixin. OntoUMLPhaseMixin. }.
+	^ OntoUMLPhaseMixin -> { OntoUMLMixin. OntoUMLPhaseMixin. OntoUMLCategory. }.
 ]
 
 { #category : #constants }
@@ -141,12 +141,12 @@ AllowedSupertypesVerification class >> validSupertypesForRelator [
 
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForRole [
-	^ OntoUMLRole -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLRoleMixin. OntoUMLMixin. OntoUMLMode. OntoUMLQuality. }.
+	^ OntoUMLRole -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLPhase. OntoUMLQuantity. OntoUMLRelator. OntoUMLRole. OntoUMLRoleMixin. OntoUMLMixin. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
 AllowedSupertypesVerification class >> validSupertypesForRoleMixin [
-	^ OntoUMLRoleMixin -> { OntoUMLMixin. OntoUMLRoleMixin. }.
+	^ OntoUMLRoleMixin -> { OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory. OntoUMLPhaseMixin. }.
 ]
 
 { #category : #constants }
