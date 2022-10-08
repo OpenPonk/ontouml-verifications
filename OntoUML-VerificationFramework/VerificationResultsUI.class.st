@@ -69,6 +69,7 @@ VerificationResultsUI >> inspectorTableIn: composite [
 
 	<inspectorPresentationOrder: -15 title: 'Results'>
 	^ SpTablePresenter new
+		  beResizable;
 		  items: self verificationResults results asArray;
 		  whenSelectedDo: [ :item | self notifySelectChanged: item ];
 		  addColumn: (SpStringTableColumn new
