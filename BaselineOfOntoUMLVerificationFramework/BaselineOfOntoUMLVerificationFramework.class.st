@@ -13,7 +13,7 @@ BaselineOfOntoUMLVerificationFramework >> baseline: spec [
 				baseline: 'OntoUMLModelQuery-Plugin'
 				with: [ spec
 						className: 'BaselineOfOntoUMLModelQuery';
-						repository: 'github://openponk/ontouml-modelquery';
+						repository: 'github://openponk/ontouml-modelquery:dev-roassal3';
 						loads: 'plugin' ].
 			spec
 				project: 'OntoUMLModelQuery'
