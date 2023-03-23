@@ -23,10 +23,13 @@ VerificationResultsUI class >> createUIFor: aVerificationResults withControllers
 
 { #category : #accessing }
 VerificationResultsUI >> changeElementColor: aElement toColor: aColor [
+
 	| diagramElementArray |
-	diagramElementArray := (self controller controllers select: [ :aController | aController model = aElement ]) asArray.
-	diagramElementArray ifNotEmpty: [ diagramElementArray first diagramElement style strokeColor: aColor.
-		diagramElementArray first diagramElement update. ] .
+	diagramElementArray := (self controller controllers select: [ 
+		                        :aController | aController model = aElement ])
+		                       asArray.
+	diagramElementArray ifNotEmpty: [ 
+		diagramElementArray first diagramElement strokeColor: aColor ]
 ]
 
 { #category : #accessing }
@@ -41,8 +44,10 @@ VerificationResultsUI >> controller: aController [
 
 { #category : #accessing }
 VerificationResultsUI >> getElementColor: aElement [
-	(self controller controllers select: [ :aController | aController model = aElement ])
-		do: [ :aController | ^ aController diagramElement style strokeColor. ].
+
+	self controller controllers
+		select: [ :aController | aController model = aElement ]
+		thenDo: [ :aController | ^ aController diagramElement strokeColor ]
 ]
 
 { #category : #accessing }

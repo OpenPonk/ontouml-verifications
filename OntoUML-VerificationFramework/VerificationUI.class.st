@@ -13,14 +13,15 @@ Class {
 VerificationUI class >> changeElementColorTo: aColor using: aController [
 
 	(aController respondsTo: #diagramElement) ifFalse: [ ^ self ].
-	aController diagramElement style strokeColor: aColor.
-	aController diagramElement update
+	aController diagramElement strokeColor: aColor
 ]
 
 { #category : #specs }
 VerificationUI class >> removeHighlightsFromElementsIn: aDiagramController [
-	aDiagramController controllers do: [ :controller | self changeElementColorTo: Color black using: controller ].
-	aDiagramController updateView.
+
+	aDiagramController controllers do: [ :controller | 
+		self changeElementColorTo: Color black using: controller ].
+	aDiagramController updateCanvas
 ]
 
 { #category : #toolbar }
@@ -60,18 +61,28 @@ VerificationUI class >> toolbarMenuItemFor: aBuilder [
 
 { #category : #specs }
 VerificationUI class >> updateVerifiedElementStyle: aVerificationResults using: aController [
+
 	| color |
-	(VerificationController isVerifiable: aController model includeGeneralizations: true) ifFalse: [ ^ self. ].
+	(VerificationController
+		 isVerifiable: aController model
+		 includeGeneralizations: true) ifFalse: [ ^ self ].
 	color := Color black.
-	(aVerificationResults hasWarnings: aController model) ifTrue: [ color := Color orange. ].
-	(aVerificationResults hasErrors: aController model) ifTrue: [ color := Color red. ].
-	aController diagramElement style strokeColor: color.
-	aController diagramElement update.
+	(aVerificationResults hasWarnings: aController model) ifTrue: [ 
+		color := Color orange ].
+	(aVerificationResults hasErrors: aController model) ifTrue: [ 
+		color := Color red ].
+	aController diagramElement strokeColor: color
 ]
 
 { #category : #specs }
 VerificationUI class >> updateVerifiedElements: aVerificationResults using: aDiagramController [
-	aDiagramController controllers do: [ :controller | self updateVerifiedElementStyle: aVerificationResults using: controller ].
-	aDiagramController updateView.
-	(VerificationResultsUI createUIFor: aVerificationResults withControllers: aDiagramController) inspect.
+
+	aDiagramController controllers do: [ :controller | 
+		self
+			updateVerifiedElementStyle: aVerificationResults
+			using: controller ].
+	aDiagramController updateCanvas.
+	(VerificationResultsUI
+		 createUIFor: aVerificationResults
+		 withControllers: aDiagramController) inspect
 ]
