@@ -4,9 +4,9 @@ Extension { #name : #OPWorkbench }
 OPWorkbench >> getAntiPatternSettingMessageFor: aAntiPattern [
 	^ aAntiPattern name , '
 	<systemsettings>
-	(aBuilder group: #antipatterns) label: ''Anti-patterns''.
+	(aBuilder group: #ontoumlAntipatterns) label: ''OntoUML Anti-patterns''.
 	(aBuilder setting: #access', aAntiPattern shortcut ,')
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self ;
 		label: ''' , aAntiPattern shortcut , ' anti-pattern'';
 		description: ''Allow or deny detection of this anti-pattern.'';
@@ -19,12 +19,12 @@ OPWorkbench class >> verificationFrameworkSettingsGroups: aBuilder [
 	"I create groups for anti-patterns and verifications."
 
 	<systemsettings>
-	(aBuilder group: #antipatterns)
-		label: 'Anti-patterns';
+	(aBuilder group: #ontoumlAntipatterns)
+		label: 'OntoUML Anti-patterns';
 		parent: #openponk;
 		order: 250.
-	(aBuilder group: #verifications)
-		label: 'Verifications';
+	(aBuilder group: #ontoumlVerifications)
+		label: 'OntoUML Verifications';
 		parent: #openponk;
 		order: 240
 ]

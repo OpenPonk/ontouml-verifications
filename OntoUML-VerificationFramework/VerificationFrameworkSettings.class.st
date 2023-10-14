@@ -59,7 +59,7 @@ VerificationFrameworkSettings class >> settingsOnAllowedSubtypesVerification: aB
 	<systemsettings>
 	"I represent settings for AllowedSubtypesVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessAllowedSubtypesVerification)
-		parent: #verifications;
+		parent: #ontoumlVerifications;
 		target: self settingsInstance;
 		label: 'AllowedSubtypesVerification';
 		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
@@ -70,7 +70,7 @@ VerificationFrameworkSettings class >> settingsOnAllowedSupertypesVerification: 
 	<systemsettings>
 	"I represent settings for AllowedSupertypesVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessAllowedSupertypesVerification)
-		parent: #verifications;
+		parent: #ontoumlVerifications;
 		target: self settingsInstance;
 		label: 'AllowedSupertypesVerification';
 		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
@@ -81,7 +81,7 @@ VerificationFrameworkSettings class >> settingsOnBinOverAntipatternVerification:
 	<systemsettings>
 	"I represent settings for BinOverAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessBinOverAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'BinOverAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/BinOver/index.html'.
@@ -92,7 +92,7 @@ VerificationFrameworkSettings class >> settingsOnCharacterizedVerification: aBui
 	<systemsettings>
 	"I represent settings for CharacterizedVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessCharacterizedVerification)
-		parent: #verifications;
+		parent: #ontoumlVerifications;
 		target: self settingsInstance;
 		label: 'CharacterizedVerification';
 		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
@@ -103,7 +103,7 @@ VerificationFrameworkSettings class >> settingsOnDecIntAntipatternVerification: 
 	<systemsettings>
 	"I represent settings for DecIntAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessDecIntAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'DecIntAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/DecInt/index.html'.
@@ -114,7 +114,7 @@ VerificationFrameworkSettings class >> settingsOnDepPhaseAntipatternVerification
 	<systemsettings>
 	"I represent settings for DepPhaseAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessDepPhaseAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'DepPhaseAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/DepPhase/index.html'.
@@ -125,7 +125,7 @@ VerificationFrameworkSettings class >> settingsOnFreeRoleAntipatternVerification
 	<systemsettings>
 	"I represent settings for FreeRoleAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessFreeRoleAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'FreeRoleAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/FreeRole/index.html'.
@@ -136,7 +136,7 @@ VerificationFrameworkSettings class >> settingsOnGSRigAntipatternVerification: a
 	<systemsettings>
 	"I represent settings for GSRigAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessGSRigAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'GSRigAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/GSRig/index.html'.
@@ -147,7 +147,7 @@ VerificationFrameworkSettings class >> settingsOnHetCollAntipatternVerification:
 	<systemsettings>
 	"I represent settings for HetCollAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessHetCollAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'HetCollAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/HetColl/index.html'.
@@ -158,7 +158,7 @@ VerificationFrameworkSettings class >> settingsOnHomoFuncAntipatternVerification
 	<systemsettings>
 	"I represent settings for HomoFuncAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessHomoFuncAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'HomoFuncAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/HomoFunc/index.html'.
@@ -169,7 +169,7 @@ VerificationFrameworkSettings class >> settingsOnIdentityRequiredVerification: a
 	<systemsettings>
 	"I represent settings for IdentityRequiredVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessIdentityRequiredVerification)
-		parent: #verifications;
+		parent: #ontoumlVerifications;
 		target: self settingsInstance;
 		label: 'IdentityRequiredVerification';
 		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
@@ -180,7 +180,7 @@ VerificationFrameworkSettings class >> settingsOnImpAbsAntipatternVerification: 
 	<systemsettings>
 	"I represent settings for ImpAbsAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessImpAbsAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'ImpAbsAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/ImpAbs/index.html'.
@@ -191,7 +191,7 @@ VerificationFrameworkSettings class >> settingsOnMixIdenAntipatternVerification:
 	<systemsettings>
 	"I represent settings for MixIdenAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessMixIdenAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'MixIdenAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/MixIden/index.html'.
@@ -202,7 +202,7 @@ VerificationFrameworkSettings class >> settingsOnMixRigAntipatternVerification: 
 	<systemsettings>
 	"I represent settings for MixRigAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessMixRigAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'MixRigAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/MixRig/index.html'.
@@ -213,7 +213,7 @@ VerificationFrameworkSettings class >> settingsOnMultDepAntipatternVerification:
 	<systemsettings>
 	"I represent settings for MultDepAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessMultDepAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'MultDepAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/MultDep/index.html'.
@@ -224,7 +224,7 @@ VerificationFrameworkSettings class >> settingsOnPartOfGeneralizationSetVerifica
 	<systemsettings>
 	"I represent settings for PartOfGeneralizationSetVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessPartOfGeneralizationSetVerification)
-		parent: #verifications;
+		parent: #ontoumlVerifications;
 		target: self settingsInstance;
 		label: 'PartOfGeneralizationSetVerification';
 		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
@@ -235,7 +235,7 @@ VerificationFrameworkSettings class >> settingsOnPartOverAntipatternVerification
 	<systemsettings>
 	"I represent settings for PartOverAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessPartOverAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'PartOverAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/PartOver/index.html'.
@@ -246,7 +246,7 @@ VerificationFrameworkSettings class >> settingsOnRelCompAntipatternVerification:
 	<systemsettings>
 	"I represent settings for RelCompAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessRelCompAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'RelCompAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelComp/index.html'.
@@ -257,7 +257,7 @@ VerificationFrameworkSettings class >> settingsOnRelOverAntipatternVerification:
 	<systemsettings>
 	"I represent settings for RelOverAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessRelOverAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'RelOverAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelOver/index.html'.
@@ -268,7 +268,7 @@ VerificationFrameworkSettings class >> settingsOnRelRigAntipatternVerification: 
 	<systemsettings>
 	"I represent settings for RelRigAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessRelRigAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'RelRigAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelRig/index.html'.
@@ -279,7 +279,7 @@ VerificationFrameworkSettings class >> settingsOnRelSpecAntipatternVerification:
 	<systemsettings>
 	"I represent settings for RelSpecAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessRelSpecAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'RelSpecAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RelSpec/index.html'.
@@ -290,7 +290,7 @@ VerificationFrameworkSettings class >> settingsOnRelationSourceVerification: aBu
 	<systemsettings>
 	"I represent settings for RelationSourceVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessRelationSourceVerification)
-		parent: #verifications;
+		parent: #ontoumlVerifications;
 		target: self settingsInstance;
 		label: 'RelationSourceVerification';
 		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
@@ -301,7 +301,7 @@ VerificationFrameworkSettings class >> settingsOnRelationTargetVerification: aBu
 	<systemsettings>
 	"I represent settings for RelationTargetVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessRelationTargetVerification)
-		parent: #verifications;
+		parent: #ontoumlVerifications;
 		target: self settingsInstance;
 		label: 'RelationTargetVerification';
 		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
@@ -312,7 +312,7 @@ VerificationFrameworkSettings class >> settingsOnRelatorMediationDependencyVerif
 	<systemsettings>
 	"I represent settings for RelatorMediationDependencyVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessRelatorMediationDependencyVerification)
-		parent: #verifications;
+		parent: #ontoumlVerifications;
 		target: self settingsInstance;
 		label: 'RelatorMediationDependencyVerification';
 		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
@@ -323,7 +323,7 @@ VerificationFrameworkSettings class >> settingsOnRepRelAntipatternVerification: 
 	<systemsettings>
 	"I represent settings for RepRelAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessRepRelAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'RepRelAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/RepRel/index.html'.
@@ -334,7 +334,7 @@ VerificationFrameworkSettings class >> settingsOnRoleMediationDependencyVerifica
 	<systemsettings>
 	"I represent settings for RoleMediationDependencyVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessRoleMediationDependencyVerification)
-		parent: #verifications;
+		parent: #ontoumlVerifications;
 		target: self settingsInstance;
 		label: 'RoleMediationDependencyVerification';
 		description: 'Allow or deny detection of this verification. For more information see documentation on: '.
@@ -345,7 +345,7 @@ VerificationFrameworkSettings class >> settingsOnUndefFormalAntipatternVerificat
 	<systemsettings>
 	"I represent settings for UndefFormalAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessUndefFormalAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'UndefFormalAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/UndefFormal/index.html'.
@@ -356,7 +356,7 @@ VerificationFrameworkSettings class >> settingsOnUndefPhaseAntipatternVerificati
 	<systemsettings>
 	"I represent settings for UndefPhaseAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessUndefPhaseAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'UndefPhaseAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/UndefPhase/index.html'.
@@ -367,7 +367,7 @@ VerificationFrameworkSettings class >> settingsOnWholeOverAntipatternVerificatio
 	<systemsettings>
 	"I represent settings for WholeOverAntipatternVerification and my code is generated from getSettingsOnMessageCodeFor:withGroup:classType:"
 	(aBuilder setting: #accessWholeOverAntipatternVerification)
-		parent: #antipatterns;
+		parent: #ontoumlAntipatterns;
 		target: self settingsInstance;
 		label: 'WholeOverAntipatternVerification';
 		description: 'Allow or deny detection of this anti-pattern. For more information see documentation on: https://ontouml.readthedocs.io/en/latest/anti-patterns/WholeOver/index.html'.
@@ -375,16 +375,20 @@ VerificationFrameworkSettings class >> settingsOnWholeOverAntipatternVerificatio
 
 { #category : #updating }
 VerificationFrameworkSettings class >> update [
+
+	<script>
 	self updateAccessMethods.
-	self updateVerificationSettings.
+	self updateVerificationSettings
 ]
 
 { #category : #'updating-access' }
 VerificationFrameworkSettings class >> updateAccessMethods [
+
+	<script>
 	| verificationController |
 	verificationController := VerificationController new.
 	self updateAccessMethodsForVerifications: verificationController.
-	self updateAccessMethodsForAntiPatterns: verificationController.
+	self updateAccessMethodsForAntiPatterns: verificationController
 ]
 
 { #category : #'updating-access' }
@@ -411,16 +415,18 @@ VerificationFrameworkSettings class >> updateOptionsForVerificationSettings [
 	| controller |
 	controller := VerificationController new.
 	(controller getVerifications reject: [ :class | { Verification. StereotypeVerification. } includes: class ]) do: 
-		[ :class | self class compile: (self getSettingsOnMessageCodeFor: class  withGroup: 'verifications' classType: 'verification' ) classified: 'settings-verifications' ].
+		[ :class | self class compile: (self getSettingsOnMessageCodeFor: class  withGroup: 'ontoumlVerifications' classType: 'verification' ) classified: 'settings-verifications' ].
 	controller getAntiPatternVerifications do: 
-		[ :class | self class compile: (self getSettingsOnMessageCodeFor: class  withGroup: 'antipatterns' classType: 'anti-pattern' ) classified: 'settings-antipatterns' ].
+		[ :class | self class compile: (self getSettingsOnMessageCodeFor: class  withGroup: 'ontoumlAntipatterns' classType: 'anti-pattern' ) classified: 'settings-antipatterns' ].
 ]
 
 { #category : #'updating-settings' }
 VerificationFrameworkSettings class >> updateVerificationSettings [
-"I am responsible fro updating verifications settings. First I create new instance of VerificationSettings class and then i update all settings methods for anti-patterns and verifications."
+	"I am responsible fro updating verifications settings. First I create new instance of VerificationSettings class and then i update all settings methods for anti-patterns and verifications."
+
+	<script>
 	self updateOptionsForVerificationSettings.
-	settingsInstance := self new.
+	settingsInstance := self new
 ]
 
 { #category : #'access - verifications' }
