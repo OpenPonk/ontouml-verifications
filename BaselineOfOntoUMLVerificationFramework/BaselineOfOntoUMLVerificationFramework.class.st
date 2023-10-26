@@ -9,6 +9,12 @@ BaselineOfOntoUMLVerificationFramework >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
+		spec baseline: 'PetitParser' with: [
+			spec
+				repository: 'github://moosetechnology/PetitParser:v3.x.x/src';
+				loads:
+					#( 'Core' 'Tests' 'Examples' 'Islands' 'Analyzer' 'Preprocessor'
+					   'Indent' 'Extension' 'TestsExtension' 'Parser' ) ].
 		spec baseline: 'OntoUMLModelQuery-Plugin' with: [
 			spec
 				className: 'BaselineOfOntoUMLModelQuery';
@@ -18,7 +24,9 @@ BaselineOfOntoUMLVerificationFramework >> baseline: spec [
 			project: 'OntoUMLModelQuery'
 			copyFrom: 'OntoUMLModelQuery-Plugin'
 			with: [ spec loads: 'default' ].
-		spec package: 'OntoUML-VerificationFramework'.
+		spec
+			package: 'OntoUML-VerificationFramework'
+			with: [ spec requires: #( 'PetitParser' ) ].
 		spec
 			group: 'plugin'
 			with:
