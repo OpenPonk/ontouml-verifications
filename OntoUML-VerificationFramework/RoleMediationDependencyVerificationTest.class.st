@@ -9,7 +9,7 @@ Class {
 
 { #category : #constants }
 RoleMediationDependencyVerificationTest >> getTestedClass [
-	^ RoleMediationDependencyVerification.
+	^ RelationDependencyVerification.
 ]
 
 { #category : #constants }
@@ -33,9 +33,9 @@ RoleMediationDependencyVerificationTest >> testFulfillsMediationDependency [
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
 	role := OPUMLClass new applyStereotype: OntoUMLRole new.
 	mediation := self createAssociationFrom: kind to: role.
-	self assert: (self getTestedClass basicNew fulfillsMediationDependency: mediation) equals: true.
+	self assert: (self getTestedClass basicNew fulfillsRelationalDependency: mediation) equals: true.
 	(mediation memberEnds at:1) lowerValue value: 0.
-	self assert: (self getTestedClass basicNew fulfillsMediationDependency: mediation) equals: false.
+	self assert: (self getTestedClass basicNew fulfillsRelationalDependency: mediation) equals: false.
 	
 ]
 

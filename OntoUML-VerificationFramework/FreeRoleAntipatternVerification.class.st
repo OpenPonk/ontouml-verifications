@@ -38,13 +38,22 @@ FreeRoleAntipatternVerification >> fulfillsMediationDependency: aMediation [
 ]
 
 { #category : #verification }
+FreeRoleAntipatternVerification >> fulfillsRelationalDependency: aRelation [
+	| sourceLowerBound targetLowerBound |
+	sourceLowerBound := (OntoUMLModelQuery getSourceEndFrom: aRelation) lower value.
+	targetLowerBound := (OntoUMLModelQuery getTargetEndFrom: aRelation) lower value.
+	^ (sourceLowerBound = '*' ifTrue: [ true. ] ifFalse: [ sourceLowerBound >= 1. ])
+		and: (targetLowerBound = '*' ifTrue: [ true. ] ifFalse: [ targetLowerBound >= 1. ]).
+]
+
+{ #category : #verification }
 FreeRoleAntipatternVerification >> isFreeRoleOccuringFor: aVerifiedObject withModel: aVerifiedModel [
 	| roleAncestors |
 	 "Get all ancestors stereotyped as Rolen."
 	roleAncestors := (OntoUMLModelQuery getAncestorsFor: aVerifiedObject) select: [ :ancestor |
 		 (OntoUMLModelQuery isStereotypeOf: ancestor oclKindOf: 'Role'). ].
-	"Check if there is at least one mandatory mediation connected to object in the roleAncestors collection."
-	^ self isMandatoryMediationConnectedTo: roleAncestors withModel: aVerifiedModel.
+	"Check if there is at least one mandatory relation connected to object in the roleAncestors collection."
+	^ self isMandatoryRelationConnectedTo: roleAncestors withModel: aVerifiedModel.
 ]
 
 { #category : #verification }
@@ -60,6 +69,19 @@ FreeRoleAntipatternVerification >> isMandatoryMediationConnectedTo: aObjectColle
 ]
 
 { #category : #verification }
+FreeRoleAntipatternVerification >> isMandatoryRelationConnectedTo: aObjectCollection withModel: aVerifiedModel [
+	| relations |
+	"Get all relations connected to one or more objects from aObjectCollection."
+	relations := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel
+		filterBy: [ :association |
+			({OntoUMLMediation. OntoUMLMaterial. OntoUMLComponentOf. OntoUMLMemberOf. OntoUMLSubCollectionOf.}
+				includes: (self class getStereotype: association) class)
+					and: [ association memberEnds anySatisfy: [ :end | aObjectCollection includes: end type ]. ]. ].
+	"Filter out all relations that don't fulfill relation dependecy."	
+	^ relations anySatisfy: [ :relation | self fulfillsRelationalDependency: relation ].
+]
+
+{ #category : #verification }
 FreeRoleAntipatternVerification >> isRelationDependencyFulfilledFor: aVerifiedObject withModel: aVerifiedModel [
 	| ancestorsAndSelf |
 	"Get all ancestors stereotyped as RoleMixin."
@@ -67,8 +89,8 @@ FreeRoleAntipatternVerification >> isRelationDependencyFulfilledFor: aVerifiedOb
 		 (OntoUMLModelQuery isStereotypeOf: ancestor oclKindOf: 'RoleMixin') ].
 	"Add verified object to the collection."
 	ancestorsAndSelf add: aVerifiedObject.
-	"Check if there is at least one mandatory mediation connected to object in the ancestorsAndSelf collection."
-	^ self isMandatoryMediationConnectedTo: ancestorsAndSelf withModel: aVerifiedModel.
+	"Check if there is at least one mandatory relation connected to object in the ancestorsAndSelf collection."
+	^ self isMandatoryRelationConnectedTo: ancestorsAndSelf withModel: aVerifiedModel.
 ]
 
 { #category : #verification }
@@ -79,8 +101,8 @@ FreeRoleAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVer
 	(self isFreeRoleOccuringFor: aVerifiedObject withModel: aVerifiedModel) ifTrue: [ 
 		^ { VerificationMessageWarning createFor: aVerifiedObject 
 				withVerification: self 
-				withText: 'Role ' , aVerifiedObject name , ' should be directly connected with at least one mediation.'
+				withText: 'Role ' , aVerifiedObject name , ' should be directly connected with at least one relation.'
 				documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForFreeRole. } ].
-	"Role with unfullfiled mediation dependency is covered by verifications."
+	"Role with unfullfiled relation dependency is covered by verifications."
 	^ {}.
 ]

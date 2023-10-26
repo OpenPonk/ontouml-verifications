@@ -39,17 +39,17 @@ FreeRoleAntipatternVerificationTest >> testFulfillsMediationDependency [
 	targetEnd := mediation memberEnds second.
 	sourceEnd lowerValue value: 1.
 	targetEnd lowerValue value: 1.
-	self assert: (testedClassInstance fulfillsMediationDependency: mediation) equals: true.
+	self assert: (testedClassInstance fulfillsRelationalDependency: mediation) equals: true.
 	targetEnd lowerValue value: (OPUMLLiteralUnlimitedNatural new value: '*').
-	self assert: (testedClassInstance fulfillsMediationDependency: mediation) equals: true.
+	self assert: (testedClassInstance fulfillsRelationalDependency: mediation) equals: true.
 	sourceEnd lowerValue value: 0.
 	targetEnd lowerValue value: 1.
-	self assert: (testedClassInstance fulfillsMediationDependency: mediation) equals: false.
+	self assert: (testedClassInstance fulfillsRelationalDependency: mediation) equals: false.
 	sourceEnd lowerValue value: 1.
 	targetEnd lowerValue value: 0.
-	self assert: (testedClassInstance fulfillsMediationDependency: mediation) equals: false.
+	self assert: (testedClassInstance fulfillsRelationalDependency: mediation) equals: false.
 	sourceEnd lowerValue value: 0.
-	self assert: (testedClassInstance fulfillsMediationDependency: mediation) equals: false.
+	self assert: (testedClassInstance fulfillsRelationalDependency: mediation) equals: false.
 
 ]
 
