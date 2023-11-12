@@ -12,7 +12,10 @@ Class {
 { #category : #specs }
 VerificationUI class >> changeElementColorTo: aColor using: aController [
 
+	| diagramElement |
 	(aController respondsTo: #diagramElement) ifFalse: [ ^ self ].
+	diagramElement := aController diagramElement.
+	(diagramElement respondsTo: #strokeColor:) ifFalse: [ ^ self ].
 	aController diagramElement strokeColor: aColor
 ]
 
@@ -62,16 +65,18 @@ VerificationUI class >> toolbarMenuItemFor: aBuilder [
 { #category : #specs }
 VerificationUI class >> updateVerifiedElementStyle: aVerificationResults using: aController [
 
-	| color |
+	| color diagramElement |
 	(VerificationController
 		 isVerifiable: aController model
 		 includeGeneralizations: true) ifFalse: [ ^ self ].
+	diagramElement := aController diagramElement.
+	(diagramElement respondsTo: #strokeColor:) ifFalse: [ ^ self ].
 	color := Color black.
-	(aVerificationResults hasWarnings: aController model) ifTrue: [ 
+	(aVerificationResults hasWarnings: aController model) ifTrue: [
 		color := Color orange ].
-	(aVerificationResults hasErrors: aController model) ifTrue: [ 
+	(aVerificationResults hasErrors: aController model) ifTrue: [
 		color := Color red ].
-	aController diagramElement strokeColor: color
+	diagramElement strokeColor: color
 ]
 
 { #category : #specs }

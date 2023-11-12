@@ -25,11 +25,14 @@ VerificationResultsUI class >> createUIFor: aVerificationResults withControllers
 VerificationResultsUI >> changeElementColor: aElement toColor: aColor [
 
 	| diagramElementArray |
-	diagramElementArray := (self controller controllers select: [ 
+	diagramElementArray := (self controller controllers select: [
 		                        :aController | aController model = aElement ])
 		                       asArray.
-	diagramElementArray ifNotEmpty: [ 
-		diagramElementArray first diagramElement strokeColor: aColor ]
+	diagramElementArray ifNotEmpty: [
+		| diagramElement |
+		diagramElement := diagramElementArray first diagramElement.
+		(diagramElement respondsTo: #strokeColor:) ifTrue: [
+			diagramElement strokeColor: aColor ] ]
 ]
 
 { #category : #accessing }
