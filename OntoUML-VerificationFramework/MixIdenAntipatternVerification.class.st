@@ -6,41 +6,43 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for MixIden anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForMixIden.
 "
 Class {
-	#name : #MixIdenAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'MixIdenAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater + TAncestorGartherer',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait + TAncestorGartherer classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixIdenAntipatternVerification class >> abbreviation [
 	^ 'MixIden'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixIdenAntipatternVerification class >> identityProviders [
 	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLMode. OntoUMLQuality. }
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixIdenAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixIdenAntipatternVerification class >> verifiedStereotypes [
 	^ {OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory. OntoUMLPhaseMixin. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MixIdenAntipatternVerification >> checkForIdentityOverlapFor: aElements [
 	| identityProviders |
 	identityProviders := (aElements collect: [ :element | self getIdentityProviderFor: element ]) asSet.
 	^ (identityProviders includes: nil) not and: identityProviders size = 1.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MixIdenAntipatternVerification >> getIdentityProviderFor: aElement [
 	| identityProvider accumulator | 
 	(self providesIdentity: aElement) ifTrue: [ ^ aElement. ].
@@ -52,7 +54,7 @@ MixIdenAntipatternVerification >> getIdentityProviderFor: aElement [
 	^ nil.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MixIdenAntipatternVerification >> getIdentityProviderFor: aElement withAccumulator: aAccumulator [
 	| identityProvider | 		
 	(self providesIdentity: aElement) ifTrue: [ ^ aElement. ].	
@@ -64,12 +66,12 @@ MixIdenAntipatternVerification >> getIdentityProviderFor: aElement withAccumulat
 	^ nil.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MixIdenAntipatternVerification >> providesIdentity: aElement [
 	^ self class identityProviders includes: (OntoUMLModelQuery getStereotypeClass: aElement).
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MixIdenAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| subtypes |
 	subtypes := OntoUMLModelQuery getChildrenOf: aVerifiedObject from: aVerifiedModel.

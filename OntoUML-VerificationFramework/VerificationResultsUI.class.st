@@ -2,17 +2,19 @@
 I am class responsible for creating UI for VerificationRestults.
 "
 Class {
-	#name : #VerificationResultsUI,
-	#superclass : #Object,
+	#name : 'VerificationResultsUI',
+	#superclass : 'Object',
 	#instVars : [
 		'verificationResults',
 		'controller',
 		'highlighted'
 	],
-	#category : #'OntoUML-VerificationFramework-UI'
+	#category : 'OntoUML-VerificationFramework-UI',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'UI'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VerificationResultsUI class >> createUIFor: aVerificationResults withControllers: aControllers [
 	| verUI |
 	verUI := self new.
@@ -21,7 +23,7 @@ VerificationResultsUI class >> createUIFor: aVerificationResults withControllers
 	^ verUI.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationResultsUI >> changeElementColor: aElement toColor: aColor [
 
 	| diagramElementArray |
@@ -35,17 +37,17 @@ VerificationResultsUI >> changeElementColor: aElement toColor: aColor [
 			diagramElement strokeColor: aColor ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationResultsUI >> controller [
 	^ controller .
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationResultsUI >> controller: aController [
 	controller := aController.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationResultsUI >> getElementColor: aElement [
 
 	self controller controllers
@@ -53,7 +55,7 @@ VerificationResultsUI >> getElementColor: aElement [
 		thenDo: [ :aController | ^ aController diagramElement strokeColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationResultsUI >> highlightElement: aElement [
 	(highlighted includes: aElement) ifTrue: [ ^ self ].
 	highlighted associations do: [ :highEl | self changeElementColor: highEl key toColor: highEl value. ].
@@ -62,17 +64,17 @@ VerificationResultsUI >> highlightElement: aElement [
 	highlighted keys do: [ :highEl | self changeElementColor: highEl toColor: Color green. ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationResultsUI >> highlighted [
 	^ highlighted ifNil: [ highlighted := Dictionary new. ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 VerificationResultsUI >> initialize [
 	highlighted := Dictionary new.
 ]
 
-{ #category : #'gt-inspector-extension' }
+{ #category : 'gt-inspector-extension' }
 VerificationResultsUI >> inspectorTableIn: composite [
 
 	<inspectorPresentationOrder: -15 title: 'Results'>
@@ -94,17 +96,17 @@ VerificationResultsUI >> inspectorTableIn: composite [
 				   url: #documentationReference)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationResultsUI >> notifySelectChanged: aSelection [
 	aSelection ifNotNil: [ self highlightElement: aSelection objectReference. ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationResultsUI >> verificationResults [
 	^ verificationResults.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationResultsUI >> verificationResults: aVerificationResults [ 
 	verificationResults := aVerificationResults.
 ]

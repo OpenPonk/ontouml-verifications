@@ -6,27 +6,29 @@ Overriden methods: verifiedClass, verifyObject:withModel:, verifiedStereotypes.
 New methods: verifyMultiplicity:forCharacterization:.
 "
 Class {
-	#name : #CharacterizedVerification,
-	#superclass : #StereotypeVerification,
-	#category : #'OntoUML-VerificationFramework-Verification-Classes'
+	#name : 'CharacterizedVerification',
+	#superclass : 'StereotypeVerification',
+	#category : 'OntoUML-VerificationFramework-Verification-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 CharacterizedVerification class >> abbreviation [
 	^ 'Characterized'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 CharacterizedVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 CharacterizedVerification class >> verifiedStereotypes [
 	^ { OntoUMLMode. OntoUMLQuality. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 CharacterizedVerification >> verifyMultiplicity: aVerifiedObject forCharacterization: aCharacterization [
 	| multiplicity |
 	multiplicity := (aCharacterization memberEnds reject: [ :characterizationProperty | (characterizationProperty type = aVerifiedObject) ]) at: 1.
@@ -35,7 +37,7 @@ CharacterizedVerification >> verifyMultiplicity: aVerifiedObject forCharacteriza
 	^ {}.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 CharacterizedVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
  	| characterizations |
 	characterizations := (aVerifiedModel select: [ :element | element isKindOf: OPUMLAssociation ])		

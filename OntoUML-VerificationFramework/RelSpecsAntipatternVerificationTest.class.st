@@ -2,12 +2,14 @@
 I represent tests for RelSpecsAntipatternVerification.
 "
 Class {
-	#name : #RelSpecsAntipatternVerificationTest,
-	#superclass : #AbstractVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'RelSpecsAntipatternVerificationTest',
+	#superclass : 'AbstractVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> getInvalidModel [
 	| firstKind firstSubKind secondKind secondSubKind firstAssociation secondAssociation firstGeneralization secondGeneralization |
 	firstKind := self createClass: 'firstKind' withStereotype: OntoUMLKind.
@@ -23,12 +25,12 @@ RelSpecsAntipatternVerificationTest >> getInvalidModel [
 	^ { firstAssociation. secondAssociation. firstKind. firstSubKind. secondKind. secondSubKind.  firstGeneralization. secondGeneralization. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelSpecsAntipatternVerificationTest >> getTestedClass [
 	^ RelSpecAntipatternVerification.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> getValidModel [
 	| firstKind firstSubKind secondKind secondSubKind thirdKind firstAssociation secondAssociation firstGeneralization secondGeneralization |
 	firstKind := self createClass: 'firstKind' withStereotype: OntoUMLKind.
@@ -46,17 +48,17 @@ RelSpecsAntipatternVerificationTest >> getValidModel [
    ^ { firstAssociation. secondAssociation. firstKind. firstSubKind. secondKind. secondSubKind. thirdKind. firstGeneralization. secondGeneralization. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelSpecsAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testContainsAncestorOrSelfOf [
 	| firstKind firstSubKind secondKind secondSubKind ancestorSet |
 	firstKind := self createClass: 'firstKind' withStereotype: OntoUMLKind.
@@ -72,7 +74,7 @@ RelSpecsAntipatternVerificationTest >> testContainsAncestorOrSelfOf [
 	self assert: (self getTestedClass basicNew contains: ancestorSet ancestorOrSelfOf: secondKind) equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testInvalidModel [
 	| firstAssociation model result |	
 	model := self getInvalidModel.
@@ -82,12 +84,12 @@ RelSpecsAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testRelSpecsExistsBetweenAnd [
 	| firstAssociation secondAssociation model |
 	model := self getValidModel.
@@ -101,7 +103,7 @@ RelSpecsAntipatternVerificationTest >> testRelSpecsExistsBetweenAnd [
 	self assert: (self getTestedClass basicNew relSpecsExistsBetween: firstAssociation and: secondAssociation) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testValidModel [
 	| firstAssociation model result |
 	model := self getValidModel.
@@ -111,12 +113,12 @@ RelSpecsAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

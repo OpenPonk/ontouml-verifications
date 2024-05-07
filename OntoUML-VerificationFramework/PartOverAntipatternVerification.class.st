@@ -6,34 +6,36 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for PartOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForPartOver.
 "
 Class {
-	#name : #PartOverAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'PartOverAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater + TAncestorGartherer',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait + TAncestorGartherer classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOverAntipatternVerification class >> abbreviation [
 	^ 'PartOver'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOverAntipatternVerification class >> partWholeAssociations [
 	^ { OntoUMLSubCollectionOf. OntoUMLSubQuantityOf. OntoUMLMemberOf. OntoUMLComponentOf. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOverAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOverAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLSubKind. OntoUMLPhase. OntoUMLRole. OntoUMLRoleMixin. OntoUMLCategory. OntoUMLMixin. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 PartOverAntipatternVerification >> checkForOverlap: aMediatedEnds [
 	| accumulator tmpAccumulator |
 	accumulator := Set new.
@@ -49,7 +51,7 @@ PartOverAntipatternVerification >> checkForOverlap: aMediatedEnds [
 	^ false.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 PartOverAntipatternVerification >> checkOverlapForMixins: aMixinCollection from: aModel [
 	| children accumulator |
 	accumulator := Set new.
@@ -60,7 +62,7 @@ PartOverAntipatternVerification >> checkOverlapForMixins: aMixinCollection from:
 	^ false.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 PartOverAntipatternVerification >> checkUpperMultiplicityFor: aPartWholeEnds [
 	^ (aPartWholeEnds collect: [ :association | association memberEnds second upper = '*'
 			ifTrue: [ Float infinity ]
@@ -68,14 +70,14 @@ PartOverAntipatternVerification >> checkUpperMultiplicityFor: aPartWholeEnds [
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 PartOverAntipatternVerification >> getPartWholeAssociationsFor: aPart from: aModel [
 	^ OntoUMLModelQuery getAssociationsFrom: aModel filterBy: [ :association |
 		(self class partWholeAssociations includes: (OntoUMLModelQuery getStereotype: association) class)
 			and: ((OntoUMLModelQuery getTargetFrom: association) = aPart) ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 PartOverAntipatternVerification >> verifyObject: aVerifiedPart withModel: aVerifiedModel [
 	| partWholeAs mixins |
 	partWholeAs := self getPartWholeAssociationsFor: aVerifiedPart from: aVerifiedModel.

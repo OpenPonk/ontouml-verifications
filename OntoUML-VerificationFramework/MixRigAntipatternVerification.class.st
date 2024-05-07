@@ -6,29 +6,31 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for MixRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForMixRig.
 "
 Class {
-	#name : #MixRigAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'MixRigAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixRigAntipatternVerification class >> abbreviation [
 	^ 'MixRig'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixRigAntipatternVerification class >> getAntiRigidTypes [
 	^ { OntoUMLRole. OntoUMLRoleMixin. OntoUMLPhase. OntoUMLPhaseMixin. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixRigAntipatternVerification class >> getRigidTypes [
 	^ {  OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. }.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 MixRigAntipatternVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| getRigidTypesCode |
 	getRigidTypesCode := '"I return collections containing all rigid types."
@@ -42,22 +44,22 @@ getRigidTypes
 	^ getRigidTypesCode.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 MixRigAntipatternVerification class >> updateFrom: aVerificationUpdater [
 	self updateMessage: (self getUpdatedMessageCode: aVerificationUpdater) withClassification: 'constants'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixRigAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixRigAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLMixin. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MixRigAntipatternVerification >> getDescendansOfMixin: aMixin withModel: aModel into: aCollection [
 	| subtypes mixins |
 	subtypes := (OntoUMLModelQuery getChildrenOf: aMixin from: aModel) asSet.
@@ -67,7 +69,7 @@ MixRigAntipatternVerification >> getDescendansOfMixin: aMixin withModel: aModel 
 	mixins do: [ :mixin | self getDescendansOfMixin: mixin withModel: aModel into: aCollection ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MixRigAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| subtypes hasRigidSubtypes hasAntiRigidSubtypes |
 	subtypes := OntoUMLModelQuery getChildrenOf: aVerifiedObject from: aVerifiedModel.

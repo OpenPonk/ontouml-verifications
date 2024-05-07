@@ -1,10 +1,12 @@
 Class {
-	#name : #VerificationFrameworkSettingsTest,
-	#superclass : #TestCase,
-	#category : #'OntoUML-VerificationFramework-Settings'
+	#name : 'VerificationFrameworkSettingsTest',
+	#superclass : 'TestCase',
+	#category : 'OntoUML-VerificationFramework-Settings',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Settings'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationFrameworkSettingsTest >> testGetSettingFor [
 	| settings |
 	settings := VerificationFrameworkSettings new.
@@ -14,7 +16,7 @@ VerificationFrameworkSettingsTest >> testGetSettingFor [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationFrameworkSettingsTest >> testSetSettingForWithValue [
 	| settings |
 	settings := VerificationFrameworkSettings new.

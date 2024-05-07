@@ -3,18 +3,20 @@ I am responsible for updating verification framework using sepcifitactions from 
 First I read references from updatingIndex.yaml and then update all classes tagged as Verification-Classes and class OntoUMLDotOrgReferences.
 "
 Class {
-	#name : #OntoUMLVerificationUpdater,
-	#superclass : #Object,
+	#name : 'OntoUMLVerificationUpdater',
+	#superclass : 'Object',
 	#instVars : [
 		'classSpecifications',
 		'relationshipSpecifications',
 		'documentationReferences',
 		'updatingIndex'
 	],
-	#category : #'OntoUML-VerificationFramework-Updating'
+	#category : 'OntoUML-VerificationFramework-Updating',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Updating'
 }
 
-{ #category : #updating }
+{ #category : 'updating' }
 OntoUMLVerificationUpdater class >> updateVerifications [
 	| updater |
 	updater := self new.
@@ -25,54 +27,54 @@ OntoUMLVerificationUpdater class >> updateVerifications [
 	updater updateVerifications.
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 OntoUMLVerificationUpdater >> antipatternDocumentationReferences [
 	^ (documentationReferences at: 'anti-patterns') associations .
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 OntoUMLVerificationUpdater >> classDocumentationReferences [
 	^ (documentationReferences at: 'classes') associations .
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 OntoUMLVerificationUpdater >> classSpecifications [
 	^ classSpecifications.
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 OntoUMLVerificationUpdater >> classSpecifications: aSpecifications [
 	classSpecifications := aSpecifications.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OntoUMLVerificationUpdater >> getClassSpecificationPaths [
 	^ (self updatingIndex at: 'verifications') at: 'class_specification_paths'.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OntoUMLVerificationUpdater >> getRelationshipSpecificationPaths [
 	^ (self updatingIndex at: 'verifications') at: 'relationship_specification_paths'.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OntoUMLVerificationUpdater >> getVerifications [
 	^ (RPackageOrganizer default packageNamed: 'OntoUML-VerificationFramework')
 		definedClasses
 		select: [ :class | (class tags asSet includes: 'Verification-Classes') "or: (class tags asSet includes: 'Antipattern-Classes')" ].
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdater >> indexUrl [
 	^ self sourceAddress , 'updatingIndex.yaml'.
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OntoUMLVerificationUpdater >> loadClassSpecification: aUrl [
 	^ self parseClassYaml: ((ZnEasy get: aUrl) contents copyReplaceAll: '?' with: 'true').
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OntoUMLVerificationUpdater >> loadClassSpecifications [
 	^ (self getClassSpecificationPaths collect:  [ :specificationPath | 
 			(self loadClassSpecification: 
@@ -80,22 +82,22 @@ OntoUMLVerificationUpdater >> loadClassSpecifications [
 			select: [ :specification | specification isNotNil ].
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OntoUMLVerificationUpdater >> loadDocumentationReferences [
 	documentationReferences := (self updatingIndex at: 'documentationReferences') .
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OntoUMLVerificationUpdater >> loadIndex [
 	^ self parseYaml: (ZnEasy get: self indexUrl) contents.
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OntoUMLVerificationUpdater >> loadRelationshipSpecification: aUrl [
 	^ self parseRelationshipYaml: ((ZnEasy get: aUrl) contents copyReplaceAll: '?' with: 'true').
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OntoUMLVerificationUpdater >> loadRelationshipSpecifications [
 	^ (self getRelationshipSpecificationPaths collect:  [ :specificationPath | 
 			(self loadRelationshipSpecification: 
@@ -103,12 +105,12 @@ OntoUMLVerificationUpdater >> loadRelationshipSpecifications [
 			select: [ :specification | specification isNotNil ].
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 OntoUMLVerificationUpdater >> parseClassYaml: aParsedYaml [ 
 	^ OntoUMLClassStereotypeYaml createFromYaml: ((self parseYaml: aParsedYaml) at: 'class_stereotype').
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 OntoUMLVerificationUpdater >> parseRelationshipYaml: aParsedYaml [ 
 	| parsedFile |
 	parsedFile := self parseYaml: aParsedYaml.
@@ -117,60 +119,60 @@ OntoUMLVerificationUpdater >> parseRelationshipYaml: aParsedYaml [
 	^ nil.
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 OntoUMLVerificationUpdater >> parseYaml: aParsedYaml [ 
 	| yamlParser |
 	yamlParser := PPYAMLGrammar new.
 	^ yamlParser parse: aParsedYaml.
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 OntoUMLVerificationUpdater >> relationshipDocumentationReferences [
 	^ (documentationReferences at: 'relationships') associations .
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 OntoUMLVerificationUpdater >> relationshipSpecifications [
 	^ relationshipSpecifications.
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 OntoUMLVerificationUpdater >> relationshipSpecifications: aSpecifications [
 	relationshipSpecifications := aSpecifications.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdater >> sourceAddress [
 	^ 'https://raw.githubusercontent.com/OntoUML/OntoUML/master/'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdater >> specificationFileName [
 	^ 'meta.yml'.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OntoUMLVerificationUpdater >> updateDocumentationReferences [
 	OntoUMLDotOrgReferences updateFrom: self .
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OntoUMLVerificationUpdater >> updateReferences [
 	OntoUMLDotOrgReferences updateFrom: self.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OntoUMLVerificationUpdater >> updateVerifications [
 	self getVerifications do: [ :verification | verification updateFrom: self ].
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 OntoUMLVerificationUpdater >> updatingIndex [
  	updatingIndex ifNil: [ updatingIndex := self loadIndex ].
 	^ updatingIndex.
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 OntoUMLVerificationUpdater >> updatingIndex: aIndex [
  	updatingIndex := aIndex.
 ]

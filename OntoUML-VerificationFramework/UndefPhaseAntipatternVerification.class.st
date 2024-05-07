@@ -6,19 +6,21 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for UndefPhase anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForUndefPhase.
 "
 Class {
-	#name : #UndefPhaseAntipatternVerification,
-	#superclass : #Verification,
+	#name : 'UndefPhaseAntipatternVerification',
+	#superclass : 'Verification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater + TAncestorGartherer',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait + TAncestorGartherer classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerification class >> abbreviation [
 	^ 'UndefPhase'.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UndefPhaseAntipatternVerification class >> canVerify: aVerifiedObject [
 	"Checks that aVerifiedObject is generalization set."
 	(super canVerify: aVerifiedObject) ifFalse: [ ^ false. ].	
@@ -30,17 +32,17 @@ UndefPhaseAntipatternVerification class >> canVerify: aVerifiedObject [
 	^ aVerifiedObject generalizations allSatisfy: [ :generalization | (OntoUMLModelQuery getStereotypeClass: generalization specific) = OntoUMLPhase. ].
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerification class >> verifiedClass [
 	^ OPUMLGeneralizationSet.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefPhaseAntipatternVerification >> aspectsExistFor: aElement inModel: aModel [
 	^ self aspectsExistFor: aElement inModel: aModel includeAncestors: true. 
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefPhaseAntipatternVerification >> aspectsExistFor: aElement inModel: aModel includeAncestors: aIncludeBoolean [
 	| ancestorsAndSelf characterisations |
 	characterisations := OntoUMLModelQuery getAssociationsFrom: aModel
@@ -55,12 +57,12 @@ UndefPhaseAntipatternVerification >> aspectsExistFor: aElement inModel: aModel i
 		anySatisfy: [ :characterisation | ancestorsAndSelf includes: characterisation memberEnds first type ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefPhaseAntipatternVerification >> attributesExistFor: aClass [
 	^ aClass ownedAttributes isNotNil and: aClass ownedAttributes isNotEmpty.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefPhaseAntipatternVerification >> createVerificationMessageFor: aVerifiedPhase [	
 	^ VerificationMessageWarning 
 			createFor: aVerifiedPhase 
@@ -70,26 +72,26 @@ UndefPhaseAntipatternVerification >> createVerificationMessageFor: aVerifiedPhas
 			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForUndefPhase.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefPhaseAntipatternVerification >> verifyGeneralFor: aVerifiedGeneralizationSet withModel: aVerifiedModel [
 	^ (self attributesExistFor: aVerifiedGeneralizationSet generalizations first general) 
 			or: [ self aspectsExistFor: aVerifiedGeneralizationSet generalizations first general inModel: aVerifiedModel. ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefPhaseAntipatternVerification >> verifyObject: aVerifiedGeneralizationSet withModel: aVerifiedModel [
 	(self verifyGeneralFor: aVerifiedGeneralizationSet withModel: aVerifiedModel) ifTrue: [ ^{}. ].
 	(self verifyPhasesIn: aVerifiedGeneralizationSet withModel: aVerifiedModel) ifTrue: [ ^{}. ].
 	^ aVerifiedGeneralizationSet generalizations collect: [ :generalization | self createVerificationMessageFor: generalization specific. ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefPhaseAntipatternVerification >> verifyPhase: aVerifiedPhase withModel: aVerifiedModel [
 "Checks if phase has at least one attribute or aspect."
 	^ (self attributesExistFor: aVerifiedPhase) or: [ self aspectsExistFor: aVerifiedPhase inModel: aVerifiedModel includeAncestors: false. ]. 
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefPhaseAntipatternVerification >> verifyPhasesIn: aVerifiedGenSet withModel: aVerifiedModel [
 "Checks if all phases in the generalization set have either attribute or aspect connected to them."
 	| results |

@@ -2,32 +2,34 @@
 I represent tests for HetCollAntipatternVerification.
 "
 Class {
-	#name : #HetCollAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'HetCollAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 HetCollAntipatternVerificationTest >> getTestedClass [
 	^ HetCollAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 HetCollAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 HetCollAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLCollective. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HetCollAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HetCollAntipatternVerificationTest >> testInvalidModel [
 	| firstPart secondPart collective firstComponentOf secondComponentOf model result |
 	firstPart := self createClass: 'firstPart'  withStereotype: OntoUMLKind.
@@ -44,12 +46,12 @@ HetCollAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HetCollAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HetCollAntipatternVerificationTest >> testValidModel [
 	| part collective componentOf model result |
 	part := self createClass: 'part'  withStereotype: OntoUMLKind.
@@ -63,17 +65,17 @@ HetCollAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HetCollAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HetCollAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HetCollAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

@@ -2,42 +2,44 @@
 I represent tests for StereotypeVerification.
 "
 Class {
-	#name : #StereotypeVerificationTest,
-	#superclass : #AbstractVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Verification-Tests'
+	#name : 'StereotypeVerificationTest',
+	#superclass : 'AbstractVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Verification-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 StereotypeVerificationTest >> getNotVerifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 StereotypeVerificationTest >> getTestedClass [
 	^ StereotypeVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 StereotypeVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 StereotypeVerificationTest >> getVerifiedClassInstance [
 	^ super getVerifiedClassInstance applyStereotype: (self getVerifiedStereotypes at: 1) new.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 StereotypeVerificationTest >> getVerifiedStereotypes [
 	self subclassResponsibility.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StereotypeVerificationTest >> testCanVerifyStereotype [
 	self assert: (self getTestedClass canVerify: OPUMLClass new) equals: false.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StereotypeVerificationTest >> testVerifiedStereotypes [
 	self assert: (self getTestedClass verifiedStereotypes isKindOf: Collection) equals: true.	
 ]

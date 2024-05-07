@@ -2,32 +2,34 @@
 I represent tests for MixRigAntipatternVerification.
 "
 Class {
-	#name : #MixRigAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'MixRigAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixRigAntipatternVerificationTest >> getTestedClass [
 	^ MixRigAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixRigAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixRigAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLMixin. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixRigAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixRigAntipatternVerificationTest >> testInvalidModel [
 	| kind collective mixin firstGeneralization secondGeneralization model result |
 	kind := self createClass: 'kind'  withStereotype: OntoUMLKind.
@@ -42,12 +44,12 @@ MixRigAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixRigAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixRigAntipatternVerificationTest >> testValidModel [
 	| kind phase mixin firstGeneralization secondGeneralization thirdGeneralization model result |
 	kind := self createClass: 'kind'  withStereotype: OntoUMLKind.
@@ -63,17 +65,17 @@ MixRigAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixRigAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixRigAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixRigAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

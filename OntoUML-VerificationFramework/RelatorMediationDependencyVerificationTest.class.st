@@ -2,32 +2,34 @@
 I represent tests for RelatorMediationDependencyVerification.
 "
 Class {
-	#name : #RelatorMediationDependencyVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Verification-Tests'
+	#name : 'RelatorMediationDependencyVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Verification-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelatorMediationDependencyVerificationTest >> getTestedClass [
 	^ RelatorMediationDependencyVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelatorMediationDependencyVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelatorMediationDependencyVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testGetMultiplicityFor [
 	| kind relator mediation |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
@@ -39,7 +41,7 @@ RelatorMediationDependencyVerificationTest >> testGetMultiplicityFor [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testInvalidModel [
 	| relator association kind model result |
 	kind := OPUMLClass new.
@@ -54,12 +56,12 @@ RelatorMediationDependencyVerificationTest >> testInvalidModel [
 	self assert: result results size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testValidModel [
 	| relator association kind secondAssociation secondKind model result |
 	kind := OPUMLClass new.
@@ -78,23 +80,23 @@ RelatorMediationDependencyVerificationTest >> testValidModel [
 	self assert: result results size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testVerifyWithModel [
 	self testInvalidModel.
 	self testValidModel.

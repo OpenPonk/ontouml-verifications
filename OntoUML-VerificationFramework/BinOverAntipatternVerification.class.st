@@ -6,36 +6,38 @@ Overriden methods: verifiedClass, verifyObject:withModel:
 Documentation for BinOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForBinOver.
 "
 Class {
-	#name : #BinOverAntipatternVerification,
-	#superclass : #Verification,
+	#name : 'BinOverAntipatternVerification',
+	#superclass : 'Verification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 BinOverAntipatternVerification class >> abbreviation [
 	^ 'BinOver'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 BinOverAntipatternVerification class >> identityProviders [
 	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLMode. OntoUMLQuality. }
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 BinOverAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 BinOverAntipatternVerification >> calculateIdentityPathFor: aSource withProvider: aIdentityProvider [
 	| pathDictionary |
 	pathDictionary := self getAncestorTreeFor: aSource withIdentityProvider: aIdentityProvider.
 	^ self getIdentityPathFor: aSource withProvider: aIdentityProvider from: pathDictionary.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 BinOverAntipatternVerification >> checkBinOverFor: aSource and: aTarget from: aModel [
 	| sourceStereotype targetStereotype sourceAndAncestors targetAndAncestors | 
 	sourceStereotype := OntoUMLModelQuery getStereotype: aSource.
@@ -60,7 +62,7 @@ BinOverAntipatternVerification >> checkBinOverFor: aSource and: aTarget from: aM
 	^ false.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 BinOverAntipatternVerification >> checkBinOverForMixins: aSource and: aTarget from: aModel [ 
 	| sourceChildren targetChildren sourceAncestors targetAncestors |
 	sourceChildren := (OntoUMLModelQuery getDescendantsFor: aSource from: aModel) 
@@ -73,7 +75,7 @@ BinOverAntipatternVerification >> checkBinOverForMixins: aSource and: aTarget fr
 	^ sourceChildren isEmpty and: (targetChildren isEmpty and: (sourceAncestors anySatisfy: [ :source | targetAncestors includes: source ])).
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 BinOverAntipatternVerification >> checkIdentityOverlapFor: aSource withAncestors: aSourceAncestors and: aTarget withAncestors: aTargetAncestors [ 
 	| sourceIdentityProviders targetIdentityProviders overlap sourcePath targetPath |
 	sourceIdentityProviders := aSourceAncestors select: [ :entity |
@@ -89,12 +91,12 @@ BinOverAntipatternVerification >> checkIdentityOverlapFor: aSource withAncestors
 		self isDisjointMissingFor: sourcePath and: targetPath withIdentityProvider: identityProvider. ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 BinOverAntipatternVerification >> checkOverlapFor: aSourceSet and: aTargetSet [
 	^ aSourceSet anySatisfy: [ :source | aTargetSet includes: source ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 BinOverAntipatternVerification >> getAncestorTreeFor: aSource withIdentityProvider: identityProvider [
 	| pathDictionary queue openedSet closedSet entity |
 	pathDictionary := Dictionary new.
@@ -117,7 +119,7 @@ BinOverAntipatternVerification >> getAncestorTreeFor: aSource withIdentityProvid
 	^ pathDictionary.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 BinOverAntipatternVerification >> getIdentityPathFor: aSource withProvider: aIdentityProvider from: aIdentityPathDictionary [
 	| pathEntity pathGeneralization result |
 	result := Dictionary new.
@@ -129,7 +131,7 @@ BinOverAntipatternVerification >> getIdentityPathFor: aSource withProvider: aIde
 	^ result.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 BinOverAntipatternVerification >> isDisjointMissingFor: sourcePath and: targetPath withIdentityProvider: identityProvider [
 	| sourceGeneralization targetGeneralization commonGeneralizationSets |
 	sourceGeneralization := sourcePath at: identityProvider.
@@ -144,7 +146,7 @@ BinOverAntipatternVerification >> isDisjointMissingFor: sourcePath and: targetPa
 	^ commonGeneralizationSets anySatisfy: [ :genSet | (genSet isDisjoint) not. ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 BinOverAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
 	| source target |
 	source := OntoUMLModelQuery getSourceFrom: aVerifiedAssociation.

@@ -6,32 +6,34 @@ Overriden methods: verifiedClass, verifyObject:withModel:, verifiedStereotypes.
 New methods: calculateMultiplicity:, calculateMultiplicity:forMediation:, fulfilsMediationDependecy:.
 "
 Class {
-	#name : #RoleMediationDependencyVerification,
-	#superclass : #StereotypeVerification,
-	#category : #'OntoUML-VerificationFramework-Verification-Classes'
+	#name : 'RoleMediationDependencyVerification',
+	#superclass : 'StereotypeVerification',
+	#category : 'OntoUML-VerificationFramework-Verification-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RoleMediationDependencyVerification class >> abbreviation [
 	^ 'RoleMediationDependency'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RoleMediationDependencyVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RoleMediationDependencyVerification class >> verifiedStereotypes [
 	^ { OntoUMLRole.}.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RoleMediationDependencyVerification >> fulfillsMediationDependency: aMediation [
 	^ (aMediation memberEnds at: 1) lower >= 1 and: (aMediation memberEnds at: 2) lower >= 1
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RoleMediationDependencyVerification >> putRoleAndItsPredecessors: aRole intoSet: aSet [
 	aSet add: aRole.
 	aRole generalizations ifEmpty: [ ^ self. ].
@@ -41,7 +43,7 @@ RoleMediationDependencyVerification >> putRoleAndItsPredecessors: aRole intoSet:
 				(self putRoleAndItsPredecessors: generalization general intoSet: aSet) ]. ]. ].	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RoleMediationDependencyVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| mediations roleTree |
 	roleTree := Set new.

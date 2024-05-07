@@ -2,32 +2,34 @@
 I represent tests for DecIntAntipatternVerification.
 "
 Class {
-	#name : #DecIntAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'DecIntAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 DecIntAntipatternVerificationTest >> getTestedClass [
 	^ DecIntAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DecIntAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DecIntAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLSubKind. OntoUMLPhase. OntoUMLMode. OntoUMLRole. OntoUMLRelator.}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DecIntAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DecIntAntipatternVerificationTest >> testInvalidModel [
 	| firstKind secondKind subKind firstGeneralization secondGeneralization generalizationSet model result |
 	firstKind := self createClass: 'firstKind'  withStereotype: OntoUMLKind.
@@ -45,12 +47,12 @@ DecIntAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DecIntAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DecIntAntipatternVerificationTest >> testValidModel [
 	| kind role rolemixin firstGeneralization secondGeneralization model result |
 	kind := self createClass: 'kind'  withStereotype: OntoUMLKind.
@@ -65,17 +67,17 @@ DecIntAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DecIntAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DecIntAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DecIntAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

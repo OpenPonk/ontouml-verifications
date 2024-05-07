@@ -2,32 +2,34 @@
 I represent tests for RelRigAntipatternVerification.
 "
 Class {
-	#name : #RelRigAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'RelRigAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelRigAntipatternVerificationTest >> getTestedClass [
 	^ RelRigAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelRigAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelRigAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelRigAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelRigAntipatternVerificationTest >> testInvalidModel [
 	| kind relator mediation model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -40,12 +42,12 @@ RelRigAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelRigAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelRigAntipatternVerificationTest >> testValidModel [
 	| kind role relator mediation generalization model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -60,17 +62,17 @@ RelRigAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelRigAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelRigAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelRigAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

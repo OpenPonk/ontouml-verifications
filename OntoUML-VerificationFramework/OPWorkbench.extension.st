@@ -1,6 +1,6 @@
-Extension { #name : #OPWorkbench }
+Extension { #name : 'OPWorkbench' }
 
-{ #category : #'*OntoUML-VerificationFramework' }
+{ #category : '*OntoUML-VerificationFramework' }
 OPWorkbench >> getAntiPatternSettingMessageFor: aAntiPattern [
 	^ aAntiPattern name , '
 	<systemsettings>
@@ -13,7 +13,7 @@ OPWorkbench >> getAntiPatternSettingMessageFor: aAntiPattern [
 		default: true'.
 ]
 
-{ #category : #'*OntoUML-VerificationFramework' }
+{ #category : '*OntoUML-VerificationFramework' }
 OPWorkbench class >> verificationFrameworkSettingsGroups: aBuilder [
 
 	"I create groups for anti-patterns and verifications."

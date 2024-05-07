@@ -2,32 +2,34 @@
 I represent tests for CharacterizedVerification.
 "
 Class {
-	#name : #CharacterizedVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Verification-Tests'
+	#name : 'CharacterizedVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Verification-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 CharacterizedVerificationTest >> getTestedClass [
 	^ CharacterizedVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 CharacterizedVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 CharacterizedVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLMode. OntoUMLQuality. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterizedVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterizedVerificationTest >> testInvalidModel [
 	| quality kind model result |
 	kind := OPUMLClass new.
@@ -40,12 +42,12 @@ CharacterizedVerificationTest >> testInvalidModel [
 	self assert: result results size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterizedVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterizedVerificationTest >> testValidModel [
 	| quality association kind model result |
 	kind := OPUMLClass new.
@@ -60,17 +62,17 @@ CharacterizedVerificationTest >> testValidModel [
 	self assert: result results size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterizedVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterizedVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterizedVerificationTest >> testVerifyMultiplicityForCharacterization [
 	| kind mode characterization |
 	kind := (OPUMLClass new) applyStereotype: OntoUMLKind new.
@@ -81,13 +83,13 @@ CharacterizedVerificationTest >> testVerifyMultiplicityForCharacterization [
 	self assert: (self getTestedClass basicNew verifyMultiplicity: mode forCharacterization: characterization) isEmpty equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterizedVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterizedVerificationTest >> testVerifyWithModel [
 	self testInvalidModel.
 	self testValidModel.

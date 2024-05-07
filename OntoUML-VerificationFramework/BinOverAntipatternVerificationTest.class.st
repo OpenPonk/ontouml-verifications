@@ -2,27 +2,29 @@
 I represent tests for BinOverAntipatternVerification.
 "
 Class {
-	#name : #BinOverAntipatternVerificationTest,
-	#superclass : #AbstractVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'BinOverAntipatternVerificationTest',
+	#superclass : 'AbstractVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 BinOverAntipatternVerificationTest >> getTestedClass [
 	^ BinOverAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 BinOverAntipatternVerificationTest >> getVerifiedClass [
  ^ OPUMLAssociation.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BinOverAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest. 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BinOverAntipatternVerificationTest >> testCheckOverlapForAnd [
 	| kind subkind role |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -32,7 +34,7 @@ BinOverAntipatternVerificationTest >> testCheckOverlapForAnd [
 	self assert:  (self getTestedClass basicNew checkOverlapFor: { kind.  subkind. } asSet and: { subkind. role. } asSet ) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BinOverAntipatternVerificationTest >> testInvalidModel [
 	| kind association model result |
 	kind := self createClass: 'kind' withStereotype:  OntoUMLKind.
@@ -44,12 +46,12 @@ BinOverAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageWarning. ]).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BinOverAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BinOverAntipatternVerificationTest >> testValidModel [
 	| kind secondKind association model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -61,12 +63,12 @@ BinOverAntipatternVerificationTest >> testValidModel [
 	self assert: result results size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BinOverAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BinOverAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

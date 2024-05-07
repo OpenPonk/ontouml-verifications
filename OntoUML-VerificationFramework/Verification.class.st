@@ -2,51 +2,53 @@
 I am (abstract) verification. All other verifications should be my subclasses.
 "
 Class {
-	#name : #Verification,
-	#superclass : #Object,
+	#name : 'Verification',
+	#superclass : 'Object',
 	#traits : 'TProfileGatherer',
 	#classTraits : 'TProfileGatherer classTrait',
-	#category : #'OntoUML-VerificationFramework-Verification-Classes'
+	#category : 'OntoUML-VerificationFramework-Verification-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Verification class >> abbreviation [
 	^ 'Verification'.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Verification class >> canVerify: aVerifiedObject [
 	^ aVerifiedObject class = self verifiedClass.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Verification class >> expandAllowedClassStereotypesIn: aCollection from: aUpdater [
 	 aCollection isString ifTrue: [ ^ self expandClassStereotype: aCollection from: aUpdater. ]
 			ifFalse: [ ^ (aCollection collect: [ :item | self expandClassStereotype: item from: aUpdater ]) flattened asSet. ].
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Verification class >> expandClassStereotype: aString from: aUpdater [
 	(aString = '*' or: aString = 'Functional complex') ifTrue: [ ^ aUpdater classSpecifications collect: [ :spec | spec name ] ]
 		ifFalse: [ ^ { aString. }. ]. 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Verification class >> new [
 	^ self shouldNotImplement.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Verification class >> updateFrom: aVerificationUpdater [
 
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Verification class >> verifiedClass [
 	^ nil.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Verification class >> verify: aVerifiedObject withModel: aVerifiedModel [
 	| verification |
 	(self canVerify: aVerifiedObject) ifFalse: [ ^ {} ].
@@ -54,7 +56,7 @@ Verification class >> verify: aVerifiedObject withModel: aVerifiedModel [
 	^ verification verifyObject: aVerifiedObject withModel: aVerifiedModel.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 Verification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	self subclassResponsibility.
 ]

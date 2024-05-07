@@ -4,12 +4,14 @@ I represent main gate to the verification framework.
 My responsibility is to start verifications and return their results in form of VerificationResults instance.
 "
 Class {
-	#name : #VerificationController,
-	#superclass : #Object,
-	#category : #'OntoUML-VerificationFramework-Controllers'
+	#name : 'VerificationController',
+	#superclass : 'Object',
+	#category : 'OntoUML-VerificationFramework-Controllers',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Controllers'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 VerificationController class >> isVerifiable: aObject includeGeneralizations: aBoolean [
 	(aObject isKindOf: OPUMLClass) ifTrue: [ ^ true. ].
 	(aObject isKindOf: OPUMLAssociation) ifTrue: [ ^ true. ].
@@ -17,7 +19,7 @@ VerificationController class >> isVerifiable: aObject includeGeneralizations: aB
 	^ false.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 VerificationController >> detectAntiPatternsIn: aVerifiedModel [
 	| verifiedObjects antiPatternVerifications results |
 	verifiedObjects := self getVerifiedObjects: aVerifiedModel.
@@ -28,21 +30,21 @@ VerificationController >> detectAntiPatternsIn: aVerifiedModel [
 	^ results.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 VerificationController >> getAntiPatternVerifications [
 	^ (RPackageOrganizer default packageNamed: 'OntoUML-VerificationFramework')
 		definedClasses
 		select: [ :class | class tags asSet includes: 'Antipattern-Classes'. ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 VerificationController >> getVerifications [
 	^ (RPackageOrganizer default packageNamed: 'OntoUML-VerificationFramework')
 		definedClasses
 		select: [ :class | class tags asSet includes: 'Verification-Classes' ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 VerificationController >> getVerifiedObjects: aVerifiedModel [
 	| verifiedObjects generalizations |
 	verifiedObjects := aVerifiedModel packagedElements select:	[ :element | self class isVerifiable: element includeGeneralizations: false. ].
@@ -53,7 +55,7 @@ VerificationController >> getVerifiedObjects: aVerifiedModel [
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 VerificationController >> verify: aVerifiedModel [
 	| verifiedObjects verifications results |
 	verifiedObjects := self getVerifiedObjects: aVerifiedModel.
@@ -63,7 +65,7 @@ VerificationController >> verify: aVerifiedModel [
 	^ results.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 VerificationController >> verifySingleObject: aVerifiedObject withVerifications: aVerifications withModel: aVerifiedModel withResults: aVerificationResults [
 	^ (aVerifications do: [ :verification | aVerificationResults addResults: (verification verify: aVerifiedObject withModel: aVerifiedModel) ]).
 ]

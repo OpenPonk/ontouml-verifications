@@ -6,27 +6,29 @@ Overriden methods: verifiedClass, verifyObject:withModel:, verifiedStereotypes.
 New methods: calculateMultiplicity:, calculateMultiplicity:forMediation:, fulfilsMediationDependecy:.
 "
 Class {
-	#name : #RelationDependencyVerification,
-	#superclass : #StereotypeVerification,
-	#category : #'OntoUML-VerificationFramework-Verification-Classes'
+	#name : 'RelationDependencyVerification',
+	#superclass : 'StereotypeVerification',
+	#category : 'OntoUML-VerificationFramework-Verification-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelationDependencyVerification class >> abbreviation [
 	^ 'RoleMediationDependency'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelationDependencyVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelationDependencyVerification class >> verifiedStereotypes [
 	^ { OntoUMLRole.}.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelationDependencyVerification >> fulfillsRelationalDependency: aRelation [
 	| sourceLowerBound targetLowerBound |
 	sourceLowerBound := (OntoUMLModelQuery getSourceEndFrom: aRelation) lower value.
@@ -35,7 +37,7 @@ RelationDependencyVerification >> fulfillsRelationalDependency: aRelation [
 		and: (targetLowerBound = '*' ifTrue: [ true. ] ifFalse: [ targetLowerBound >= 1. ]).
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelationDependencyVerification >> isMandatoryRelationConnectedTo: aObjectCollection withModel: aVerifiedModel [
 	| relations |
 	"Get all relations connected to one or more objects from aObjectCollection."
@@ -48,7 +50,7 @@ RelationDependencyVerification >> isMandatoryRelationConnectedTo: aObjectCollect
 	^ relations anySatisfy: [ :relation | self fulfillsRelationalDependency: relation ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelationDependencyVerification >> putRoleAndItsPredecessors: aRole intoSet: aSet [
 	aSet add: aRole.
 	aRole generalizations ifEmpty: [ ^ self. ].
@@ -58,7 +60,7 @@ RelationDependencyVerification >> putRoleAndItsPredecessors: aRole intoSet: aSet
 				(self putRoleAndItsPredecessors: generalization general intoSet: aSet) ]. ]. ].	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelationDependencyVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| roleTree |
 	roleTree := Set new.

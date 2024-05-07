@@ -6,29 +6,31 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for RepRel anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRepRel.
 "
 Class {
-	#name : #RepRelAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'RepRelAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater + TAncestorGartherer',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait + TAncestorGartherer classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RepRelAntipatternVerification class >> abbreviation [
 	^ 'RepRel'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RepRelAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RepRelAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RepRelAntipatternVerification >> createWarningMessageFor: aVerifiedObject [
  	^ {VerificationMessageWarning createFor: aVerifiedObject
 		withVerification: self
@@ -37,7 +39,7 @@ RepRelAntipatternVerification >> createWarningMessageFor: aVerifiedObject [
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RepRelAntipatternVerification >> getMediationsFor: aVerifiedObjects fromModel: aVerifiedModel [
 	^ OntoUMLModelQuery getAssociationsFrom: aVerifiedModel
 			withStereotype: OntoUMLMediation 
@@ -47,7 +49,7 @@ RepRelAntipatternVerification >> getMediationsFor: aVerifiedObjects fromModel: a
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RepRelAntipatternVerification >> getUpperBoundMultiplicityOf: aMediation for: aVerifiedObjects [
 	| multiplicity upperBound|
 	multiplicity := (aMediation memberEnds
@@ -59,7 +61,7 @@ RepRelAntipatternVerification >> getUpperBoundMultiplicityOf: aMediation for: aV
 	^ upperBound.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RepRelAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
  	| mediations verifiedObjectAndAncestors |
 	verifiedObjectAndAncestors := self class getAncestorsFor: aVerifiedObject. 

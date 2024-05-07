@@ -6,19 +6,21 @@ Overriden methods: verifiedClass, verifyObject:withModel:, verifiedStereotypes.
 New methods: identityProviders, hasIdentity:, getSuperClassesFromModel:, countIdentitySources:fromModel:withAccumulator:.
 "
 Class {
-	#name : #IdentityRequiredVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'IdentityRequiredVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Verification-Classes'
+	#category : 'OntoUML-VerificationFramework-Verification-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 IdentityRequiredVerification class >> abbreviation [
 	^ 'IdentityRequired'.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 IdentityRequiredVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| identityProvidersCode |
 	identityProvidersCode := '"I return list of all OntoUML identity providers.
@@ -32,29 +34,29 @@ identityProviders
 	^ identityProvidersCode.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 IdentityRequiredVerification class >> identityProviders [
 	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLMode. OntoUMLQuality. }
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 IdentityRequiredVerification class >> updateFrom: aVerificationUpdater [
 	| identityProvidersCode |
 	identityProvidersCode := self getUpdatedMessageCode: aVerificationUpdater.
 	self updateMessage: identityProvidersCode withClassification: 'constants'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 IdentityRequiredVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 IdentityRequiredVerification class >> verifiedStereotypes [
 	^ {OntoUMLSubKind. OntoUMLPhase. OntoUMLRole.}.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 IdentityRequiredVerification >> countIdentitySources: aVerifiedObject fromModel: aVerifiedModel withAccumulator: aVerificationAccumulator [
 	| stereotype superclasses results |
 	(aVerificationAccumulator anySatisfy: [ :element | element = aVerifiedObject ]) ifTrue: [ ^ Float negativeInfinity. ].
@@ -67,19 +69,19 @@ IdentityRequiredVerification >> countIdentitySources: aVerifiedObject fromModel:
 	^ results.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 IdentityRequiredVerification >> getSuperClasses: aVerifiedObject fromModel: aVerifiedModel [
 	^ ((aVerifiedModel select: [ :element | element class = OPUMLGeneralization ])
 		select: [ :generalizaion | generalizaion  specific = aVerifiedObject ])
 			collect: [ :generalization | generalization general ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 IdentityRequiredVerification >> hasIdentity: aVerifiedStereotype [
 	^ self class identityProviders anySatisfy: [ :identityProvider | identityProvider = aVerifiedStereotype class ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 IdentityRequiredVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| identityCount verificationAccumulator |
 	verificationAccumulator := Set new.

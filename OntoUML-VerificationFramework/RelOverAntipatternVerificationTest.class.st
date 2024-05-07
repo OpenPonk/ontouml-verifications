@@ -2,12 +2,14 @@
 I represent tests for RelOverAntipatternVerification.
 "
 Class {
-	#name : #RelOverAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'RelOverAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> getInvalidModel [
 	| relator kind subkind firstMediation secondMediation generalization |
 	relator := self createClass: 'relator' withStereotype: OntoUMLRelator.
@@ -24,12 +26,12 @@ RelOverAntipatternVerificationTest >> getInvalidModel [
 	^ { relator. kind. subkind. firstMediation. firstMediation. generalization .}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> getTestedClass [
 	^ RelOverAntipatternVerification.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> getValidModel [
 	| relator firstKind secondKind firstMediation secondMediation |
 	relator := self createClass: 'relator' withStereotype: OntoUMLRelator.
@@ -42,22 +44,22 @@ RelOverAntipatternVerificationTest >> getValidModel [
 	^ { relator. firstKind. secondKind. firstMediation. secondMediation. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testCheckForOverlap [
 	| relator mediatedObjects model testedClass |
 	testedClass := self getTestedClass basicNew.
@@ -72,7 +74,7 @@ RelOverAntipatternVerificationTest >> testCheckForOverlap [
 	self assert: (testedClass checkForOverlap: mediatedObjects) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	| relator mediatedObjects model testedClass |
 	testedClass := self getTestedClass basicNew.
@@ -87,7 +89,7 @@ RelOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	self assert: (testedClass checkUpperMultiplicityFor: mediatedObjects) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testGetMediatedEndsForFrom [	
 	| relator mediatedObjects model |
 	model := self getValidModel.
@@ -97,7 +99,7 @@ RelOverAntipatternVerificationTest >> testGetMediatedEndsForFrom [
 	self assert: (self getTestedClass basicNew getMediatedEndsFor: relator from: model) asOrderedCollection equals: mediatedObjects.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testInvalidModel [
 	| relator model result |	
 	model := self getInvalidModel.
@@ -107,12 +109,12 @@ RelOverAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testValidModel [
 	| relator model result |	
 	model := self getValidModel.
@@ -122,17 +124,17 @@ RelOverAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelOverAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

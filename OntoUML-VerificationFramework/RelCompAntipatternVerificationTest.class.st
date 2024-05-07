@@ -2,12 +2,14 @@
 I represent tests for RelCompAntipatternVerification.
 "
 Class {
-	#name : #RelCompAntipatternVerificationTest,
-	#superclass : #AbstractVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'RelCompAntipatternVerificationTest',
+	#superclass : 'AbstractVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> getInvalidModel [
 	| sourceA tagetA sourceB targetB associationA associationB firstGeneralization secondGeneralization |
 	sourceA := self createClass: 'sourceA' withStereotype: OntoUMLKind.
@@ -24,12 +26,12 @@ RelCompAntipatternVerificationTest >> getInvalidModel [
 	^ { associationA. associationB. sourceA. tagetA. sourceB. targetB. firstGeneralization. secondGeneralization. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelCompAntipatternVerificationTest >> getTestedClass [
 	^ RelCompAntipatternVerification.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> getValidModel [
 	| sourceA tagetA sourceB targetB associationA associationB firstGeneralization secondGeneralization |
 	sourceA := self createClass: 'sourceA' withStereotype: OntoUMLKind.
@@ -46,17 +48,17 @@ RelCompAntipatternVerificationTest >> getValidModel [
 	^ { associationA. associationB. sourceA. tagetA. sourceB. targetB. firstGeneralization. secondGeneralization. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelCompAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> testCheckBoundsFor [
 	| kindA kindB associationA associationB testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
@@ -78,7 +80,7 @@ RelCompAntipatternVerificationTest >> testCheckBoundsFor [
 	self assert: (testedClassInstance checkBoundsFor: associationB memberEnds second) equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> testContainsAncestorOrSelfOf [
 	| kind subkindA subkindB subkindC kindB testedClassInstance ancestorTree  |
 	testedClassInstance := self getTestedClass basicNew.
@@ -97,7 +99,7 @@ RelCompAntipatternVerificationTest >> testContainsAncestorOrSelfOf [
 	self assert: (testedClassInstance contains: ancestorTree ancestorOrSelfOf: kindB) equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> testInvalidModel [
 	| associationA model result |
 	model := self getInvalidModel.
@@ -107,12 +109,12 @@ RelCompAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> testRelCompExistsBetweenAnd [
 	| model associationA associationB |
 	model := self getValidModel.
@@ -126,7 +128,7 @@ RelCompAntipatternVerificationTest >> testRelCompExistsBetweenAnd [
 	self assert: (self getTestedClass basicNew relCompExistsBetween: associationA and: associationB) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> testValidModel [
 	| associationA  model result |	
 	model := self getValidModel.
@@ -136,12 +138,12 @@ RelCompAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelCompAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

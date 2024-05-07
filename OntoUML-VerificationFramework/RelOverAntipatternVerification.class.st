@@ -6,29 +6,31 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for RelOver anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRelOver.
 "
 Class {
-	#name : #RelOverAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'RelOverAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater + TAncestorGartherer',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait + TAncestorGartherer classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelOverAntipatternVerification class >> abbreviation [
 	^ 'RelOver'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelOverAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelOverAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelOverAntipatternVerification >> checkForOverlap: aMediatedEnds [
 	| accumulator tmpAccumulator |
 	accumulator := Set new.
@@ -45,7 +47,7 @@ RelOverAntipatternVerification >> checkForOverlap: aMediatedEnds [
 	^ false.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelOverAntipatternVerification >> checkOverlapForMixins: aMixinCollection from: aModel [
 	| children accumulator |
 	accumulator := Set new.
@@ -56,13 +58,13 @@ RelOverAntipatternVerification >> checkOverlapForMixins: aMixinCollection from: 
 	^ false.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelOverAntipatternVerification >> checkUpperMultiplicityFor: aMediatedEnds [
 	^ (aMediatedEnds collect: [ :end | end upper = '*' ifTrue: [ Float infinity. ] ifFalse: [ end upper. ]. ]) sumNumbers > 2.
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelOverAntipatternVerification >> getMediatedEndsFor: aRelator from: aModel [	
 	^ (OntoUMLModelQuery getAssociationsFrom: aModel
 			withStereotype: OntoUMLMediation
@@ -73,7 +75,7 @@ RelOverAntipatternVerification >> getMediatedEndsFor: aRelator from: aModel [
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelOverAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVerifiedModel [
 	| mediatedEnds mixins |
 	mediatedEnds := self getMediatedEndsFor: aVerifiedRelator from: aVerifiedModel.

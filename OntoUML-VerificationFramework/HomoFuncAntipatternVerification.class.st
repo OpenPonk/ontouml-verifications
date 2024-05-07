@@ -6,42 +6,44 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for HomoFunc anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForHomoFunc.
 "
 Class {
-	#name : #HomoFuncAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'HomoFuncAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 HomoFuncAntipatternVerification class >> abbreviation [
 	^ 'HomoFunc'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 HomoFuncAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 HomoFuncAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLComponentOf. }.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HomoFuncAntipatternVerification >> getSortalDescendantsFor: aElement from: aModel [
 	^ (OntoUMLModelQuery getDescendantsFor: aElement from: aModel)
 	 		select: [ :descendant | OntoUMLModelQuery isStereotypeOf: descendant oclKindOf: 'Sortal'. ].
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HomoFuncAntipatternVerification >> hasKindAsAncestor: aElement [
 	^ (OntoUMLModelQuery getAncestorsFor: aElement)
 	 		anySatisfy:	[ :ancestor | 
 				(self class getStereotype: ancestor) class = OntoUMLKind. ].
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HomoFuncAntipatternVerification >> isFunctionalComplex: aElement in: aModel [
 	| stereotype | 
 	stereotype := (OntoUMLModelQuery getStereotype: aElement).
@@ -56,7 +58,7 @@ HomoFuncAntipatternVerification >> isFunctionalComplex: aElement in: aModel [
 			allSatisfy: [ :child | self isFunctionalComplex: child in: aModel. ] ).
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 HomoFuncAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
 	| whole partEnd wholeAncestorsAndDescendants |
 	whole :=	OntoUMLModelQuery getSourceFrom: aVerifiedAssociation.

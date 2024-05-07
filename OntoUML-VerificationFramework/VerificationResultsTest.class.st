@@ -1,10 +1,12 @@
 Class {
-	#name : #VerificationResultsTest,
-	#superclass : #TestCase,
-	#category : #'OntoUML-VerificationFramework-Results'
+	#name : 'VerificationResultsTest',
+	#superclass : 'TestCase',
+	#category : 'OntoUML-VerificationFramework-Results',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Results'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationResultsTest >> testAddResult [
 	| verificationResults dummyMessage |
 	dummyMessage := 'dummyMessage'.	
@@ -14,7 +16,7 @@ VerificationResultsTest >> testAddResult [
 	self assert: (verificationResults results anySatisfy: [ :item | item = dummyMessage ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationResultsTest >> testAddResults [
 	| verificationResults dummyMessageCollection |
 	dummyMessageCollection := {'dummyMessage'. 'dummyMessage2'}.	
@@ -26,7 +28,7 @@ VerificationResultsTest >> testAddResults [
 	self assert: (verificationResults results anySatisfy: [ :item | item = (dummyMessageCollection at: 2) ]).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationResultsTest >> testHasErrors [
 	| verificationResults dummyMessage dummyObject dummyVerification |
 	dummyObject := Object new.
@@ -38,7 +40,7 @@ VerificationResultsTest >> testHasErrors [
 	self assert: (verificationResults hasErrors: dummyObject).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationResultsTest >> testHasWarnings [
 	| verificationResults dummyMessage dummyObject dummyVerification |
 	dummyObject := Object new.
@@ -50,12 +52,12 @@ VerificationResultsTest >> testHasWarnings [
 	self assert: (verificationResults hasWarnings: dummyObject).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationResultsTest >> testInitialize [
 	self assert: VerificationResults new results equals: Set new.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationResultsTest >> testResults [
 	| verificationResults dummyMessage |
 	dummyMessage := 'dummyMessage'.	
@@ -66,7 +68,7 @@ VerificationResultsTest >> testResults [
 	self assert: (verificationResults results anySatisfy: [ :item | item = dummyMessage ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationResultsTest >> testSelectErrors [
 	| verificationResults dummyMessage dummyObject dummyVerification |
 	dummyObject := Object new.
@@ -79,7 +81,7 @@ VerificationResultsTest >> testSelectErrors [
 	self assert: (verificationResults selectErrors anySatisfy: [ :item | item = dummyMessage ]).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationResultsTest >> testSelectWarnings [
 	| verificationResults dummyMessage dummyObject dummyVerification |
 	dummyObject := Object new.

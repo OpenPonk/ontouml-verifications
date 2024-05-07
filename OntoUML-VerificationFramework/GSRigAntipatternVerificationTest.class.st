@@ -2,27 +2,29 @@
 I represent tests for GSRigAntipatternVerification.
 "
 Class {
-	#name : #GSRigAntipatternVerificationTest,
-	#superclass : #AbstractVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'GSRigAntipatternVerificationTest',
+	#superclass : 'AbstractVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 GSRigAntipatternVerificationTest >> getTestedClass [
 	^ GSRigAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 GSRigAntipatternVerificationTest >> getVerifiedClass [
  ^ OPUMLGeneralizationSet.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GSRigAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest. 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GSRigAntipatternVerificationTest >> testIncludesAntiRigidSubtype [
 	| roleMixin kind mixin genSet |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -38,7 +40,7 @@ GSRigAntipatternVerificationTest >> testIncludesAntiRigidSubtype [
 	self assert: (self getTestedClass basicNew includesAntiRigidSubtype: genSet) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GSRigAntipatternVerificationTest >> testIncludesRigidSubtype [
 	| role subkindA kind genSet |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -54,7 +56,7 @@ GSRigAntipatternVerificationTest >> testIncludesRigidSubtype [
 	self assert: (self getTestedClass basicNew isSupertypeRigid: genSet) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GSRigAntipatternVerificationTest >> testInvalidModel [
 	| kind subkind role genA genB genSet model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -71,7 +73,7 @@ GSRigAntipatternVerificationTest >> testInvalidModel [
 	self assert: result results size equals: 2.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GSRigAntipatternVerificationTest >> testIsSupertypeRigid [
 	| role subkindA subkindB kind genSet |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -89,12 +91,12 @@ GSRigAntipatternVerificationTest >> testIsSupertypeRigid [
 	self assert: (self getTestedClass basicNew isSupertypeRigid: genSet) equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GSRigAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GSRigAntipatternVerificationTest >> testValidModel [
 	| mixin subkind role genA genB genSet model result |
 	mixin := self createClass: 'mixin' withStereotype: OntoUMLMixin.
@@ -111,12 +113,12 @@ GSRigAntipatternVerificationTest >> testValidModel [
 	self assert: result results size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GSRigAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GSRigAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

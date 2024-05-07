@@ -6,34 +6,36 @@ Overriden methods: verifiedClass, verifyObject:withModel:
 Documentation for ImpAbs anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForImpAbs.
 "
 Class {
-	#name : #ImpAbsAntipatternVerification,
-	#superclass : #Verification,
+	#name : 'ImpAbsAntipatternVerification',
+	#superclass : 'Verification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerification class >> abbreviation [
 	^ 'ImpAbs'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 ImpAbsAntipatternVerification >> checkNumberOfChildrenFor: aElementEnd from: aModel [
  	^ (OntoUMLModelQuery getChildrenOf: aElementEnd type from: aModel) size >= 2.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 ImpAbsAntipatternVerification >> checkUpperMultiplicityFor: aEnd [
 	^ aEnd upperBound = '*' ifTrue: [ ^ true. ] ifFalse: [ ^ aEnd upperBound >= 2 ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 ImpAbsAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
 	| sourceEnd targetEnd |
 	sourceEnd := OntoUMLModelQuery getSourceEndFrom: aVerifiedAssociation.

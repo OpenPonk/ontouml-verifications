@@ -8,22 +8,24 @@ Overriden methods: canVerify.
 New methods: canVerifyStereotype:, verifiedStereotypes.
 "
 Class {
-	#name : #StereotypeVerification,
-	#superclass : #Verification,
-	#category : #'OntoUML-VerificationFramework-Verification-Classes'
+	#name : 'StereotypeVerification',
+	#superclass : 'Verification',
+	#category : 'OntoUML-VerificationFramework-Verification-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StereotypeVerification class >> abbreviation [
 	^ 'StereotypeVerification'.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StereotypeVerification class >> canVerify: aVerifiedObject [
 	^ (super canVerify: aVerifiedObject) and: (self canVerifyStereotype: aVerifiedObject).
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StereotypeVerification class >> canVerifyStereotype: aVerifiedObject [
 	| stereotype |
 	stereotype := self getStereotype: aVerifiedObject.
@@ -31,7 +33,7 @@ StereotypeVerification class >> canVerifyStereotype: aVerifiedObject [
 	^ self verifiedStereotypes anySatisfy: [ :class | class = stereotype class ].
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 StereotypeVerification class >> verifiedStereotypes [
 	^ {}.	
 ]

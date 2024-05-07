@@ -2,32 +2,34 @@
 I represent tests for HomoFuncAntipatternVerification.
 "
 Class {
-	#name : #HomoFuncAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'HomoFuncAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 HomoFuncAntipatternVerificationTest >> getTestedClass [
 	^ HomoFuncAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 HomoFuncAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 HomoFuncAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLComponentOf. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testGetSortalDescendantsForFrom [
 	| ancestor kindA kindB mixin roleMixin model |
 	ancestor := self createClass: 'ancestor' withStereotype: OntoUMLMixin.
@@ -56,7 +58,7 @@ HomoFuncAntipatternVerificationTest >> testGetSortalDescendantsForFrom [
 			kindB} asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testHasKindAsAncestor [
 	| kindA subkindA roleA roleMixin roleB testedClassInstance |
 	kindA := self createClass: 'kindA' withStereotype: OntoUMLKind.
@@ -72,7 +74,7 @@ HomoFuncAntipatternVerificationTest >> testHasKindAsAncestor [
 	self assert: (testedClassInstance hasKindAsAncestor: roleB) equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testInvalidModel [
 	| whole funcComplex part generalization componentOf model result |
 	whole := self createClass: 'whole'  withStereotype: OntoUMLKind.
@@ -90,7 +92,7 @@ HomoFuncAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testIsFunctionalComplexIn [
 	| kind mixin subkind roleMixin role model collective testedClassInstance |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -113,12 +115,12 @@ HomoFuncAntipatternVerificationTest >> testIsFunctionalComplexIn [
 	self assert: (testedClassInstance isFunctionalComplex: collective in: model) equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testValidModel [
 	| whole funcComplex partA partB generalization componentOfA componentOfB model result |
 	whole := self createClass: 'whole'  withStereotype: OntoUMLKind.
@@ -138,17 +140,17 @@ HomoFuncAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HomoFuncAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

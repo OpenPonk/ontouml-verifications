@@ -6,19 +6,21 @@ Overriden methods: verifiedClass, verifyObject:withModel:
 New methods: validSubtypes.
 "
 Class {
-	#name : #AllowedSubtypesVerification,
-	#superclass : #Verification,
+	#name : 'AllowedSubtypesVerification',
+	#superclass : 'Verification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Verification-Classes'
+	#category : 'OntoUML-VerificationFramework-Verification-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> abbreviation [
 	^ 'AllowedSubtypes'.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 AllowedSubtypesVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| validSubtypesCode |
 	validSubtypesCode := '"I return dictionary containing collections of allowed subtypes for each OntoUML element stereotype.
@@ -36,7 +38,7 @@ validSubtypes
 	^ validSubtypesCode
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 AllowedSubtypesVerification class >> getValidSubtypesForCode: aStereotype fromCollection: aCollection [
 	| methodTemplate |
 	self checkStringForCodeInjection: aStereotype.
@@ -52,14 +54,14 @@ AllowedSubtypesVerification class >> getValidSubtypesForCode: aStereotype fromCo
 	^ methodTemplate.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 AllowedSubtypesVerification class >> setValidSubtypesFor: aStereotype fromCollection: aCollection [
 	| validSubtypesForCode |
 	validSubtypesForCode := self getValidSubtypesForCode: aStereotype fromCollection: aCollection.
 	self updateMessage: validSubtypesForCode withClassification: 'constants'.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 AllowedSubtypesVerification class >> updateFrom: aVerificationUpdater [
 	| updatedMessageCode |
 	updatedMessageCode := self getUpdatedMessageCode: aVerificationUpdater.
@@ -69,7 +71,7 @@ AllowedSubtypesVerification class >> updateFrom: aVerificationUpdater [
 	
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypes [
 	| result |
 	result := Dictionary new.
@@ -89,77 +91,77 @@ AllowedSubtypesVerification class >> validSubtypes [
 	^ result.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForCategory [
 	^ OntoUMLCategory -> { OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLCategory. OntoUMLMode. OntoUMLQuality. OntoUMLRole. OntoUMLPhase. OntoUMLRoleMixin. OntoUMLPhaseMixin. OntoUMLMixin. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForCollective [
 	^ OntoUMLCollective -> { OntoUMLSubKind. OntoUMLPhase. OntoUMLRole. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForKind [
 	^ OntoUMLKind -> { OntoUMLSubKind. OntoUMLPhase. OntoUMLRole. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForMixin [
 	^ OntoUMLMixin -> { OntoUMLSubKind. OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLCategory. OntoUMLMixin. OntoUMLRole. OntoUMLPhase. OntoUMLRoleMixin. OntoUMLPhaseMixin. OntoUMLRelator. OntoUMLQuality. OntoUMLMode. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForMode [
 	^ OntoUMLMode -> { OntoUMLSubKind. OntoUMLRole. OntoUMLPhase. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForPhase [
 	^ OntoUMLPhase -> { OntoUMLPhase. OntoUMLRole. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForPhaseMixin [
 	^ OntoUMLPhaseMixin -> { OntoUMLPhase. OntoUMLPhaseMixin. OntoUMLRole. OntoUMLRoleMixin. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForQuality [
 	^ OntoUMLQuality -> { OntoUMLSubKind. OntoUMLRole. OntoUMLPhase. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForQuantity [
 	^ OntoUMLQuantity -> { OntoUMLSubKind. OntoUMLPhase. OntoUMLRole. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForRelator [
 	^ OntoUMLRelator -> { OntoUMLSubKind. OntoUMLPhase. OntoUMLRole. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForRole [
 	^ OntoUMLRole -> { OntoUMLRole. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForRoleMixin [
 	^ OntoUMLRoleMixin -> { OntoUMLRole. OntoUMLRoleMixin. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> validSubtypesForSubKind [
 	^ OntoUMLSubKind -> { OntoUMLSubKind. OntoUMLPhase. OntoUMLRole. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AllowedSubtypesVerification class >> verifiedClass [
 	^ OPUMLGeneralization.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 AllowedSubtypesVerification >> verifyObject: aVerifiedGeneralization withModel: aVerifiedModel [
 	| generalStereotype specificStereotype |
 	generalStereotype := self class getStereotype: aVerifiedGeneralization general.

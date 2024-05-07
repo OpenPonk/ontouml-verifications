@@ -2,27 +2,29 @@
 I represent tests for OntoUMLClassStereotypeYaml.
 "
 Class {
-	#name : #OntoUMLClassStereotypeYamlTest,
-	#superclass : #OntoUMLStereotypeYamlTest,
-	#category : #'OntoUML-VerificationFramework-Updating'
+	#name : 'OntoUMLClassStereotypeYamlTest',
+	#superclass : 'OntoUMLStereotypeYamlTest',
+	#category : 'OntoUML-VerificationFramework-Updating',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Updating'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLClassStereotypeYamlTest >> getTestedClass [
  ^ OntoUMLClassStereotypeYaml.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLClassStereotypeYamlTest >> referenceYaml [
 	^ super referenceYaml at: 'class_stereotype'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLClassStereotypeYamlTest >> referenceYamlAlternative [
 	^ super referenceYamlAlternative at: 'class_stereotype'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLClassStereotypeYamlTest >> referenceYamlAlternativeText [
 	^ 'class_stereotype:
   name: Mixin
@@ -50,7 +52,7 @@ OntoUMLClassStereotypeYamlTest >> referenceYamlAlternativeText [
 '.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLClassStereotypeYamlTest >> referenceYamlText [
 	^ 'class_stereotype:
   name: Role
@@ -77,7 +79,7 @@ OntoUMLClassStereotypeYamlTest >> referenceYamlText [
 '.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testAbstract [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -86,7 +88,7 @@ OntoUMLClassStereotypeYamlTest >> testAbstract [
 	self assert: classYaml abstract equals: (self referenceYamlAlternative at: 'abstract').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testDependency [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -95,7 +97,7 @@ OntoUMLClassStereotypeYamlTest >> testDependency [
 	self assert: classYaml forbiddenAssociations equals: (self referenceYamlAlternative at: 'forbidden_associations').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testForbiddenAssociations [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -104,7 +106,7 @@ OntoUMLClassStereotypeYamlTest >> testForbiddenAssociations [
 	self assert: classYaml forbiddenAssociations equals: (self referenceYamlAlternative at: 'forbidden_associations').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testIdentityPriciple [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -113,7 +115,7 @@ OntoUMLClassStereotypeYamlTest >> testIdentityPriciple [
 	self assert: classYaml identityPriciple equals: (self referenceYamlAlternative at: 'identity_principle').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testName [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -122,7 +124,7 @@ OntoUMLClassStereotypeYamlTest >> testName [
 	self assert: classYaml name equals: (self referenceYamlAlternative at: 'name').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testParent [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -131,7 +133,7 @@ OntoUMLClassStereotypeYamlTest >> testParent [
 	self assert: classYaml parent equals: (self referenceYamlAlternative at: 'parent').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testProvidesIdentity [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -140,7 +142,7 @@ OntoUMLClassStereotypeYamlTest >> testProvidesIdentity [
 	self assert: classYaml providesIdentity equals: ((self referenceYamlAlternative at: 'provides_identity') = 'true').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testRigidity [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -149,7 +151,7 @@ OntoUMLClassStereotypeYamlTest >> testRigidity [
 	self assert: classYaml rigidity equals: (self referenceYamlAlternative at: 'rigidity').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testSubtypes [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -158,7 +160,7 @@ OntoUMLClassStereotypeYamlTest >> testSubtypes [
 	self assert: classYaml subtypes equals: ((self referenceYamlAlternative at: 'subtypes') collect: [ :stereotype | self getTestedClass tmpCorrectStereotypeCase: stereotype ]).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testSupertypes [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	

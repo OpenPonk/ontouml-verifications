@@ -6,29 +6,31 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for RelRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRelRig.
 "
 Class {
-	#name : #RelRigAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'RelRigAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #checking }
+{ #category : 'checking' }
 RelRigAntipatternVerification class >> abbreviation [
 	^ 'RelRig'.
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 RelRigAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 RelRigAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelRigAntipatternVerification >> verifyObject: aVerifiedRelator withModel: aVerifiedModel [
 	| associations |
 	associations := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel withStereotype: OntoUMLMediation filterBy: 

@@ -6,29 +6,31 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for FreeRole anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForFreeRole.
 "
 Class {
-	#name : #FreeRoleAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'FreeRoleAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 FreeRoleAntipatternVerification class >> abbreviation [
 	^ 'FreeRole'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 FreeRoleAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 FreeRoleAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLRole. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 FreeRoleAntipatternVerification >> fulfillsMediationDependency: aMediation [
 	| sourceLowerBound targetLowerBound |
 	sourceLowerBound := (OntoUMLModelQuery getSourceEndFrom: aMediation) lower value.
@@ -37,7 +39,7 @@ FreeRoleAntipatternVerification >> fulfillsMediationDependency: aMediation [
 		and: (targetLowerBound = '*' ifTrue: [ true ] ifFalse: [targetLowerBound >= 1]).
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 FreeRoleAntipatternVerification >> fulfillsRelationalDependency: aRelation [
 	| sourceLowerBound targetLowerBound |
 	sourceLowerBound := (OntoUMLModelQuery getSourceEndFrom: aRelation) lower value.
@@ -46,7 +48,7 @@ FreeRoleAntipatternVerification >> fulfillsRelationalDependency: aRelation [
 		and: (targetLowerBound = '*' ifTrue: [ true. ] ifFalse: [ targetLowerBound >= 1. ]).
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 FreeRoleAntipatternVerification >> isFreeRoleOccuringFor: aVerifiedObject withModel: aVerifiedModel [
 	| roleAncestors |
 	 "Get all ancestors stereotyped as Rolen."
@@ -56,7 +58,7 @@ FreeRoleAntipatternVerification >> isFreeRoleOccuringFor: aVerifiedObject withMo
 	^ self isMandatoryRelationConnectedTo: roleAncestors withModel: aVerifiedModel.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 FreeRoleAntipatternVerification >> isMandatoryMediationConnectedTo: aObjectCollection withModel: aVerifiedModel [
 	| mediations |
 	"Get all mediations connected to one or more objects from aObjectCollection."
@@ -68,7 +70,7 @@ FreeRoleAntipatternVerification >> isMandatoryMediationConnectedTo: aObjectColle
 	^ mediations anySatisfy: [ :mediation | self fulfillsMediationDependency: mediation ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 FreeRoleAntipatternVerification >> isMandatoryRelationConnectedTo: aObjectCollection withModel: aVerifiedModel [
 	| relations |
 	"Get all relations connected to one or more objects from aObjectCollection."
@@ -81,7 +83,7 @@ FreeRoleAntipatternVerification >> isMandatoryRelationConnectedTo: aObjectCollec
 	^ relations anySatisfy: [ :relation | self fulfillsRelationalDependency: relation ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 FreeRoleAntipatternVerification >> isRelationDependencyFulfilledFor: aVerifiedObject withModel: aVerifiedModel [
 	| ancestorsAndSelf |
 	"Get all ancestors stereotyped as RoleMixin."
@@ -93,7 +95,7 @@ FreeRoleAntipatternVerification >> isRelationDependencyFulfilledFor: aVerifiedOb
 	^ self isMandatoryRelationConnectedTo: ancestorsAndSelf withModel: aVerifiedModel.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 FreeRoleAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	"If relational dependecy is fulfilled directly or through relator, free role doesn't occur."
 	(self isRelationDependencyFulfilledFor: aVerifiedObject withModel: aVerifiedModel) ifTrue: [ ^{}. ].

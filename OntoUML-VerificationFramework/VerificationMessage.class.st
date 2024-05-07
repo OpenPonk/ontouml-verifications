@@ -5,18 +5,20 @@ My responsibility is to store reference to verification, verified object, and te
 
 "
 Class {
-	#name : #VerificationMessage,
-	#superclass : #Object,
+	#name : 'VerificationMessage',
+	#superclass : 'Object',
 	#instVars : [
 		'objectReference',
 		'verification',
 		'messageText',
 		'documentationReference'
 	],
-	#category : #'OntoUML-VerificationFramework-Messages'
+	#category : 'OntoUML-VerificationFramework-Messages',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Messages'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VerificationMessage class >> createFor: aObject withVerification: aVerification withText: aText [
 	| message |
 	message := self basicNew.
@@ -26,7 +28,7 @@ VerificationMessage class >> createFor: aObject withVerification: aVerification 
 	^ message.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VerificationMessage class >> createFor: aObject withVerification: aVerification withText: aText documentationReference: aDocumentationReference [ 
 	| message |
 	message := self basicNew.
@@ -37,23 +39,23 @@ VerificationMessage class >> createFor: aObject withVerification: aVerification 
 	^ message.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VerificationMessage class >> new [
 	^ self shouldNotImplement.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> documentationReference [
 	documentationReference ifNil: [ documentationReference := OntoUMLDotOrgReferences getDefinitionReferenceFor: objectReference ].
 	^ documentationReference.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> documentationReference: aDocumentationReference [
 	documentationReference := aDocumentationReference.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> getObjectReferenceName [
 	(self objectReference respondsTo: #name)
 		ifTrue: [ ^ self objectReference name ].
@@ -62,37 +64,37 @@ VerificationMessage >> getObjectReferenceName [
 				, self objectReference specific name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> messageText [
 	^ messageText.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> messageText: aText [
 	^ messageText := aText.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> objectReference [
 	^ objectReference.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> objectReference: aObject [
 	^ objectReference := aObject.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> severity [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> verification [
 	^ verification.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VerificationMessage >> verification: aVerificationReference [
 	^ verification := aVerificationReference.
 ]

@@ -2,32 +2,34 @@
 I represent tests for MixIdenAntipatternVerification.
 "
 Class {
-	#name : #MixIdenAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'MixIdenAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixIdenAntipatternVerificationTest >> getTestedClass [
 	^ MixIdenAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixIdenAntipatternVerificationTest >> getVerifiedClass [
  ^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MixIdenAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ {OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory.}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixIdenAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest. 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixIdenAntipatternVerificationTest >> testInvalidModel [
 	| nonsortal sortalA sortalB identityProvider genIA genIB genNA genNB model result |
 	sortalA := self createClass: 'sortalA' withStereotype: OntoUMLSubKind.
@@ -44,12 +46,12 @@ MixIdenAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixIdenAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixIdenAntipatternVerificationTest >> testValidModel [
 	| nonsortal sortalA sortalB identityProviderA identityProviderB genIA genIB genNA genNB model result |
 	sortalA := self createClass: 'sortalA' withStereotype: OntoUMLSubKind.
@@ -67,17 +69,17 @@ MixIdenAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixIdenAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixIdenAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MixIdenAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

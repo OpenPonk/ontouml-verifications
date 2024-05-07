@@ -1,25 +1,27 @@
 Class {
-	#name : #UndefFormalAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'UndefFormalAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefFormalAntipatternVerificationTest >> getTestedClass [
 	^ UndefFormalAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefFormalAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefFormalAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLDomainFormal. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testAttributesExistFor [
 	| kind |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -28,12 +30,12 @@ UndefFormalAntipatternVerificationTest >> testAttributesExistFor [
 	self assert: (self getTestedClass basicNew attributesExistFor: kind) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testInvalidModel [
 	| firstKind secondKind firstAssociation model result |
 	firstKind := self createClass: 'firstKind' withStereotype: OntoUMLKind.
@@ -46,12 +48,12 @@ UndefFormalAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testQualitiesExistForInModel [
 	| kind quality characterisation model |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.	
@@ -65,7 +67,7 @@ UndefFormalAntipatternVerificationTest >> testQualitiesExistForInModel [
 	self assert: (self getTestedClass basicNew qualitiesExistFor: kind inModel: model) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testValidModel [
 	| firstKind secondKind quality domainFormal characterisation model result |
 	firstKind := self createClass: 'firstKind' withStereotype: OntoUMLKind.
@@ -82,17 +84,17 @@ UndefFormalAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

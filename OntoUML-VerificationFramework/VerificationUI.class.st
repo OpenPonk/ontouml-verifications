@@ -4,12 +4,14 @@ I define items in menu that are responsible for starting anti-pattern detection,
 I am also responsible for displaying results and highliting elements in the model.
 "
 Class {
-	#name : #VerificationUI,
-	#superclass : #Object,
-	#category : #'OntoUML-VerificationFramework-UI'
+	#name : 'VerificationUI',
+	#superclass : 'Object',
+	#category : 'OntoUML-VerificationFramework-UI',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'UI'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> changeElementColorTo: aColor using: aController [
 
 	| diagramElement |
@@ -19,7 +21,7 @@ VerificationUI class >> changeElementColorTo: aColor using: aController [
 	aController diagramElement strokeColor: aColor
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> removeHighlightsFromElementsIn: aDiagramController [
 
 	aDiagramController controllers do: [ :controller | 
@@ -27,7 +29,7 @@ VerificationUI class >> removeHighlightsFromElementsIn: aDiagramController [
 	aDiagramController updateCanvas
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 VerificationUI class >> toolbarMenu: aBuilder [
 
 	<opEditorToolbarMenu: #OPUmlClassEditorPlugin>
@@ -39,7 +41,7 @@ VerificationUI class >> toolbarMenu: aBuilder [
 	self toolbarMenuItemFor: aBuilder
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> toolbarMenuItemFor: aBuilder [
 
 	(aBuilder item: 'Verification')
@@ -62,7 +64,7 @@ VerificationUI class >> toolbarMenuItemFor: aBuilder [
 							aBuilder model diagramController ] ]
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> updateVerifiedElementStyle: aVerificationResults using: aController [
 
 	| color diagramElement |
@@ -79,7 +81,7 @@ VerificationUI class >> updateVerifiedElementStyle: aVerificationResults using: 
 	diagramElement strokeColor: color
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> updateVerifiedElements: aVerificationResults using: aDiagramController [
 
 	aDiagramController controllers do: [ :controller | 

@@ -6,29 +6,31 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for MultDep anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForMultDep.
 "
 Class {
-	#name : #MultDepAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'MultDepAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 MultDepAntipatternVerification class >> abbreviation [
 	^ 'MultDep'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MultDepAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MultDepAntipatternVerification class >> verifiedStereotypes [ 
 	^ { OntoUMLKind. OntoUMLQuantity. OntoUMLCollective. OntoUMLRole. OntoUMLPhase. OntoUMLSubKind. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin.}.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MultDepAntipatternVerification >> checkForRelatorOverlap: aRelators [
 	| accumulator tmpAccumulator |
 	accumulator := Set new.
@@ -44,7 +46,7 @@ MultDepAntipatternVerification >> checkForRelatorOverlap: aRelators [
 	^ false.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MultDepAntipatternVerification >> relatorHierarchyExistsFor: aAssociationSet with: aVerifiedObject [
 	| relators |
 	relators := aAssociationSet collect: [ :association | (OntoUMLModelQuery getSourceFrom: association) = aVerifiedObject 
@@ -53,7 +55,7 @@ MultDepAntipatternVerification >> relatorHierarchyExistsFor: aAssociationSet wit
 	^ self checkForRelatorOverlap: relators.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 MultDepAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| associations |
 	(OntoUMLModelQuery isStereotypeOf: aVerifiedObject oclKindOf: 'Sortal') ifFalse: [ ^ {}. ].

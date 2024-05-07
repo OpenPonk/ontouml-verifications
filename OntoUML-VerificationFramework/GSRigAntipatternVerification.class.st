@@ -6,34 +6,36 @@ Overriden methods: verifiedClass, verifyObject:withModel:
 Documentation for GSRig anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForGSRig.
 "
 Class {
-	#name : #GSRigAntipatternVerification,
-	#superclass : #Verification,
+	#name : 'GSRigAntipatternVerification',
+	#superclass : 'Verification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 GSRigAntipatternVerification class >> abbreviation [
 	^ 'GSRig'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 GSRigAntipatternVerification class >> getAntiRigidTypes [
 	^ { OntoUMLRole. OntoUMLRoleMixin. OntoUMLPhase. OntoUMLPhaseMixin. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 GSRigAntipatternVerification class >> getRigidTypes [
 	^ {  OntoUMLKind. OntoUMLSubKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLRelator. OntoUMLMode. OntoUMLQuality. OntoUMLCategory. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 GSRigAntipatternVerification class >> verifiedClass [
 	^ OPUMLGeneralizationSet.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 GSRigAntipatternVerification >> createWarningMessagesFor: aGenSet [
 	^ aGenSet generalizations collect: [ :generalization | VerificationMessageWarning 
 			createFor: generalization 
@@ -43,7 +45,7 @@ GSRigAntipatternVerification >> createWarningMessagesFor: aGenSet [
 			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForGSRig. ]
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 GSRigAntipatternVerification >> includesAntiRigidSubtype: aVerifiedGeneralizationSet [
 	^ (aVerifiedGeneralizationSet generalizations anySatisfy: 
 		[ :generalization | self class getAntiRigidTypes includes: 
@@ -51,7 +53,7 @@ GSRigAntipatternVerification >> includesAntiRigidSubtype: aVerifiedGeneralizatio
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 GSRigAntipatternVerification >> includesRigidSubtype: aVerifiedGeneralizationSet [
 	^ (aVerifiedGeneralizationSet generalizations anySatisfy: 
 		[ :generalization | self class getRigidTypes includes: 
@@ -59,7 +61,7 @@ GSRigAntipatternVerification >> includesRigidSubtype: aVerifiedGeneralizationSet
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 GSRigAntipatternVerification >> isSupertypeRigid: aVerifiedGeneralizationSet [
 	^ (aVerifiedGeneralizationSet generalizations allSatisfy: 
 		[ :generalization | self class getRigidTypes includes: 
@@ -67,7 +69,7 @@ GSRigAntipatternVerification >> isSupertypeRigid: aVerifiedGeneralizationSet [
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 GSRigAntipatternVerification >> verifyObject: aVerifiedGeneralizationSet withModel: aVerifiedModel [
 	((self isSupertypeRigid: aVerifiedGeneralizationSet) and: 
 		((self includesRigidSubtype: aVerifiedGeneralizationSet) 
