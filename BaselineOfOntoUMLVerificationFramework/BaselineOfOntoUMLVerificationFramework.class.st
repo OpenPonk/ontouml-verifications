@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfOntoUMLVerificationFramework,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfOntoUMLVerificationFramework
+	#name : 'BaselineOfOntoUMLVerificationFramework',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfOntoUMLVerificationFramework',
+	#package : 'BaselineOfOntoUMLVerificationFramework'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOntoUMLVerificationFramework >> baseline: spec [
 
 	<baseline>
