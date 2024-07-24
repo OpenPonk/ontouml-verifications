@@ -7,7 +7,7 @@ New methods: validTargets.
 "
 Class {
 	#name : 'RelationTargetVerification',
-	#superclass : 'Verification',
+	#superclass : 'RelationEndVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : 'OntoUML-VerificationFramework-Verification-Classes',
@@ -150,16 +150,21 @@ RelationTargetVerification class >> verifiedClass [
 ]
 
 { #category : 'verification' }
-RelationTargetVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
-	| end endStereotype associationStereotype |
-	associationStereotype := self class getStereotype: aVerifiedAssociation.	
-	associationStereotype ifNil: [ ^{} ]. 
-	end := aVerifiedAssociation memberEnds at: 2.
-	endStereotype := self class getStereotype: end type.	
-	endStereotype ifNil: [ ^{} ]. 
-	((self class validTargets at: associationStereotype class) anySatisfy: [ :validEnd | endStereotype class = validEnd  ])
-		ifFalse: [ ^ {VerificationMessageError createFor: aVerifiedAssociation 
-			withVerification: self 
-			withText: endStereotype class name , ' cannot be end of ' , associationStereotype class name , ' association'} ].
-	^ {}.
+RelationTargetVerification >> getErrorMessageFor: aEnd withAssociation: aAssociation [
+	| endStereotypeName associationStereotypeName |
+	endStereotypeName := (self class getStereotypeClass: aEnd) name.
+	associationStereotypeName := (self class getStereotypeClass: aAssociation) name.
+	^ VerificationMessageError createFor: aAssociation
+			withVerification: self
+			withText: endStereotypeName , ' cannot be target of ' , associationStereotypeName , ' association'.
+]
+
+{ #category : 'verification' }
+RelationTargetVerification >> getVerifiedEnd: aVerifiedAssociation [
+	^ (aVerifiedAssociation memberEnds at: 2) type.
+]
+
+{ #category : 'verification' }
+RelationTargetVerification >> validStereotypesForEnd [
+	^ self class validTargets.
 ]

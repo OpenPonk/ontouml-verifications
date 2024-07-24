@@ -7,7 +7,7 @@ New methods: validSources.
 "
 Class {
 	#name : 'RelationSourceVerification',
-	#superclass : 'Verification',
+	#superclass : 'RelationEndVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
 	#category : 'OntoUML-VerificationFramework-Verification-Classes',
@@ -150,16 +150,21 @@ RelationSourceVerification class >> verifiedClass [
 ]
 
 { #category : 'verification' }
-RelationSourceVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
-	| source sourceStereotype associationStereotype |
-	associationStereotype := self class getStereotype: aVerifiedAssociation.
-	associationStereotype ifNil: [ ^ {} ]. 
-	source := aVerifiedAssociation memberEnds at: 1.
-	sourceStereotype := self class getStereotype: source type.
-	sourceStereotype ifNil: [ ^ {} ]. 
-	((self class validSources at: associationStereotype class) anySatisfy: [ :validsource | sourceStereotype class = validsource  ])
-		ifFalse: [ ^ {VerificationMessageError createFor: aVerifiedAssociation
+RelationSourceVerification >> getErrorMessageFor: aEnd withAssociation: aAssociation [
+	| endStereotypeName associationStereotypeName |
+	endStereotypeName := (self class getStereotypeClass: aEnd) name.
+	associationStereotypeName := (self class getStereotypeClass: aAssociation) name.
+	^ VerificationMessageError createFor: aAssociation
 			withVerification: self
-			withText: sourceStereotype class name , ' cannot be source of ' , associationStereotype class name , ' association'} ].
-	^ {}.
+			withText: endStereotypeName , ' cannot be source of ' , associationStereotypeName , ' association'.
+]
+
+{ #category : 'verification' }
+RelationSourceVerification >> getVerifiedEnd: aVerifiedAssociation [
+	^ (aVerifiedAssociation memberEnds at: 1) type.
+]
+
+{ #category : 'verification' }
+RelationSourceVerification >> validStereotypesForEnd [
+	^ self class validSources.
 ]

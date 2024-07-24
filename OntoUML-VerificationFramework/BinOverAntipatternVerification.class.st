@@ -155,7 +155,7 @@ BinOverAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: 
 		withVerification: self 
 		withText: 'Both ends of the ' , 
 			(OntoUMLModelQuery getAssociationName:  aVerifiedAssociation) ,
-			 ' association are connected to the same element: ' , source name
+			 ' association can be represented by the same individual: ' , source name
 		documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForBinOver. } ].
 	^ {}.
 ]
