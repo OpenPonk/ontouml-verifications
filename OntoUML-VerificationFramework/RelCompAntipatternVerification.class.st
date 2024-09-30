@@ -6,24 +6,26 @@ Overriden methods: verifiedClass, verifyObject:withModel:
 Documentation for RelComp anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForRelComp.
 "
 Class {
-	#name : #RelCompAntipatternVerification,
-	#superclass : #Verification,
+	#name : 'RelCompAntipatternVerification',
+	#superclass : 'Verification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelCompAntipatternVerification class >> abbreviation [
 	^ 'RelComp'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelCompAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelCompAntipatternVerification >> checkBoundsFor: aEnd [
 	| upper lower |
 	upper := aEnd upperBound = '*' ifTrue: [ Float infinity. ] ifFalse: [ aEnd upperBound ].
@@ -33,7 +35,7 @@ RelCompAntipatternVerification >> checkBoundsFor: aEnd [
 	
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelCompAntipatternVerification >> contains: aOriginSet ancestorOrSelfOf: aTarget [
 	| ancestorSet |
 	(aOriginSet includes: aTarget) ifTrue: [ ^ true ].
@@ -41,7 +43,7 @@ RelCompAntipatternVerification >> contains: aOriginSet ancestorOrSelfOf: aTarget
 	^ aOriginSet anySatisfy: [ :origin | (ancestorSet includes: origin) ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelCompAntipatternVerification >> createWarningMessageFor: aVerifiedObject and: aAssociation [
 	^ VerificationMessageWarning 
 			createFor: aVerifiedObject 
@@ -53,7 +55,7 @@ RelCompAntipatternVerification >> createWarningMessageFor: aVerifiedObject and: 
 			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRelOver.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelCompAntipatternVerification >> relCompExistsBetween: aAssociationA and: aAssociationB [
 	| sourceA targetA sourceB targetB sourceAncestorsB targetAncestorsB |	
 	aAssociationA = aAssociationB ifTrue: [ ^ false. ].	
@@ -72,7 +74,7 @@ RelCompAntipatternVerification >> relCompExistsBetween: aAssociationA and: aAsso
 		or: ((sourceAncestorsB includes: sourceA) and: (targetAncestorsB includes: sourceA)).
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelCompAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	(aVerifiedModel select: [ :element | (element isKindOf: OPUMLAssociation) and: element ~= aVerifiedObject])
 			do: [ :association |

@@ -6,34 +6,36 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for DecInt anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForDecInt.
 "
 Class {
-	#name : #DecIntAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'DecIntAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 DecIntAntipatternVerification class >> abbreviation [
 	^ 'DecInt'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DecIntAntipatternVerification class >> allowedSupertypes [
-	^ { OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory. }
+	^ { OntoUMLMixin. OntoUMLRoleMixin. OntoUMLCategory. OntoUMLPhaseMixin. }
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DecIntAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DecIntAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLSubKind. OntoUMLPhase. OntoUMLMode. OntoUMLRole. OntoUMLRelator.}.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 DecIntAntipatternVerification >> getConcreteParentsFor: aVerifiedObject from: aVerifiedModel [
 	| suspiciousParents |
 	suspiciousParents :=  (OntoUMLModelQuery getParentsOf: aVerifiedObject)
@@ -46,7 +48,7 @@ DecIntAntipatternVerification >> getConcreteParentsFor: aVerifiedObject from: aV
 					[ :genSet | (genSet isCovering) ]. ]. ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 DecIntAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| supertypes |
 	supertypes := self getConcreteParentsFor: aVerifiedObject from: aVerifiedModel .

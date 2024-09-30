@@ -1,10 +1,12 @@
 Class {
-	#name : #VerificationControllerTest,
-	#superclass : #TestCase,
-	#category : #'OntoUML-VerificationFramework-Controllers'
+	#name : 'VerificationControllerTest',
+	#superclass : 'TestCase',
+	#category : 'OntoUML-VerificationFramework-Controllers',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Controllers'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationControllerTest >> testGetAntiPatternVerifications [
 	| controller antiPatternVerifications  |
 	controller := VerificationController new.
@@ -14,7 +16,7 @@ VerificationControllerTest >> testGetAntiPatternVerifications [
 	self assert: (antiPatternVerifications allSatisfy: [ :verificationClass | verificationClass tags asSet includes: 'Antipattern-Classes'. ]) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationControllerTest >> testGetVerifications [
 	| controller verifications |
 	controller := VerificationController new.
@@ -25,25 +27,30 @@ VerificationControllerTest >> testGetVerifications [
 	self assert: (verifications allSatisfy: [ :verificationClass | verificationClass tags asSet includes: 'Verification-Classes'. ]) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationControllerTest >> testGetVerifiedObjects [
-	| model kind subkind controller array |
+	| model kind subkind generalization note controller collection |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
 	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.
-	model := OPUMLModel new.
-	array := {kind. subkind}.
-	model packagedElements: array.
+	generalization := OPUMLGeneralization new.
+	generalization general: kind.
+	generalization specific: subkind.
+	note := OPUMLNode new.
+	model := OPUMLPackage new.
+	collection  := {kind. subkind. generalization. note.} asOrderedCollection.
+	model packagedElements: collection.
+	collection := {kind. subkind. generalization.} asOrderedCollection.
 	controller := VerificationController new.
-	self assert: (controller getVerifiedObjects: model) equals: array.
+	self assert: (controller getVerifiedObjects: model) equals: collection.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationControllerTest >> testVerify [
 	| kind subkind controller array results model |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
 	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.	
 	array := {kind. subkind}.
-	model := OPUMLModel new.
+	model := OPUMLPackage new.
 	model packagedElements: array.
 	controller := VerificationController new.
 	results := controller verify:model.
@@ -52,7 +59,7 @@ VerificationControllerTest >> testVerify [
 	self assert: (results hasErrors: subkind) equals: true.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationControllerTest >> testVerifySingleObjectWithVerificationsWithModelWithResults [
 	| kind subkind controller array results |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.

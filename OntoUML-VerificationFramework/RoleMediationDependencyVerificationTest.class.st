@@ -2,44 +2,46 @@
 I represent tests for RoleMediationDependencyVerification.
 "
 Class {
-	#name : #RoleMediationDependencyVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Verification-Tests'
+	#name : 'RoleMediationDependencyVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Verification-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RoleMediationDependencyVerificationTest >> getTestedClass [
-	^ RoleMediationDependencyVerification.
+	^ RelationDependencyVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RoleMediationDependencyVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RoleMediationDependencyVerificationTest >> getVerifiedStereotypes [
 	^{ OntoUMLRole.}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoleMediationDependencyVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoleMediationDependencyVerificationTest >> testFulfillsMediationDependency [
 	| kind role mediation |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
 	role := OPUMLClass new applyStereotype: OntoUMLRole new.
 	mediation := self createAssociationFrom: kind to: role.
-	self assert: (self getTestedClass basicNew fulfillsMediationDependency: mediation) equals: true.
+	self assert: (self getTestedClass basicNew fulfillsRelationalDependency: mediation) equals: true.
 	(mediation memberEnds at:1) lowerValue value: 0.
-	self assert: (self getTestedClass basicNew fulfillsMediationDependency: mediation) equals: false.
+	self assert: (self getTestedClass basicNew fulfillsRelationalDependency: mediation) equals: false.
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoleMediationDependencyVerificationTest >> testInvalidModel [
 	| role model result |
 	role := OPUMLClass new.
@@ -50,12 +52,12 @@ RoleMediationDependencyVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageError.]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoleMediationDependencyVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoleMediationDependencyVerificationTest >> testValidModel [
 	| relator association role model result |
 	role := OPUMLClass new.
@@ -70,23 +72,23 @@ RoleMediationDependencyVerificationTest >> testValidModel [
 	self assert: result results size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoleMediationDependencyVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoleMediationDependencyVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoleMediationDependencyVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoleMediationDependencyVerificationTest >> testVerifyWithModel [
 	self testInvalidModel.
 	self testValidModel.

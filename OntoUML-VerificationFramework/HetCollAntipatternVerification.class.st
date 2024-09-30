@@ -6,33 +6,35 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for HetColl anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForHetColl.
 "
 Class {
-	#name : #HetCollAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'HetCollAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #updating }
+{ #category : 'updating' }
 HetCollAntipatternVerification class >> abbreviation [
 	^ 'HetColl'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 HetCollAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 HetCollAntipatternVerification class >> verifiedStereotypes [
 	^ {OntoUMLCollective. OntoUMLSubKind. OntoUMLRole. OntoUMLPhase. OntoUMLMixin. OntoUMLRoleMixin. OntoUMLPhaseMixin. OntoUMLCategory.}.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 HetCollAntipatternVerification >> isApplicableFor: aElement in: aModel [
 	| ancestors stereotype | 
 	stereotype := OntoUMLModelQuery getStereotypeClass: aElement.
-	stereotype = OntoUMLCollective ifTrue: [^true].
+	stereotype = OntoUMLCollective ifTrue: [ ^ true. ].
 	ancestors := OntoUMLModelQuery getAncestorsFor: aElement.
 	({ OntoUMLRole. OntoUMLPhase. OntoUMLSubKind. } includes: stereotype) ifTrue: 
 		[ (ancestors anySatisfy: [ :ancestor | 
@@ -44,17 +46,17 @@ HetCollAntipatternVerification >> isApplicableFor: aElement in: aModel [
 	^false.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 HetCollAntipatternVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| parts ancestorsAndSelf |
-	(self isApplicableFor: aVerifiedObject in: aVerifiedModel) ifFalse:[ ^{}. ].
+	(self isApplicableFor: aVerifiedObject in: aVerifiedModel) ifFalse:[ ^ {}. ].
 	
 	ancestorsAndSelf := OntoUMLModelQuery getAncestorsFor: aVerifiedObject.
 	ancestorsAndSelf add: aVerifiedObject.
 	
 	parts := OntoUMLModelQuery getAssociationsFrom: aVerifiedModel
 		withStereotype: OntoUMLMemberOf 
-		filterBy: [ :memberOf | ancestorsAndSelf includes: (memberOf memberEnds second type). ].
+		filterBy: [ :memberOf | ancestorsAndSelf includes: (memberOf memberEnds first type). ].
 		
 	parts size > 1 ifTrue: [ 
 		^ {VerificationMessageWarning createFor: aVerifiedObject 

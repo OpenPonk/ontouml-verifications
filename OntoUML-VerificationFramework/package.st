@@ -1,1 +1,1 @@
-Package { #name : #'OntoUML-VerificationFramework' }
+Package { #name : 'OntoUML-VerificationFramework' }

@@ -2,12 +2,14 @@
 I represent tests for PartOverAntipatternVerification.
 "
 Class {
-	#name : #PartOverAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'PartOverAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> getInvalidModel [
 	| wholeA wholeB part parent generalizationA generalizationB componentOfA componentOfB |
 	wholeA := self createClass: 'wholeA' withStereotype: OntoUMLSubKind.
@@ -23,12 +25,12 @@ PartOverAntipatternVerificationTest >> getInvalidModel [
 	^ { part. wholeA. wholeB. parent. generalizationA. generalizationB. componentOfA. componentOfB. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOverAntipatternVerificationTest >> getTestedClass [
 	^ PartOverAntipatternVerification.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> getValidModel [
 	| wholeA wholeB part parentA parentB generalizationA generalizationB componentOfA componentOfB |
 	wholeA := self createClass: 'wholeA' withStereotype: OntoUMLSubKind.
@@ -45,22 +47,22 @@ PartOverAntipatternVerificationTest >> getValidModel [
 	^ { part. wholeA. wholeB. parentA. parentB. generalizationA. generalizationB. componentOfA. componentOfB. }.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOverAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOverAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLSubKind. OntoUMLPhase. OntoUMLRole. OntoUMLRoleMixin. OntoUMLCategory. OntoUMLMixin. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testCheckForOverlap [
 	| model part mediatedEnds testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
@@ -76,7 +78,7 @@ PartOverAntipatternVerificationTest >> testCheckForOverlap [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	| model part mediatedEnds testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
@@ -93,7 +95,7 @@ PartOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testGetPartWholeAssociationsForFrom [
 	| wholeA wholeB partA partB association partWholeAssociationA partWholeAssociationB model testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
@@ -131,7 +133,7 @@ PartOverAntipatternVerificationTest >> testGetPartWholeAssociationsForFrom [
 		equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testInvalidModel [
 	| part model result |
 	model := self getInvalidModel.
@@ -141,12 +143,12 @@ PartOverAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testValidModel [
 	| part model result |
 	model := self getValidModel.
@@ -156,17 +158,17 @@ PartOverAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOverAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

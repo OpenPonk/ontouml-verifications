@@ -2,59 +2,61 @@
 I represent tests for OntoUMLStereotypeYaml.
 "
 Class {
-	#name : #OntoUMLStereotypeYamlTest,
-	#superclass : #TestCase,
-	#category : #'OntoUML-VerificationFramework-Updating'
+	#name : 'OntoUMLStereotypeYamlTest',
+	#superclass : 'TestCase',
+	#category : 'OntoUML-VerificationFramework-Updating',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Updating'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLStereotypeYamlTest >> getTestedClass [
 	^ OntoUMLStereotypeYaml.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLStereotypeYamlTest >> getTestedClassInstance: aYaml [
 	^ self getTestedClass createFromYaml: aYaml.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLStereotypeYamlTest >> parseReferenceYaml: aReferenceYamlText [
 	| yamlParser |
 	yamlParser := PPYAMLGrammar new.
 	^ yamlParser parse: aReferenceYamlText.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLStereotypeYamlTest >> referenceYaml [
 	^ self parseReferenceYaml: self referenceYamlText.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLStereotypeYamlTest >> referenceYamlAlternative [
 	^ self parseReferenceYaml: self referenceYamlAlternativeText.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLStereotypeYamlTest >> referenceYamlAlternativeText [
 	^ 'test:
 	-alternative'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLStereotypeYamlTest >> referenceYamlText [
 	^ 'test:
 	-reference
 	-text'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLStereotypeYamlTest >> testCreateFromYaml [
 	| stereotypeYaml |
 	stereotypeYaml := self getTestedClass createFromYaml: self referenceYaml.
 	self assert: stereotypeYaml yaml equals: self referenceYaml.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLStereotypeYamlTest >> testSourceEnd [
 	| stereotypeYaml |
 	stereotypeYaml := self getTestedClassInstance: self referenceYaml.
@@ -63,7 +65,7 @@ OntoUMLStereotypeYamlTest >> testSourceEnd [
 	self assert: stereotypeYaml yaml equals: self referenceYamlAlternative.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLStereotypeYamlTest >> testTmpCorrectStereotypeCase [
 	self assert: (self getTestedClass tmpCorrectStereotypeCase: 'Subkind') equals: 'SubKind'.
 	self assert: (self getTestedClass tmpCorrectStereotypeCase: 'subkiNd') equals: 'SubKind'.
@@ -72,7 +74,7 @@ OntoUMLStereotypeYamlTest >> testTmpCorrectStereotypeCase [
 	self assert: (self getTestedClass tmpCorrectStereotypeCase: 'sUb') equals: 'sUb'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLStereotypeYamlTest >> testTmpCorrectStereotypeName [
 	self assert: (self getTestedClass tmpCorrectStereotypeName: 'Formal') equals: 'DomainFormal'.
 	self assert: (self getTestedClass tmpCorrectStereotypeName: 'FoRmal') equals: 'DomainFormal'.

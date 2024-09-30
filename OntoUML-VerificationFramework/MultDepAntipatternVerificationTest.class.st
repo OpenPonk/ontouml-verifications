@@ -2,32 +2,34 @@
 I represent tests for MultDepAntipatternVerification.
 "
 Class {
-	#name : #MultDepAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'MultDepAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 MultDepAntipatternVerificationTest >> getTestedClass [
 	^ MultDepAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MultDepAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MultDepAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLKind. OntoUMLQuantity. OntoUMLCollective. OntoUMLRole. OntoUMLPhase. OntoUMLSubKind. OntoUMLCategory. OntoUMLMixin. OntoUMLRoleMixin.}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MultDepAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest. 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MultDepAntipatternVerificationTest >> testInvalidModel [
 	| kind secondKind collective firstMediation secondMediation model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -43,12 +45,12 @@ MultDepAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MultDepAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MultDepAntipatternVerificationTest >> testValidModel [
 	| kind secondKind collective firstMediation secondAssociation model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -63,12 +65,12 @@ MultDepAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MultDepAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MultDepAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

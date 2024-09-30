@@ -2,12 +2,14 @@
 I represent tests for WholeOverAntipatternVerification.
 "
 Class {
-	#name : #WholeOverAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'WholeOverAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> getTestModelForMethods [
 	| commonAncestor testedObject1 testedObject2 child1 commonChild testedObject3 association1 association2 association3 |
 	commonAncestor := self createClass: 'commonAncestor' withStereotype: OntoUMLKind.
@@ -31,27 +33,27 @@ WholeOverAntipatternVerificationTest >> getTestModelForMethods [
 		 }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> getTestedClass [
 	^ WholeOverAntipatternVerification.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLSubKind. OntoUMLPhase. OntoUMLRole. OntoUMLRoleMixin. OntoUMLCategory. OntoUMLMixin. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testCheckForOverlapInModel [
 	| model testedAssociationEnds overlapingSet1 overlapingSet2 nonOverlapingSet |
 	model := self getTestModelForMethods.
@@ -65,7 +67,7 @@ WholeOverAntipatternVerificationTest >> testCheckForOverlapInModel [
 	self assert: ((self getTestedClass basicNew) checkForOverlap: nonOverlapingSet inModel: model) equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	| model testedAssociationEnds highUpperEndSet1 highUpperEndSet2 okUpperEndSet |
 	model := self getTestModelForMethods.
@@ -79,7 +81,7 @@ WholeOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	self assert: ((self getTestedClass basicNew) checkUpperMultiplicityFor: okUpperEndSet) equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testGetPartEndsForFrom [
 	| model whole result |
 	model := self getTestModelForMethods.
@@ -91,7 +93,7 @@ WholeOverAntipatternVerificationTest >> testGetPartEndsForFrom [
 	self assert: ((self getTestedClass basicNew) getPartEndsFor: whole from: model) equals: result.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testInvalidModel [
 	| whole partA partB child generalizationA generalizationB componentOfA componentOfB model result |
 	whole := self createClass: 'whole' withStereotype: OntoUMLKind.
@@ -110,12 +112,12 @@ WholeOverAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testValidModel [
 	| whole partA partB componentOfA componentOfB model result |
 	whole := self createClass: 'whole' withStereotype: OntoUMLKind.
@@ -131,17 +133,17 @@ WholeOverAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

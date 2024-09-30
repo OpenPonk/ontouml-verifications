@@ -6,27 +6,29 @@ Overriden methods: verifiedClass, verifyObject:withModel:, verifiedStereotypes.
 New methods: getMultiplicity:for:.
 "
 Class {
-	#name : #RelatorMediationDependencyVerification,
-	#superclass : #StereotypeVerification,
-	#category : #'OntoUML-VerificationFramework-Verification-Classes'
+	#name : 'RelatorMediationDependencyVerification',
+	#superclass : 'StereotypeVerification',
+	#category : 'OntoUML-VerificationFramework-Verification-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelatorMediationDependencyVerification class >> abbreviation [
 	^ 'RelatorMediationDependency'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelatorMediationDependencyVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RelatorMediationDependencyVerification class >> verifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelatorMediationDependencyVerification >> getUpperBoundMultiplicityOf: aMediation for: aVerifiedObject [
 	| multiplicity |
 	multiplicity := (aMediation memberEnds
@@ -35,7 +37,7 @@ RelatorMediationDependencyVerification >> getUpperBoundMultiplicityOf: aMediatio
 	^ multiplicity lower
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RelatorMediationDependencyVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
  	| mediations totalMultiplicity |
 	mediations := ((aVerifiedModel select: [ :element | element isKindOf: OPUMLAssociation ])		

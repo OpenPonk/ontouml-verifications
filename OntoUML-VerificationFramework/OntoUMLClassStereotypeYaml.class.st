@@ -2,58 +2,60 @@
 I represent single documentation for single class stereotype and provide access to its properties.
 "
 Class {
-	#name : #OntoUMLClassStereotypeYaml,
-	#superclass : #OntoUMLStereotypeYaml,
-	#category : #'OntoUML-VerificationFramework-Updating'
+	#name : 'OntoUMLClassStereotypeYaml',
+	#superclass : 'OntoUMLStereotypeYaml',
+	#category : 'OntoUML-VerificationFramework-Updating',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Updating'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> abstract [
 	^ self yaml at: 'abstract'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> dependency [
 	^ self yaml at: 'dependency'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> forbiddenAssociations [
 	^ self yaml at: 'forbidden_associations'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> identityPriciple [
 	^ self yaml at: 'identity_principle'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> name [
 	^ self class tmpCorrectStereotypeCase: (self yaml at: 'name')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> parent [
 	^ self class tmpCorrectStereotypeCase: (self yaml at: 'parent')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> providesIdentity [
 	^ (self yaml at: 'provides_identity') = 'true'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> rigidity [
 	^ self yaml at: 'rigidity'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> subtypes [
 	^ (self yaml at: 'subtypes')
 		collect: [ :arg1 | self class tmpCorrectStereotypeCase: arg1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OntoUMLClassStereotypeYaml >> supertypes [
 	^ (self yaml at: 'supertypes')
 		collect: [ :arg1 | self class tmpCorrectStereotypeCase: arg1 ]

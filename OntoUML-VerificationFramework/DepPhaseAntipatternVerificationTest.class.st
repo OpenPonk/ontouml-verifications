@@ -1,30 +1,32 @@
 Class {
-	#name : #DepPhaseAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'DepPhaseAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 DepPhaseAntipatternVerificationTest >> getTestedClass [
 	^ DepPhaseAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DepPhaseAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DepPhaseAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLMediation. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DepPhaseAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DepPhaseAntipatternVerificationTest >> testInvalidModel [
 	| kind phase relator generalization mediation model result |
 	kind := self createClass: 'kind'  withStereotype: OntoUMLKind.
@@ -40,12 +42,12 @@ DepPhaseAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DepPhaseAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DepPhaseAntipatternVerificationTest >> testValidModel [
 	| kind role relator generalization mediation model result |
 	kind := self createClass: 'kind'  withStereotype: OntoUMLKind.
@@ -61,17 +63,17 @@ DepPhaseAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message class = VerificationMessageWarning ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DepPhaseAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DepPhaseAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DepPhaseAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

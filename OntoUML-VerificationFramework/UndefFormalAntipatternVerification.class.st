@@ -6,34 +6,36 @@ Overriden methods: verifiedClass, verifiedSterotypes, verifyObject:withModel:
 Documentation for UndefFormal anti-pattern can be found on ontouml.org. Direct link is located in OntoUMLDotOrgReferences getDefinitionReferenceForUndefFormal.
 "
 Class {
-	#name : #UndefFormalAntipatternVerification,
-	#superclass : #StereotypeVerification,
+	#name : 'UndefFormalAntipatternVerification',
+	#superclass : 'StereotypeVerification',
 	#traits : 'TCodeInjectionChecker + TClassUpdater + TAncestorGartherer',
 	#classTraits : 'TCodeInjectionChecker classTrait + TClassUpdater classTrait + TAncestorGartherer classTrait',
-	#category : #'OntoUML-VerificationFramework-Antipattern-Classes'
+	#category : 'OntoUML-VerificationFramework-Antipattern-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefFormalAntipatternVerification class >> abbreviation [
 	^ 'UndefFormal'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefFormalAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefFormalAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLDomainFormal. }.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefFormalAntipatternVerification >> attributesExistFor: aClass [
 	^ aClass ownedAttributes isNotNil and: aClass ownedAttributes isNotEmpty.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefFormalAntipatternVerification >> qualitiesExistFor: aObject inModel: aModel [
 	| ancestorsAndSelf characterisations |
 	characterisations := OntoUMLModelQuery getAssociationsFrom: aModel
@@ -47,7 +49,7 @@ UndefFormalAntipatternVerification >> qualitiesExistFor: aObject inModel: aModel
 		anySatisfy: [ :characterisation | ancestorsAndSelf includes: characterisation memberEnds first type ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 UndefFormalAntipatternVerification >> verifyObject: aVerifiedAssociation withModel: aVerifiedModel [
 	| source target result |
 	source := (aVerifiedAssociation memberEnds at: 1) type. 

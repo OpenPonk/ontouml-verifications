@@ -1,9 +1,11 @@
 Trait {
-	#name : #TChildGartherer,
-	#category : #'OntoUML-VerificationFramework-Traits'
+	#name : 'TChildGartherer',
+	#category : 'OntoUML-VerificationFramework-Traits',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Traits'
 }
 
-{ #category : #verification }
+{ #category : 'verification' }
 TChildGartherer classSide >> getAllChildrenFor: aAncestor from: aModel [
 	| childrenSet |
 	childrenSet := Set new.
@@ -11,7 +13,7 @@ TChildGartherer classSide >> getAllChildrenFor: aAncestor from: aModel [
 	^ childrenSet.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 TChildGartherer classSide >> getAllChildrenFor: aTarget into: aChildrenSet from: aModel [
 	((aModel select: [ :object | object isKindOf: OPUMLGeneralization. ])
 		select: [ :generalization | generalization general = aTarget. ])
@@ -21,7 +23,7 @@ TChildGartherer classSide >> getAllChildrenFor: aTarget into: aChildrenSet from:
 				self getAllChildrenFor: generalization specific into: aChildrenSet from: aModel]. ].
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 TChildGartherer classSide >> getDescendantsFor: aAncestor from: aModel [
 	| childrenSet |
 	childrenSet := Set new.
@@ -29,7 +31,7 @@ TChildGartherer classSide >> getDescendantsFor: aAncestor from: aModel [
 	^ childrenSet
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 TChildGartherer classSide >> getDescendantsFor: aTarget from: aModel into: aChildrenSet [
 	((aModel select: [ :object | object isKindOf: OPUMLGeneralization ])
 		select: [ :generalization | generalization general = aTarget ])

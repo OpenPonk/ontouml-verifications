@@ -2,32 +2,34 @@
 I represent tests for RepRelAntipatternVerification.
 "
 Class {
-	#name : #RepRelAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'RepRelAntipatternVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RepRelAntipatternVerificationTest >> getTestedClass [
 	^ RepRelAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RepRelAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RepRelAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RepRelAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RepRelAntipatternVerificationTest >> testGetMediationsForFromModel [
 	| kind secondKind relator firstMediation secondMediation model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -52,7 +54,7 @@ RepRelAntipatternVerificationTest >> testGetMediationsForFromModel [
 		hasSameElements: {firstMediation}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RepRelAntipatternVerificationTest >> testGetUpperBoundMultiplicityOfFor [
 	| kind relator mediation |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -67,7 +69,7 @@ RepRelAntipatternVerificationTest >> testGetUpperBoundMultiplicityOfFor [
 	self assert: (self getTestedClass basicNew getUpperBoundMultiplicityOf: mediation for: { kind. }) equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RepRelAntipatternVerificationTest >> testInvalidModel [
 	| kind firstRole secondRole relator firstMediation secondMediation firstGeneralization secondGeneralization model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -88,12 +90,12 @@ RepRelAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RepRelAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RepRelAntipatternVerificationTest >> testValidModel [
 	| kind firstRole secondRole relator firstMediation secondMediation firstGeneralization secondGeneralization model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -112,17 +114,17 @@ RepRelAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RepRelAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RepRelAntipatternVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RepRelAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

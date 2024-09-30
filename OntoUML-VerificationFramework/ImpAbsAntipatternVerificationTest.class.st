@@ -2,27 +2,29 @@
 I represent tests for ImpAbsAntipatternVerification.
 "
 Class {
-	#name : #ImpAbsAntipatternVerificationTest,
-	#superclass : #AbstractVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'ImpAbsAntipatternVerificationTest',
+	#superclass : 'AbstractVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> getTestedClass [
 	^ ImpAbsAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLAssociation.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> testCheckNumberOfChildrenForFrom [
 	| source taget directChildA directChildB indirectChild association directGenA directGenB indirectGen model |
 	source := self createClass: 'sourceA' withStereotype: OntoUMLKind.
@@ -40,7 +42,7 @@ ImpAbsAntipatternVerificationTest >> testCheckNumberOfChildrenForFrom [
 	self assert: (self getTestedClass basicNew checkNumberOfChildrenFor: association memberEnds first from: model) equals: true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	| kindA kindB association end testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
@@ -56,7 +58,7 @@ ImpAbsAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
 	self assert: (testedClassInstance checkUpperMultiplicityFor: end) equals: false.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> testInvalidModel [
 	| source taget childA childB association generalizationA generalizationB model result |
 	source := self createClass: 'sourceA' withStereotype: OntoUMLKind.
@@ -73,12 +75,12 @@ ImpAbsAntipatternVerificationTest >> testInvalidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> testValidModel [
 	| source taget childA childB association generalizationA generalizationB model result |
 	source := self createClass: 'sourceA' withStereotype: OntoUMLKind.
@@ -95,12 +97,12 @@ ImpAbsAntipatternVerificationTest >> testValidModel [
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ImpAbsAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

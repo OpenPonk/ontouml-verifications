@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfOntoUMLVerificationFramework }
+Package { #name : 'BaselineOfOntoUMLVerificationFramework' }

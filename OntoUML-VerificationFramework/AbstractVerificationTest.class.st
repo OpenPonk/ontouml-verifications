@@ -4,18 +4,20 @@ I represent abstract test class.
 My responsibility lies in defining unified interface for my subclasses.
 "
 Class {
-	#name : #AbstractVerificationTest,
-	#superclass : #TestCase,
-	#category : #'OntoUML-VerificationFramework-Verification-Tests'
+	#name : 'AbstractVerificationTest',
+	#superclass : 'TestCase',
+	#category : 'OntoUML-VerificationFramework-Verification-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractVerificationTest >> canVerifyTest [
 	self assert: (self getTestedClass canVerify: self getNotVerifiedClassInstance) equals: false.	
 	self assert: (self getTestedClass canVerify: self getVerifiedClassInstance) equals: true.
 ]
 
-{ #category : #'tests - utility' }
+{ #category : 'tests - utility' }
 AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd [
 	| association |
 	association := OPUMLAssociation new.
@@ -35,7 +37,7 @@ AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd [
 	^ association
 ]
 
-{ #category : #'tests - utility' }
+{ #category : 'tests - utility' }
 AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd with: aStereotype [ 
 	| association |
 	association := self createAssociationFrom: aSource to: aEnd.
@@ -43,7 +45,7 @@ AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd with: aStere
 	^ association.
 ]
 
-{ #category : #'tests - utility' }
+{ #category : 'tests - utility' }
 AbstractVerificationTest >> createClass: aName withStereotype: aStereotype [
 	| result |
 	result := OPUMLClass new.
@@ -52,7 +54,7 @@ AbstractVerificationTest >> createClass: aName withStereotype: aStereotype [
 	^ result.
 ]
 
-{ #category : #'tests - utility' }
+{ #category : 'tests - utility' }
 AbstractVerificationTest >> createGeneralizationFor: aGeneral withSpecific: aSpecific [
 	| generalization |
 	generalization := OPUMLGeneralization new.
@@ -61,43 +63,43 @@ AbstractVerificationTest >> createGeneralizationFor: aGeneral withSpecific: aSpe
 	^ generalization.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AbstractVerificationTest >> getNotVerifiedClass [
 	^ Object.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AbstractVerificationTest >> getNotVerifiedClassInstance [
 	^ self getNotVerifiedClass new.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AbstractVerificationTest >> getTestedClass [
 	self subclassResponsibility.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AbstractVerificationTest >> getVerifiedClass [
 	self subclassResponsibility.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 AbstractVerificationTest >> getVerifiedClassInstance [
 	^ self getVerifiedClass new.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractVerificationTest >> newTest [
 	self should: [ self getTestedClass new. ] raise: ShouldNotImplement.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractVerificationTest >> testUpdateFrom [
 	"Each of my subclasses that contains test for updateable verification should implement this method."
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractVerificationTest >> verifiedClassTest [
 	self assert: self getTestedClass verifiedClass equals: self getVerifiedClass.
 ]

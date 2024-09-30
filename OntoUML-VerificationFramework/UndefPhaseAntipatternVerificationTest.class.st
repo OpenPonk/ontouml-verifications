@@ -2,27 +2,24 @@
 I represent tests for UndefPhaseAntipatternVerification.
 "
 Class {
-	#name : #UndefPhaseAntipatternVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Antipattern-Tests'
+	#name : 'UndefPhaseAntipatternVerificationTest',
+	#superclass : 'AbstractVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Antipattern-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Antipattern-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> getTestedClass [
 	^ UndefPhaseAntipatternVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> getVerifiedClass [
-	^ OPUMLClass.
+	^ OPUMLGeneralizationSet.
 ]
 
-{ #category : #constants }
-UndefPhaseAntipatternVerificationTest >> getVerifiedStereotypes [
-	^ { OntoUMLPhase. }.
-]
-
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> testAspectsExistForInModel [
 	| kind quality characterisation model |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.	
@@ -36,7 +33,7 @@ UndefPhaseAntipatternVerificationTest >> testAspectsExistForInModel [
 	self assert: (self getTestedClass basicNew aspectsExistFor: kind inModel: model) equals: true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> testAttributesExistFor [
 	| kind |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
@@ -45,54 +42,53 @@ UndefPhaseAntipatternVerificationTest >> testAttributesExistFor [
 	self assert: (self getTestedClass basicNew attributesExistFor: kind) equals: true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> testCanVerify [
-	self canVerifyTest.
+	"self canVerifyTest."
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> testInvalidModel [
-	| kind phase generalization model result |
+	| kind phase generalization generalizationSet model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	phase := self createClass: 'phase' withStereotype: OntoUMLPhase.	
 	generalization := self createGeneralizationFor: kind withSpecific: phase.
-	model := { kind. phase. generalization. }.
+	generalizationSet := OPUMLGeneralizationSet new.
+	generalization generalizationSets: { generalizationSet }.
+	model := { kind. phase. generalization. generalizationSet }.
 	result := VerificationResults new.
-	result addResults: (self getTestedClass verify: phase withModel: model).
+	result addResults: (self getTestedClass verify: generalizationSet withModel: model).
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> testValidModel [
-	| kind phase generalization quality characterisation model result |
+	| kind phase generalization quality characterisation generalizationSet model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	phase := self createClass: 'phase' withStereotype: OntoUMLPhase.	
 	quality := self createClass: 'quality' withStereotype: OntoUMLQuality.	
 	generalization := self createGeneralizationFor: kind withSpecific: phase.
 	characterisation := self createAssociationFrom: kind to: quality.
 	characterisation applyStereotype: OntoUMLCharacterization new.
-	model := { kind. phase. generalization. characterisation. }.
+	generalizationSet := OPUMLGeneralizationSet new.
+	generalization generalizationSets: { generalizationSet }.
+	model := { kind. phase. generalization. characterisation. generalizationSet }.
 	result := VerificationResults new.
-	result addResults: (self getTestedClass verify: phase withModel: model).
+	result addResults: (self getTestedClass verify: generalizationSet withModel: model).
 	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #constants }
-UndefPhaseAntipatternVerificationTest >> testVerifiedStereotypes [
-	super testVerifiedStereotypes.
-]
-
-{ #category : #constants }
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.

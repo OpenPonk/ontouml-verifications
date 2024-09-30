@@ -4,27 +4,29 @@ I am verification for PartOfGeneralizationSet rule.
 Overriden methods: verifiedClass, verifyObject:withModel:, verifiedStereotypes.
 "
 Class {
-	#name : #PartOfGeneralizationSetVerification,
-	#superclass : #StereotypeVerification,
-	#category : #'OntoUML-VerificationFramework-Verification-Classes'
+	#name : 'PartOfGeneralizationSetVerification',
+	#superclass : 'StereotypeVerification',
+	#category : 'OntoUML-VerificationFramework-Verification-Classes',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Classes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOfGeneralizationSetVerification class >> abbreviation [
 	^ 'PartOfGenSet'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOfGeneralizationSetVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOfGeneralizationSetVerification class >> verifiedStereotypes [
 	^ { OntoUMLPhase.}.
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 PartOfGeneralizationSetVerification >> verifyObject: aVerifiedObject withModel: aVerifiedModel [
 	| generalizationSets |
 	generalizationSets := aVerifiedObject generalizations flatCollect: [ :generalization | generalization generalizationSets ].	

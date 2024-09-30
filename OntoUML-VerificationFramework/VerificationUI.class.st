@@ -4,67 +4,92 @@ I define items in menu that are responsible for starting anti-pattern detection,
 I am also responsible for displaying results and highliting elements in the model.
 "
 Class {
-	#name : #VerificationUI,
-	#superclass : #ComposablePresenter,
-	#category : #'OntoUML-VerificationFramework-UI'
+	#name : 'VerificationUI',
+	#superclass : 'Object',
+	#category : 'OntoUML-VerificationFramework-UI',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'UI'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> changeElementColorTo: aColor using: aController [
-	aController diagramElement style strokeColor: aColor.
-	aController diagramElement update.
+
+	| diagramElement |
+	(aController respondsTo: #diagramElement) ifFalse: [ ^ self ].
+	diagramElement := aController diagramElement.
+	(diagramElement respondsTo: #strokeColor:) ifFalse: [ ^ self ].
+	aController diagramElement strokeColor: aColor
 ]
 
-{ #category : #specs }
-VerificationUI class >> defaultSpec [
-]
-
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> removeHighlightsFromElementsIn: aDiagramController [
-	aDiagramController controllers do: [ :controller | self changeElementColorTo: Color black using: controller ].
-	aDiagramController updateView.
+
+	aDiagramController controllers do: [ :controller | 
+		self changeElementColorTo: Color black using: controller ].
+	aDiagramController updateCanvas
 ]
 
-{ #category : #toolbar }
-VerificationUI class >> toolbarMenu: aBuilder [ 
+{ #category : 'toolbar' }
+VerificationUI class >> toolbarMenu: aBuilder [
+
 	<opEditorToolbarMenu: #OPUmlClassEditorPlugin>
-	| builder |
-	builder := aBuilder model diagramController model profileApplications.
-	(builder isEmpty or: [ builder anyOne appliedProfile name ~= 'OntoUML' ])
+	| appliedProfiles |
+	appliedProfiles := aBuilder model diagramController model
+		                   profileApplications collect: #appliedProfile.
+	(appliedProfiles noneSatisfy: [ :each | each name = 'OntoUML' ]) 
 		ifTrue: [ ^ self ].
 	self toolbarMenuItemFor: aBuilder
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> toolbarMenuItemFor: aBuilder [
-	(aBuilder item: 'Verify model')
-		action: [ self updateVerifiedElements: 
-			(VerificationController new verify: aBuilder model diagramController model) using: aBuilder model diagramController. ].
-	(aBuilder item: 'Detect anti-patterns')
-		action: [ self updateVerifiedElements: 
-			(VerificationController new detectAntiPatternsIn: aBuilder model diagramController model) using: aBuilder model diagramController. ].
-	(aBuilder item: 'Remove highlights')
-		action: [ self removeHighlightsFromElementsIn: aBuilder model diagramController. ].
+
+	(aBuilder item: 'Verification')
+		icon: OntoUMLIcons ontoumlIcon;
+		action: [  ];
+		with: [ 
+			(aBuilder item: 'Verify model') action: [ 
+					self
+						updateVerifiedElements: (VerificationController new verify:
+									 aBuilder model diagramController model)
+						using: aBuilder model diagramController ].
+			(aBuilder item: 'Detect anti-patterns') action: [ 
+					self
+						updateVerifiedElements:
+							(VerificationController new detectAntiPatternsIn:
+									 aBuilder model diagramController model)
+						using: aBuilder model diagramController ].
+			(aBuilder item: 'Remove highlights') action: [ 
+					self removeHighlightsFromElementsIn:
+							aBuilder model diagramController ] ]
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> updateVerifiedElementStyle: aVerificationResults using: aController [
-	| color |
+
+	| color diagramElement |
+	(VerificationController
+		 isVerifiable: aController model
+		 includeGeneralizations: true) ifFalse: [ ^ self ].
+	diagramElement := aController diagramElement.
+	(diagramElement respondsTo: #strokeColor:) ifFalse: [ ^ self ].
 	color := Color black.
-	(aVerificationResults hasWarnings: aController model) ifTrue: [ color := Color orange. ].
-	(aVerificationResults hasErrors: aController model) ifTrue: [ color := Color red. ].
-	aController diagramElement style strokeColor: color.
-	aController diagramElement update.
+	(aVerificationResults hasWarnings: aController model) ifTrue: [
+		color := Color orange ].
+	(aVerificationResults hasErrors: aController model) ifTrue: [
+		color := Color red ].
+	diagramElement strokeColor: color
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 VerificationUI class >> updateVerifiedElements: aVerificationResults using: aDiagramController [
-	aDiagramController controllers do: [ :controller | self updateVerifiedElementStyle: aVerificationResults using: controller ].
-	aDiagramController updateView.
-	(VerificationResultsUI createUIFor: aVerificationResults withControllers: aDiagramController) inspect.
-]
 
-{ #category : #initialization }
-VerificationUI >> initializeWidgets [
-	"We don't need to initialize anything."
+	aDiagramController controllers do: [ :controller | 
+		self
+			updateVerifiedElementStyle: aVerificationResults
+			using: controller ].
+	aDiagramController updateCanvas.
+	(VerificationResultsUI
+		 createUIFor: aVerificationResults
+		 withControllers: aDiagramController) inspect
 ]

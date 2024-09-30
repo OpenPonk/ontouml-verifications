@@ -2,27 +2,29 @@
 I represent tests for OntoUMLRelationshipStereotypeYaml.
 "
 Class {
-	#name : #OntoUMLRelationshipStereotypeYamlTest,
-	#superclass : #OntoUMLStereotypeYamlTest,
-	#category : #'OntoUML-VerificationFramework-Updating'
+	#name : 'OntoUMLRelationshipStereotypeYamlTest',
+	#superclass : 'OntoUMLStereotypeYamlTest',
+	#category : 'OntoUML-VerificationFramework-Updating',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Updating'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLRelationshipStereotypeYamlTest >> getTestedClass [
  ^ OntoUMLRelationshipStereotypeYaml.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLRelationshipStereotypeYamlTest >> referenceYaml [
 	^ super referenceYaml at: 'aggregation_stereotype'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLRelationshipStereotypeYamlTest >> referenceYamlAlternative [
 	^ super referenceYamlAlternative at: 'relationship_stereotype'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLRelationshipStereotypeYamlTest >> referenceYamlAlternativeText [
 	^ 'relationship_stereotype:
   name: characterization
@@ -47,7 +49,7 @@ OntoUMLRelationshipStereotypeYamlTest >> referenceYamlAlternativeText [
 '.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLRelationshipStereotypeYamlTest >> referenceYamlText [
 	^ 'aggregation_stereotype:
   name: memberOf
@@ -73,7 +75,7 @@ OntoUMLRelationshipStereotypeYamlTest >> referenceYamlText [
 '.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLRelationshipStereotypeYamlTest >> testAllowedSources [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -82,7 +84,7 @@ OntoUMLRelationshipStereotypeYamlTest >> testAllowedSources [
 	self assert: classYaml allowedSources equals: ((self referenceYamlAlternative at: 'source_end') at: 'allowed').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLRelationshipStereotypeYamlTest >> testAllowedTargets [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -91,7 +93,7 @@ OntoUMLRelationshipStereotypeYamlTest >> testAllowedTargets [
 	self assert: classYaml allowedTargets equals: ((self referenceYamlAlternative at: 'target_end') at: 'allowed').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLRelationshipStereotypeYamlTest >> testBinaryProperties [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -100,7 +102,7 @@ OntoUMLRelationshipStereotypeYamlTest >> testBinaryProperties [
 	self assert: classYaml binaryProperties equals: (self referenceYamlAlternative at: 'binary_properties').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLRelationshipStereotypeYamlTest >> testDirected [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -109,7 +111,7 @@ OntoUMLRelationshipStereotypeYamlTest >> testDirected [
 	self assert: classYaml directed equals: (self referenceYamlAlternative at: 'directed').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLRelationshipStereotypeYamlTest >> testName [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -118,7 +120,7 @@ OntoUMLRelationshipStereotypeYamlTest >> testName [
 	self assert: classYaml name equals: (self referenceYamlAlternative at: 'name') capitalized.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLRelationshipStereotypeYamlTest >> testSourceEnd [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	
@@ -127,7 +129,7 @@ OntoUMLRelationshipStereotypeYamlTest >> testSourceEnd [
 	self assert: classYaml sourceEnd equals: (self referenceYamlAlternative at: 'source_end').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLRelationshipStereotypeYamlTest >> testTargetEnd [
 	| classYaml |
 	classYaml := self getTestedClassInstance: self referenceYaml.	

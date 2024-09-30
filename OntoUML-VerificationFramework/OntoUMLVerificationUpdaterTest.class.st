@@ -1,22 +1,24 @@
 Class {
-	#name : #OntoUMLVerificationUpdaterTest,
-	#superclass : #TestCase,
-	#category : #'OntoUML-VerificationFramework-Updating'
+	#name : 'OntoUMLVerificationUpdaterTest',
+	#superclass : 'TestCase',
+	#category : 'OntoUML-VerificationFramework-Updating',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Updating'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> parseReferenceYaml: aReferenceYamlText [
 	| yamlParser |
 	yamlParser := PPYAMLGrammar new.
 	^ yamlParser parse: aReferenceYamlText.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceAggregationYaml [
 	^ self parseReferenceYaml: self referenceAggregationYamlText.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceAggregationYamlText [
 	^ 'aggregation_stereotype:
   name: subQuantityOf
@@ -40,12 +42,12 @@ OntoUMLVerificationUpdaterTest >> referenceAggregationYamlText [
     cyclicity: false'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceClassYaml [
 	^ self parseReferenceYaml: self referenceClassYamlText.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceClassYamlText [
 	^ 'class_stereotype:
   name: Mode
@@ -72,12 +74,12 @@ OntoUMLVerificationUpdaterTest >> referenceClassYamlText [
   abstract: true'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceIndexYaml [
 	^ self parseReferenceYaml: self referenceIndexYamlText.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceIndexYamlText [
 	^ 'verifications:
     relationship_specification_paths:
@@ -106,12 +108,12 @@ OntoUMLVerificationUpdaterTest >> referenceIndexYamlText [
         - classes/nonsortals/rolemixin/'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceRelationshipYaml [
 	^ self parseReferenceYaml: self referenceRelationshipYamlText.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceRelationshipYamlText [
 	^ 'relationship_stereotype:
   name: characterization
@@ -135,19 +137,19 @@ OntoUMLVerificationUpdaterTest >> referenceRelationshipYamlText [
     cyclicity: false'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceYaml [
 	^ self parseReferenceYaml: self referenceYamlText.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OntoUMLVerificationUpdaterTest >> referenceYamlText [
 	^ 'test:
 	-reference
 	-text'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testClassSpecifications [
 	| updater | 
 	updater := OntoUMLVerificationUpdater new.
@@ -157,7 +159,7 @@ OntoUMLVerificationUpdaterTest >> testClassSpecifications [
 	self assert: updater classSpecifications equals: 'second test'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testGetClassSpecificationPaths [
 	| updater result | 
 	updater := OntoUMLVerificationUpdater new.
@@ -166,7 +168,7 @@ OntoUMLVerificationUpdaterTest >> testGetClassSpecificationPaths [
 	self assert: result equals: ((updater updatingIndex at: 'verifications') at: 'class_specification_paths').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testGetRelationshipSpecificationPaths [
 	| updater result | 
 	updater := OntoUMLVerificationUpdater new.
@@ -175,7 +177,7 @@ OntoUMLVerificationUpdaterTest >> testGetRelationshipSpecificationPaths [
 	self assert: result equals: ((updater updatingIndex at: 'verifications') at: 'relationship_specification_paths').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testGetVerifications [
 	| controller verifications |
 	controller := VerificationController new.
@@ -185,14 +187,14 @@ OntoUMLVerificationUpdaterTest >> testGetVerifications [
 	self assert: (verifications anySatisfy: [ :verificationClass | verificationClass = Verification ]) equals: true. 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testIndexUrl [
 	| updater | 
 	updater := OntoUMLVerificationUpdater new.
 	self assert: updater indexUrl equals: 'https://raw.githubusercontent.com/OntoUML/OntoUML/master/updatingIndex.yaml'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testParseClassYaml [
 	| updater result | 
 	updater := OntoUMLVerificationUpdater new.
@@ -201,7 +203,7 @@ OntoUMLVerificationUpdaterTest >> testParseClassYaml [
 	self assert: result yaml equals: (self referenceClassYaml at: 'class_stereotype').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testParseRelationshipYaml [
 	| updater result | 
 	updater := OntoUMLVerificationUpdater new.
@@ -213,7 +215,7 @@ OntoUMLVerificationUpdaterTest >> testParseRelationshipYaml [
 	self assert: result yaml equals: (self referenceAggregationYaml at: 'aggregation_stereotype').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testParseYaml [
 	| updater | 
 	updater := OntoUMLVerificationUpdater new.
@@ -223,7 +225,7 @@ OntoUMLVerificationUpdaterTest >> testParseYaml [
 	self assert: (updater parseYaml: self referenceYamlText) equals: self referenceYaml.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testRelationshipSpecifications [
 	| updater | 
 	updater := OntoUMLVerificationUpdater new.
@@ -233,14 +235,14 @@ OntoUMLVerificationUpdaterTest >> testRelationshipSpecifications [
 	self assert: updater relationshipSpecifications equals: 'second test'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testSourceAddress [
 	| updater | 
 	updater := OntoUMLVerificationUpdater new.
 	self assert: updater sourceAddress equals: 'https://raw.githubusercontent.com/OntoUML/OntoUML/master/'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testSpecificationFileName [
 	| updater | 
 	updater := OntoUMLVerificationUpdater new.

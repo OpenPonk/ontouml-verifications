@@ -1,10 +1,12 @@
 Class {
-	#name : #VerificationMessageTest,
-	#superclass : #TestCase,
-	#category : #'OntoUML-VerificationFramework-Messages'
+	#name : 'VerificationMessageTest',
+	#superclass : 'TestCase',
+	#category : 'OntoUML-VerificationFramework-Messages',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Messages'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationMessageTest >> testCreateForWithVerificationWithText [
 	| validationMessage testObject testVerification testMessageText |
 	testObject := Object new.
@@ -16,7 +18,7 @@ VerificationMessageTest >> testCreateForWithVerificationWithText [
 	assert: validationMessage messageText  equals: testMessageText.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationMessageTest >> testMessageText [
 	| validationMessage testObject testVerification testMessageText secondText |
 	testObject := Object new.
@@ -30,12 +32,12 @@ VerificationMessageTest >> testMessageText [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationMessageTest >> testNew [
 	self should: [ VerificationMessage new. ] raise: ShouldNotImplement.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationMessageTest >> testObjectReference [
 	| validationMessage testObject testVerification testMessageText secondObject |
 	testObject := Object new.
@@ -48,7 +50,7 @@ VerificationMessageTest >> testObjectReference [
 	self assert: validationMessage objectReference equals: secondObject.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationMessageTest >> testVerification [
 	| validationMessage testObject testVerification testMessageText secondVerification |
 	testObject := Object new.

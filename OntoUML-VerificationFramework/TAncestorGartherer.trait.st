@@ -1,9 +1,11 @@
 Trait {
-	#name : #TAncestorGartherer,
-	#category : #'OntoUML-VerificationFramework-Traits'
+	#name : 'TAncestorGartherer',
+	#category : 'OntoUML-VerificationFramework-Traits',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Traits'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TAncestorGartherer classSide >> getAncestorsFor: aChild [
 	| ancestorSet |
 	ancestorSet := Set new.
@@ -11,7 +13,7 @@ TAncestorGartherer classSide >> getAncestorsFor: aChild [
 	^ ancestorSet.
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TAncestorGartherer classSide >> getAncestorsFor: aTarget into: aAncestorsSet [ 
 	aTarget generalizations do: [ :generalization | 
 		(aAncestorsSet includes: generalization general) ifFalse: [ 

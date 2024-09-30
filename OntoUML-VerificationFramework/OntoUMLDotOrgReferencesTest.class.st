@@ -1,17 +1,19 @@
 Class {
-	#name : #OntoUMLDotOrgReferencesTest,
-	#superclass : #TestCase,
-	#category : #'OntoUML-VerificationFramework-DocumentationReferences'
+	#name : 'OntoUMLDotOrgReferencesTest',
+	#superclass : 'TestCase',
+	#category : 'OntoUML-VerificationFramework-DocumentationReferences',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'DocumentationReferences'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLDotOrgReferencesTest >> getExpectedUpdatedMessageCode [
 	^ '"I return documentation reference for: Mock"
 getDefinitionReferenceForMock
 	^ ''https://ontouml.readthedocs.io/en/latest/mock/index.html'' .'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceFor [
 	| kind class |
 	kind := OPUMLClass new.
@@ -21,7 +23,7 @@ OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceFor [
 	self assert: (OntoUMLDotOrgReferences getDefinitionReferenceFor: class) equals: ''. 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceForStereotype [
 
 	| methodList |
@@ -45,7 +47,7 @@ OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceForStereotype [
 				, url asString ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceForStereotypeCode [
 	| mockAssociation updatedCode |
 	mockAssociation := 'Mock' -> 'https://ontouml.readthedocs.io/en/latest/mock/index.html'.

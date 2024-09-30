@@ -2,32 +2,34 @@
 I represent tests for PartOfGeneralizationSetVerification.
 "
 Class {
-	#name : #PartOfGeneralizationSetVerificationTest,
-	#superclass : #StereotypeVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Verification-Tests'
+	#name : 'PartOfGeneralizationSetVerificationTest',
+	#superclass : 'StereotypeVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Verification-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOfGeneralizationSetVerificationTest >> getTestedClass [
 	^ PartOfGeneralizationSetVerification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOfGeneralizationSetVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PartOfGeneralizationSetVerificationTest >> getVerifiedStereotypes [
 	^ {OntoUMLPhase.}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testInvalidModel [
 	| phase model result |
 	phase := OPUMLClass new.
@@ -39,12 +41,12 @@ PartOfGeneralizationSetVerificationTest >> testInvalidModel [
 	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testValidModel [
 	| kind phase generalization generalizationSet model result |
 	phase := OPUMLClass new.
@@ -65,23 +67,23 @@ PartOfGeneralizationSetVerificationTest >> testValidModel [
 	self assert: result results size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testVerifiedStereotypes [
 	super testVerifiedStereotypes.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testVerifyWithModel [
 	self testInvalidModel.
 	self testValidModel.

@@ -2,42 +2,44 @@
 I represent tests for Verification.
 "
 Class {
-	#name : #VerificationTest,
-	#superclass : #AbstractVerificationTest,
-	#category : #'OntoUML-VerificationFramework-Verification-Tests'
+	#name : 'VerificationTest',
+	#superclass : 'AbstractVerificationTest',
+	#category : 'OntoUML-VerificationFramework-Verification-Tests',
+	#package : 'OntoUML-VerificationFramework',
+	#tag : 'Verification-Tests'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 VerificationTest >> getTestedClass [
 	^ Verification.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 VerificationTest >> getVerifiedClass [
 	^ nil.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 VerificationTest >> getVerifiedClassInstance [
 	^ nil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationTest >> testCanVerify [
 	self assert: (self getTestedClass canVerify: self getNotVerifiedClassInstance) equals: false.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationTest >> testNew [
 	self newTest.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationTest >> testVerifiedClass [
 	self assert: self getTestedClass verifiedClass equals: self getVerifiedClass.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VerificationTest >> testVerifyObjectWithModel [
 	self
 		assertCollection:
