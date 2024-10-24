@@ -33,8 +33,9 @@ MixRigAntipatternVerification class >> getRigidTypes [
 { #category : 'updating' }
 MixRigAntipatternVerification class >> getUpdatedMessageCode: aVerificationUpdater [
 	| getRigidTypesCode |
-	getRigidTypesCode := '"I return collections containing all rigid types."
-getRigidTypes
+	getRigidTypesCode := 'getRigidTypes
+	"I return collections containing all rigid types."
+
 	^ { '.
 	(aVerificationUpdater classSpecifications select: [ :class | class rigidity = 'rigid' ])
 		do: [ :classSpecification | self checkStringForCodeInjection: classSpecification name.

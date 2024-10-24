@@ -33,6 +33,12 @@ StereotypeVerification class >> canVerifyStereotype: aVerifiedObject [
 	^ self verifiedStereotypes anySatisfy: [ :class | class = stereotype class ].
 ]
 
+{ #category : 'testing' }
+StereotypeVerification class >> isAbstract [
+
+	^ self = StereotypeVerification
+]
+
 { #category : 'constants' }
 StereotypeVerification class >> verifiedStereotypes [
 	^ {}.	

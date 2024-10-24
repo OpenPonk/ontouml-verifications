@@ -33,6 +33,12 @@ Verification class >> expandClassStereotype: aString from: aUpdater [
 		ifFalse: [ ^ { aString. }. ]. 
 ]
 
+{ #category : 'testing' }
+Verification class >> isAbstract [
+
+	^ self = Verification
+]
+
 { #category : 'instance creation' }
 Verification class >> new [
 	^ self shouldNotImplement.

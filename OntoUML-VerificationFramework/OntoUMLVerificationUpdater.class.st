@@ -18,13 +18,16 @@ Class {
 
 { #category : 'updating' }
 OntoUMLVerificationUpdater class >> updateVerifications [
+
+	<script>
 	| updater |
 	updater := self new.
-	updater classSpecifications:  updater loadClassSpecifications.
-	updater relationshipSpecifications: updater loadRelationshipSpecifications.
+	updater classSpecifications: updater loadClassSpecifications.
+	updater relationshipSpecifications:
+		updater loadRelationshipSpecifications.
 	updater loadDocumentationReferences.
-	updater updateReferences.	
-	updater updateVerifications.
+	updater updateReferences.
+	updater updateVerifications
 ]
 
 { #category : 'acccessing' }

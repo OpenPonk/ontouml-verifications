@@ -34,6 +34,12 @@ StereotypeVerificationTest >> getVerifiedStereotypes [
 	self subclassResponsibility.
 ]
 
+{ #category : 'testing' }
+StereotypeVerificationTest >> isAbstract [
+
+	^ self = StereotypeVerificationTest
+]
+
 { #category : 'tests' }
 StereotypeVerificationTest >> testCanVerifyStereotype [
 	self assert: (self getTestedClass canVerify: OPUMLClass new) equals: false.	
