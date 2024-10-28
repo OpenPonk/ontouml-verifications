@@ -8,8 +8,9 @@ Class {
 
 { #category : 'tests' }
 OntoUMLDotOrgReferencesTest >> getExpectedUpdatedMessageCode [
-	^ '"I return documentation reference for: Mock"
-getDefinitionReferenceForMock
+	^ 'getDefinitionReferenceForMock
+	"I return documentation reference for: Mock"
+
 	^ ''https://ontouml.readthedocs.io/en/latest/mock/index.html'' .'.
 ]
 

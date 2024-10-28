@@ -11,6 +11,12 @@ Class {
 	#tag : 'Verification-Tests'
 }
 
+{ #category : 'testing' }
+AbstractVerificationTest class >> isAbstract [
+
+	^ self = AbstractVerificationTest
+]
+
 { #category : 'tests' }
 AbstractVerificationTest >> canVerifyTest [
 	self assert: (self getTestedClass canVerify: self getNotVerifiedClassInstance) equals: false.	
@@ -91,12 +97,6 @@ AbstractVerificationTest >> getVerifiedClassInstance [
 { #category : 'tests' }
 AbstractVerificationTest >> newTest [
 	self should: [ self getTestedClass new. ] raise: ShouldNotImplement.
-]
-
-{ #category : 'tests' }
-AbstractVerificationTest >> testUpdateFrom [
-	"Each of my subclasses that contains test for updateable verification should implement this method."
-	
 ]
 
 { #category : 'tests' }

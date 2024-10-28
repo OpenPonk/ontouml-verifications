@@ -13,6 +13,12 @@ RelationEndVerification class >> abbreviation [
 	^ 'RelationEndVerification'.
 ]
 
+{ #category : 'testing' }
+RelationEndVerification class >> isAbstract [
+
+	^ self = RelationEndVerification
+]
+
 { #category : 'verification' }
 RelationEndVerification >> getDirectParentsOf: aChild fromModel: aModel [
 	^ ((aModel select: [ :element | element class = OPUMLGeneralization ])
