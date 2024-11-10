@@ -32,14 +32,14 @@ VerificationController >> detectAntiPatternsIn: aVerifiedModel [
 
 { #category : 'verification' }
 VerificationController >> getAntiPatternVerifications [
-	^ (RPackageOrganizer default packageNamed: 'OntoUML-VerificationFramework')
+	^ (self packageOrganizer packageNamed: 'Openponk-OntoUML-Verifications')
 		definedClasses
 		select: [ :class | class tags asSet includes: 'Antipattern-Classes'. ].
 ]
 
 { #category : 'verification' }
 VerificationController >> getVerifications [
-	^ (RPackageOrganizer default packageNamed: 'OntoUML-VerificationFramework')
+	^ (self packageOrganizer packageNamed: 'OpenPonk-OntoUML-Verifications')
 		definedClasses
 		select: [ :class | class tags asSet includes: 'Verification-Classes' ].
 ]
