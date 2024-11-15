@@ -4,17 +4,17 @@ SmalltalkCISpec {
 			#platforms : [
 				#pharo
 			],
-			#baseline : 'OntoUMLVerificationFramework'
+			#baseline : 'OpenPonkOntoUMLVerifications'
 		}
 	],
 	#testing : {
 		#coverage : {
 			#packages : [
-				'OntoUML-Verification*'
+				'OpenPonk**'
 			]
 		},
 		#packages : [
-			'OntoUML-Verification*'
+			'OpenPonk-OntoUML-Verification*'
 		]
 	}
 }
