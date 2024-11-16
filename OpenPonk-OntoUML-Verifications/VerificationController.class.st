@@ -32,16 +32,18 @@ VerificationController >> detectAntiPatternsIn: aVerifiedModel [
 
 { #category : 'verification' }
 VerificationController >> getAntiPatternVerifications [
-	^ (self packageOrganizer packageNamed: 'Openponk-OntoUML-Verifications')
-		definedClasses
-		select: [ :class | class tags asSet includes: 'Antipattern-Classes'. ].
+
+	^ (self packageOrganizer packageNamed:
+		   'OpenPonk-OntoUML-Verifications') definedClasses select: [ :class |
+		  class packageTag name = 'Antipattern-Classes' ]
 ]
 
 { #category : 'verification' }
 VerificationController >> getVerifications [
-	^ (self packageOrganizer packageNamed: 'OpenPonk-OntoUML-Verifications')
-		definedClasses
-		select: [ :class | class tags asSet includes: 'Verification-Classes' ].
+
+	^ (self packageOrganizer packageNamed:
+		   'OpenPonk-OntoUML-Verifications') definedClasses select: [ :class |
+		  class packageTag name = 'Verification-Classes' ]
 ]
 
 { #category : 'verification' }
