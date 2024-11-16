@@ -65,7 +65,7 @@ OntoUMLVerificationUpdater >> getVerifications [
 
 	^ (self packageOrganizer packageNamed:
 		   'Openponk-OntoUML-Verifications') definedClasses select: [ :class |
-		  class tags asSet includes: 'Verification-Classes' "or: (class tags asSet includes: 'Antipattern-Classes')" ]
+		  class packageTag name = 'Verification-Classes' "or: [ class packageTag name = 'Antipattern-Classes' ]" ]
 ]
 
 { #category : 'constants' }
