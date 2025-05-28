@@ -75,10 +75,10 @@ VerificationResultsUI >> initialize [
 ]
 
 { #category : 'gt-inspector-extension' }
-VerificationResultsUI >> inspectorTableIn: composite [
+VerificationResultsUI >> inspectorTableIn: aBuilder [
 
 	<inspectorPresentationOrder: -15 title: 'Results'>
-	^ SpTablePresenter new
+	^ aBuilder newTable
 		  beResizable;
 		  items: self verificationResults results asArray;
 		  whenSelectedDo: [ :item | self notifySelectChanged: item ];
