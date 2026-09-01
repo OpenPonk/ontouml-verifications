@@ -25,6 +25,7 @@ AbstractVerificationTest >> canVerifyTest [
 
 { #category : 'tests - utility' }
 AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd [
+
 	| association |
 	association := OPUMLAssociation new.
 	OPUMLProperty new
@@ -39,7 +40,7 @@ AbstractVerificationTest >> createAssociationFrom: aSource to: aEnd [
 		upperValue: (OPUMLLiteralUnlimitedNatural new value: 1);
 		owningAssociation: association;
 		type: aEnd.
-	association memberEnds addAll: association ownedEnds asArray.
+	association memberEnds addAll: association ownedEnds.
 	^ association
 ]
 

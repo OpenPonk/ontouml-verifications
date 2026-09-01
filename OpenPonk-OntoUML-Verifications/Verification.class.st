@@ -11,7 +11,7 @@ Class {
 	#tag : 'Verification-Classes'
 }
 
-{ #category : 'instance creation' }
+{ #category : 'constants' }
 Verification class >> abbreviation [
 	^ 'Verification'.
 ]

@@ -1,3 +1,6 @@
+"
+Trait providing utility methods to traverse and gather child and descendant hierarchies for model elements.
+"
 Trait {
 	#name : 'TChildGartherer',
 	#category : 'OpenPonk-OntoUML-Verifications-Traits',

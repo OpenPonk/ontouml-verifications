@@ -1,3 +1,6 @@
+"
+Trait providing utility methods to traverse and gather ancestral hierarchies for model elements.
+"
 Trait {
 	#name : 'TAncestorGartherer',
 	#category : 'OpenPonk-OntoUML-Verifications-Traits',

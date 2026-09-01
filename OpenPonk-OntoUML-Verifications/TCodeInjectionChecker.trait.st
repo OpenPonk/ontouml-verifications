@@ -1,3 +1,6 @@
+"
+Trait providing utility methods to validate strings and URLs against potential code injection vulnerabilities.
+"
 Trait {
 	#name : 'TCodeInjectionChecker',
 	#category : 'OpenPonk-OntoUML-Verifications-Traits',

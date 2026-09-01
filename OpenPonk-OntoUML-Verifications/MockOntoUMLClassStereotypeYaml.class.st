@@ -9,22 +9,22 @@ Class {
 	#tag : 'Updating'
 }
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> abstract: aValue [
 	yaml add: 'abstract' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> dependency: aValue [
 	yaml add: 'dependency' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> forbiddenAssociations: aValue [
 	yaml add: 'forbidden_associations' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> identityPrinciple: aValue [
 	yaml add: 'identity_principle' -> aValue.
 ]
@@ -34,32 +34,32 @@ MockOntoUMLClassStereotypeYaml >> initialize [
 	self yaml: Dictionary new.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> name: aValue [
 	yaml add: 'name' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> parent: aValue [
 	yaml add: 'parent' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> providesIdentity: aValue [
 	yaml add: 'provides_identity' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> rigidity: aValue [
 	yaml add: 'rigidity' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> subtypes: aValue [
 	yaml add: 'subtypes' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLClassStereotypeYaml >> supertypes: aValue [
 	yaml add: 'supertypes' -> aValue.
 ]

@@ -1,3 +1,6 @@
+"
+Verification rule checking the structural validity of relationship endpoints (source and target) based on OntoUML stereotype constraints.
+"
 Class {
 	#name : 'RelationEndVerification',
 	#superclass : 'Verification',
@@ -8,7 +11,7 @@ Class {
 	#tag : 'Verification-Classes'
 }
 
-{ #category : 'instance creation' }
+{ #category : 'constants' }
 RelationEndVerification class >> abbreviation [
 	^ 'RelationEndVerification'.
 ]

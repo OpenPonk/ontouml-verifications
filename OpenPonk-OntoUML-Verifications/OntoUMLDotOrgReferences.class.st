@@ -1,3 +1,6 @@
+"
+Provides utility methods to resolve and fetch reference URLs and definitions for OntoUML stereotypes and anti-patterns directly from OntoUML.org documentation.
+"
 Class {
 	#name : 'OntoUMLDotOrgReferences',
 	#superclass : 'Object',

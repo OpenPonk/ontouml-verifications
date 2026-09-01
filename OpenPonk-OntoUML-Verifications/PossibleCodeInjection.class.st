@@ -1,3 +1,6 @@
+"
+Error raised when a string or URL fails validation and is suspected of containing a code injection vulnerability.
+"
 Class {
 	#name : 'PossibleCodeInjection',
 	#superclass : 'Error',

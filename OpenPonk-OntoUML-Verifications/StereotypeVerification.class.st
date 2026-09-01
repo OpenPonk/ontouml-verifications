@@ -15,7 +15,7 @@ Class {
 	#tag : 'Verification-Classes'
 }
 
-{ #category : 'instance creation' }
+{ #category : 'constants' }
 StereotypeVerification class >> abbreviation [
 	^ 'StereotypeVerification'.
 ]

@@ -1,3 +1,6 @@
+"
+Trait providing utility methods for dynamically updating, reclassifying, and recompiling class methods.
+"
 Trait {
 	#name : 'TClassUpdater',
 	#category : 'OpenPonk-OntoUML-Verifications-Traits',

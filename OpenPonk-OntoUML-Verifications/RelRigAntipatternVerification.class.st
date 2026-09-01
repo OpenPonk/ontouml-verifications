@@ -15,17 +15,17 @@ Class {
 	#tag : 'Antipattern-Classes'
 }
 
-{ #category : 'checking' }
+{ #category : 'constants' }
 RelRigAntipatternVerification class >> abbreviation [
 	^ 'RelRig'.
 ]
 
-{ #category : 'checking' }
+{ #category : 'constants' }
 RelRigAntipatternVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : 'checking' }
+{ #category : 'constants' }
 RelRigAntipatternVerification class >> verifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]

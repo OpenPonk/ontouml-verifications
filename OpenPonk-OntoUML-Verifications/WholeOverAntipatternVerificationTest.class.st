@@ -33,17 +33,17 @@ WholeOverAntipatternVerificationTest >> getTestModelForMethods [
 		 }.
 ]
 
-{ #category : 'tests' }
+{ #category : 'constants' }
 WholeOverAntipatternVerificationTest >> getTestedClass [
 	^ WholeOverAntipatternVerification.
 ]
 
-{ #category : 'tests' }
+{ #category : 'constants' }
 WholeOverAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : 'tests' }
+{ #category : 'constants' }
 WholeOverAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLKind. OntoUMLCollective. OntoUMLQuantity. OntoUMLSubKind. OntoUMLPhase. OntoUMLRole. OntoUMLRoleMixin. OntoUMLCategory. OntoUMLMixin. }.
 ]

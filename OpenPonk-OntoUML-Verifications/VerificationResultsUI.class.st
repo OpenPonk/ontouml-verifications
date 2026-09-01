@@ -57,11 +57,14 @@ VerificationResultsUI >> getElementColor: aElement [
 
 { #category : 'accessing' }
 VerificationResultsUI >> highlightElement: aElement [
+
 	(highlighted includes: aElement) ifTrue: [ ^ self ].
-	highlighted associations do: [ :highEl | self changeElementColor: highEl key toColor: highEl value. ].
+	highlighted associations do: [ :highEl |
+		self changeElementColor: highEl key toColor: highEl value ].
 	highlighted := Dictionary new.
-	highlighted add: ( aElement -> (self getElementColor: aElement)).
-	highlighted keys do: [ :highEl | self changeElementColor: highEl toColor: Color green. ].
+	highlighted add: aElement -> (self getElementColor: aElement).
+	highlighted keysDo: [ :highEl |
+		self changeElementColor: highEl toColor: Color green ]
 ]
 
 { #category : 'accessing' }

@@ -30,22 +30,22 @@ OntoUMLVerificationUpdater class >> updateVerifications [
 	updater updateVerifications
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLVerificationUpdater >> antipatternDocumentationReferences [
 	^ (documentationReferences at: 'anti-patterns') associations .
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLVerificationUpdater >> classDocumentationReferences [
 	^ (documentationReferences at: 'classes') associations .
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLVerificationUpdater >> classSpecifications [
 	^ classSpecifications.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLVerificationUpdater >> classSpecifications: aSpecifications [
 	classSpecifications := aSpecifications.
 ]
@@ -130,17 +130,17 @@ OntoUMLVerificationUpdater >> parseYaml: aParsedYaml [
 	^ yamlParser parse: aParsedYaml.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLVerificationUpdater >> relationshipDocumentationReferences [
 	^ (documentationReferences at: 'relationships') associations .
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLVerificationUpdater >> relationshipSpecifications [
 	^ relationshipSpecifications.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLVerificationUpdater >> relationshipSpecifications: aSpecifications [
 	relationshipSpecifications := aSpecifications.
 ]
@@ -170,13 +170,13 @@ OntoUMLVerificationUpdater >> updateVerifications [
 	self getVerifications do: [ :verification | verification updateFrom: self ].
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLVerificationUpdater >> updatingIndex [
  	updatingIndex ifNil: [ updatingIndex := self loadIndex ].
 	^ updatingIndex.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLVerificationUpdater >> updatingIndex: aIndex [
  	updatingIndex := aIndex.
 ]

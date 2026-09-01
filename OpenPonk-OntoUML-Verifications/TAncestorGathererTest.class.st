@@ -8,7 +8,7 @@ Class {
 	#tag : 'Traits'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests - utility' }
 TAncestorGathererTest >> createClass: aName withStereotype: aStereotype [
 	| result |
 	result := OPUMLClass new.
@@ -17,7 +17,7 @@ TAncestorGathererTest >> createClass: aName withStereotype: aStereotype [
 	^ result.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests - utility' }
 TAncestorGathererTest >> createGeneralizationFor: aGeneral withSpecific: aSpecific [
 	| generalization |
 	generalization := OPUMLGeneralization new.
