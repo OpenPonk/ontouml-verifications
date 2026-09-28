@@ -1,3 +1,6 @@
+"
+Tests configuration persistence and preference handling for the OntoUML verification framework.
+"
 Class {
 	#name : 'VerificationFrameworkSettingsTest',
 	#superclass : 'TestCase',

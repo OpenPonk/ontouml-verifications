@@ -1,3 +1,6 @@
+"
+Tests ancestor collection algorithms provided by the TAncestorGatherer trait across ontological generalization hierarchies.
+"
 Class {
 	#name : 'TAncestorGathererTest',
 	#superclass : 'TestCase',

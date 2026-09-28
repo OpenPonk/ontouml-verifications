@@ -1,3 +1,6 @@
+"
+Tests aggregation, filtering, and state management of verification result collections in OntoUML.
+"
 Class {
 	#name : 'VerificationResultsTest',
 	#superclass : 'TestCase',

@@ -1,3 +1,6 @@
+"
+Tests reactive updating of verification diagnostics in response to model changes.
+"
 Class {
 	#name : 'OntoUMLVerificationUpdaterTest',
 	#superclass : 'TestCase',

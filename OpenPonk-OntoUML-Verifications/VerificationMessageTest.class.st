@@ -1,3 +1,6 @@
+"
+Tests diagnostic message formatting, severity levels, and model references generated during OntoUML verification.
+"
 Class {
 	#name : 'VerificationMessageTest',
 	#superclass : 'TestCase',

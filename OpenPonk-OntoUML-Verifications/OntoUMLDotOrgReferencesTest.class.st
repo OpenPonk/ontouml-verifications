@@ -1,3 +1,6 @@
+"
+Verifies documentation hyperlinks and external reference integrity pointing to the OntoUML specification portal.
+"
 Class {
 	#name : 'OntoUMLDotOrgReferencesTest',
 	#superclass : 'TestCase',
