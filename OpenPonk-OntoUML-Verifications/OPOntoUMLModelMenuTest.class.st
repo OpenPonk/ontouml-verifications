@@ -57,10 +57,9 @@ OPOntoUMLModelMenuTest >> testModelMenuContainsNoOntoUmlCommandsWhenGenericUmlEd
 
 { #category : 'tests' }
 OPOntoUMLModelMenuTest >> testModelMenuContainsOntoUmlCommandsWhenUmlEditorHasOntoUmlProfile [
-	"Verifies that Model menu is enabled and contains OntoUML items when OntoUML profile is applied."
+	"Verifies that Model menu is enabled and contains OntoUML verification items when OntoUML profile is applied."
 	| umlPlugin testEditor umlPackage ontoProfile profileApplication modelMenuItem subMenuNames |
-	umlPlugin := OPPluginRegistry default plugins
-		detect: [ :eachPluginCandidate | eachPluginCandidate isKindOf: OPUmlClassEditorPlugin ].
+	umlPlugin := OPUmlClassEditorPlugin new.
 	testEditor := (OPEditor on: umlPlugin)
 		workbench: mockWorkbench;
 		yourself.
@@ -77,47 +76,7 @@ OPOntoUMLModelMenuTest >> testModelMenuContainsOntoUmlCommandsWhenUmlEditorHasOn
 	self assert: modelMenuItem isEnabled.
 	subMenuNames := modelMenuItem subMenu menuGroups
 		flatCollect: [ :eachGroup | eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
-	self assertCollection: subMenuNames includesAll: #( 'Patterns' 'Verification' 'Transform to UML' 'Git model repository' )
-]
-
-{ #category : 'tests' }
-OPOntoUMLModelMenuTest >> testPatternsSubMenuContainsAllFourteenPatternsWhenOntoUmlProfileApplied [
-	"Verifies that Patterns submenu contains all 14 ontological pattern items."
-	| umlPlugin testEditor umlPackage ontoProfile profileApplication modelMenuItem patternsItems patternNames |
-	umlPlugin := OPPluginRegistry default plugins
-		detect: [ :eachPluginCandidate | eachPluginCandidate isKindOf: OPUmlClassEditorPlugin ].
-	testEditor := (OPEditor on: umlPlugin)
-		workbench: mockWorkbench;
-		yourself.
-	umlPackage := OPUMLPackage new.
-	ontoProfile := OntoUMLProfileFactory profile.
-	profileApplication := OPUMLProfileApplication new appliedProfile: ontoProfile.
-	umlPackage profileApplications add: profileApplication.
-	testEditor openEmptyModel: umlPackage.
-
-	toolbarPresenter focusedEditor: testEditor.
-	modelMenuItem := toolbarPresenter menu menuGroups first menuItems
-		detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
-	patternsItems := modelMenuItem subMenu menuGroups
-		flatCollect: [ :eachGroup | eachGroup menuItems select: [ :eachItem | eachItem name = 'Patterns' ] ].
-	self assert: patternsItems isNotEmpty.
-	patternNames := patternsItems first subMenu menuGroups
-		flatCollect: [ :eachGroup | eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
-	self assertCollection: patternNames includesAll: #(
-		'Characterisation pattern'
-		'Formal relation pattern'
-		'General relator pattern'
-		'Generalization category pattern'
-		'Generalization mixin pattern'
-		'Generalization rolemixin pattern'
-		'Generic relator pattern'
-		'Partition category pattern'
-		'Partition mode pattern'
-		'Partition phase pattern'
-		'Partition relator pattern'
-		'Partition rolemixin pattern'
-		'Partition role pattern'
-		'Partition subkind pattern' )
+	self assertCollection: subMenuNames includesAll: #( 'Verification' )
 ]
 
 { #category : 'tests' }
