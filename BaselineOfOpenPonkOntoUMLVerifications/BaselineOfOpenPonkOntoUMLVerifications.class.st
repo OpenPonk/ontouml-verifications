@@ -15,14 +15,14 @@ BaselineOfOpenPonkOntoUMLVerifications >> baseline: spec [
 	spec for: #common do: [
 		spec baseline: 'PetitParser' with: [
 			spec
-				repository: 'github://moosetechnology/PetitParser:v3.0.x';
+				repository: 'github://moosetechnology/PetitParser:v3.0.0';
 				loads:
 					#( 'Core' 'Tests' 'Examples' 'Islands' 'Analyzer' 'Preprocessor'
 					   'Indent' 'Extension' 'TestsExtension' 'Parser' ) ].
 		spec baseline: 'OpenPonkOntoUMLModelQuery-Plugin' with: [
 			spec
 				className: 'BaselineOfOpenPonkOntoUMLModelQuery';
-				repository: 'github://openponk/ontouml-modelquery:v4.1.x';
+				repository: 'github://openponk/ontouml-modelquery:v5.0.0';
 				loads: 'plugin' ].
 		spec
 			project: 'OpenPonkOntoUMLModelQuery'
