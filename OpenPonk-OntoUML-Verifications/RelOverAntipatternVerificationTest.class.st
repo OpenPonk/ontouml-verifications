@@ -26,7 +26,7 @@ RelOverAntipatternVerificationTest >> getInvalidModel [
 	^ { relator. kind. subkind. firstMediation. firstMediation. generalization .}.
 ]
 
-{ #category : 'tests' }
+{ #category : 'constants' }
 RelOverAntipatternVerificationTest >> getTestedClass [
 	^ RelOverAntipatternVerification.
 ]
@@ -44,12 +44,12 @@ RelOverAntipatternVerificationTest >> getValidModel [
 	^ { relator. firstKind. secondKind. firstMediation. secondMediation. }.
 ]
 
-{ #category : 'tests' }
+{ #category : 'constants' }
 RelOverAntipatternVerificationTest >> getVerifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : 'tests' }
+{ #category : 'constants' }
 RelOverAntipatternVerificationTest >> getVerifiedStereotypes [
 	^ { OntoUMLRelator. }.
 ]

@@ -1,3 +1,6 @@
+"
+Manages the configuration and toggle settings for various OntoUML model verifications and anti-pattern detections within the framework.
+"
 Class {
 	#name : 'VerificationFrameworkSettings',
 	#superclass : 'Object',

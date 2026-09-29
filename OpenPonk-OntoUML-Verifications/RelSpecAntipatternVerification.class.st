@@ -15,12 +15,12 @@ Class {
 	#tag : 'Antipattern-Classes'
 }
 
-{ #category : 'checking' }
+{ #category : 'constants' }
 RelSpecAntipatternVerification class >> abbreviation [
 	^ 'RelSpec'.
 ]
 
-{ #category : 'checking' }
+{ #category : 'constants' }
 RelSpecAntipatternVerification class >> verifiedClass [
 	^ OPUMLAssociation .
 ]

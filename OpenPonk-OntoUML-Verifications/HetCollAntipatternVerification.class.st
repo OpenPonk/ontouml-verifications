@@ -15,7 +15,7 @@ Class {
 	#tag : 'Antipattern-Classes'
 }
 
-{ #category : 'updating' }
+{ #category : 'constants' }
 HetCollAntipatternVerification class >> abbreviation [
 	^ 'HetColl'.
 ]

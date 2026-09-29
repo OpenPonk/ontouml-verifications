@@ -208,7 +208,8 @@ AllowedSupertypesVerification class >> validSupertypesForSubKind [
 
 { #category : 'constants' }
 AllowedSupertypesVerification class >> verifiedClass [
-	^ OPUMLGeneralization.
+
+	^ OPUMLGeneralization
 ]
 
 { #category : 'verification' }

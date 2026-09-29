@@ -1,3 +1,6 @@
+"
+Tests the OntoUML verification controller coordinating model diagnostics and feedback visualizers.
+"
 Class {
 	#name : 'VerificationControllerTest',
 	#superclass : 'TestCase',

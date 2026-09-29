@@ -1,3 +1,6 @@
+"
+Tests class stereotype and property update mechanisms provided by the TClassUpdater trait.
+"
 Class {
 	#name : 'TClassUpdaterTest',
 	#superclass : 'TestCase',

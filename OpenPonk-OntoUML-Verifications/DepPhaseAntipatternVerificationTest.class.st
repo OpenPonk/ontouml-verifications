@@ -1,3 +1,6 @@
+"
+Verifies detection rules and diagnostic reporting for the OntoUML DepPhase antipattern.
+"
 Class {
 	#name : 'DepPhaseAntipatternVerificationTest',
 	#superclass : 'StereotypeVerificationTest',

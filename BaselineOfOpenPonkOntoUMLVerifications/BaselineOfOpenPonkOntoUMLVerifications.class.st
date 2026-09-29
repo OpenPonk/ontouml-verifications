@@ -1,3 +1,6 @@
+"
+Metacello baseline for the OpenPonk OntoUML Verifications package, defining its package dependencies and load configurations.
+"
 Class {
 	#name : 'BaselineOfOpenPonkOntoUMLVerifications',
 	#superclass : 'BaselineOf',

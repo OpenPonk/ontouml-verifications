@@ -1,3 +1,6 @@
+"
+Tests security sanitization and expression validation performed by the TCodeInjectionChecker trait.
+"
 Class {
 	#name : 'TCodeInjectionCheckerTest',
 	#superclass : 'TestCase',

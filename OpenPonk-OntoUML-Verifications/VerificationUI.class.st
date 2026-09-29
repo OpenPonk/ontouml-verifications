@@ -29,41 +29,6 @@ VerificationUI class >> removeHighlightsFromElementsIn: aDiagramController [
 	aDiagramController updateCanvas
 ]
 
-{ #category : 'toolbar' }
-VerificationUI class >> toolbarMenu: aBuilder [
-
-	<opEditorToolbarMenu: #OPUmlClassEditorPlugin>
-	| appliedProfiles |
-	appliedProfiles := aBuilder model diagramController model
-		                   profileApplications collect: #appliedProfile.
-	(appliedProfiles noneSatisfy: [ :each | each name = 'OntoUML' ]) 
-		ifTrue: [ ^ self ].
-	self toolbarMenuItemFor: aBuilder
-]
-
-{ #category : 'specs' }
-VerificationUI class >> toolbarMenuItemFor: aBuilder [
-
-	(aBuilder item: 'Verification')
-		icon: OntoUMLIcons ontoumlIcon;
-		action: [  ];
-		with: [ 
-			(aBuilder item: 'Verify model') action: [ 
-					self
-						updateVerifiedElements: (VerificationController new verify:
-									 aBuilder model diagramController model)
-						using: aBuilder model diagramController ].
-			(aBuilder item: 'Detect anti-patterns') action: [ 
-					self
-						updateVerifiedElements:
-							(VerificationController new detectAntiPatternsIn:
-									 aBuilder model diagramController model)
-						using: aBuilder model diagramController ].
-			(aBuilder item: 'Remove highlights') action: [ 
-					self removeHighlightsFromElementsIn:
-							aBuilder model diagramController ] ]
-]
-
 { #category : 'specs' }
 VerificationUI class >> updateVerifiedElementStyle: aVerificationResults using: aController [
 

@@ -1,3 +1,6 @@
+"
+Tests ancestor collection algorithms provided by the TAncestorGatherer trait across ontological generalization hierarchies.
+"
 Class {
 	#name : 'TAncestorGathererTest',
 	#superclass : 'TestCase',
@@ -8,7 +11,7 @@ Class {
 	#tag : 'Traits'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests - utility' }
 TAncestorGathererTest >> createClass: aName withStereotype: aStereotype [
 	| result |
 	result := OPUMLClass new.
@@ -17,7 +20,7 @@ TAncestorGathererTest >> createClass: aName withStereotype: aStereotype [
 	^ result.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests - utility' }
 TAncestorGathererTest >> createGeneralizationFor: aGeneral withSpecific: aSpecific [
 	| generalization |
 	generalization := OPUMLGeneralization new.

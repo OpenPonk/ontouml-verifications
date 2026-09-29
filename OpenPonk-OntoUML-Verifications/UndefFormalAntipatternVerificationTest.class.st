@@ -1,3 +1,6 @@
+"
+Verifies detection algorithms and diagnostic results for the OntoUML Undefined Formal antipattern.
+"
 Class {
 	#name : 'UndefFormalAntipatternVerificationTest',
 	#superclass : 'StereotypeVerificationTest',

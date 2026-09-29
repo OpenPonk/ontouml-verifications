@@ -9,12 +9,12 @@ Class {
 	#tag : 'Updating'
 }
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLRelationshipStereotypeYaml >> binaryProperties: aValue [
 	yaml add: 'binary_properties' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLRelationshipStereotypeYaml >> directed: aValue [
 	yaml add: 'directed' -> aValue.
 ]
@@ -24,17 +24,17 @@ MockOntoUMLRelationshipStereotypeYaml >> initialize [
 	self yaml: Dictionary new.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLRelationshipStereotypeYaml >> name: aValue [
 	yaml add: 'name' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLRelationshipStereotypeYaml >> sourceEnd: aValue [
 	yaml add: 'source_end' -> aValue.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 MockOntoUMLRelationshipStereotypeYaml >> targetEnd: aValue [
 	yaml add: 'target_end' -> aValue.
 ]

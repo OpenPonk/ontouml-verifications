@@ -9,37 +9,37 @@ Class {
 	#tag : 'Updating'
 }
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLRelationshipStereotypeYaml >> allowedSources [
 	^ self sourceEnd at: 'allowed'.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLRelationshipStereotypeYaml >> allowedTargets [
 	^ self targetEnd at: 'allowed'.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLRelationshipStereotypeYaml >> binaryProperties [
 	^ self yaml at: 'binary_properties'.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLRelationshipStereotypeYaml >> directed [
 	^ self yaml at: 'directed'.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLRelationshipStereotypeYaml >> name [
 	^ self class tmpCorrectStereotypeName: (self yaml at: 'name') capitalized.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLRelationshipStereotypeYaml >> sourceEnd [
 	^ self yaml at: 'source_end'.
 ]
 
-{ #category : 'acccessing' }
+{ #category : 'accessing' }
 OntoUMLRelationshipStereotypeYaml >> targetEnd [
 	^ self yaml at: 'target_end'.
 ]
