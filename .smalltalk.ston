@@ -1,20 +1,1 @@
-SmalltalkCISpec {
-	#loading : [
-		SCIMetacelloLoadSpec {
-			#platforms : [
-				#pharo
-			],
-			#baseline : 'OpenPonkOntoUMLVerifications'
-		}
-	],
-	#testing : {
-		#coverage : {
-			#packages : [
-				'OpenPonk**'
-			]
-		},
-		#packages : [
-			'OpenPonk-OntoUML-Verification*'
-		]
-	}
-}
+SmalltalkCISpec {	#loading : [		SCIMetacelloLoadSpec {			#platforms : [				#pharo			],			#baseline : 'OpenPonkOntoUMLVerifications'		}	],	#testing : {		#packages : [			'OpenPonk-OntoUML-Verification*'		],		#coverage : {			#packages : [				'OpenPonk-OntoUML-Verification*'			]		}	}}
