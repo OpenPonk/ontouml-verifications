@@ -22,7 +22,7 @@ BaselineOfOpenPonkOntoUMLVerifications >> baseline: spec [
 		spec baseline: 'OpenPonkOntoUMLModelQuery-Plugin' with: [
 			spec
 				className: 'BaselineOfOpenPonkOntoUMLModelQuery';
-				repository: 'github://OpenPonk/ontouml-modelquery:v5.1.0';
+				repository: 'github://OpenPonk/ontouml-modelquery:v5.1.1';
 				loads: 'plugin' ].
 		spec
 			project: 'OpenPonkOntoUMLModelQuery'
