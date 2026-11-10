@@ -109,19 +109,23 @@ RelationTargetVerificationTest >> testValidModel [
 
 { #category : 'tests' }
 RelationTargetVerificationTest >> testValidTargets [
+
 	| dictionary |
-	dictionary  := self getTestedClass validTargets.
-	self assert: (dictionary isKindOf: Dictionary) equals: true.
-	self assert: ((dictionary at: OntoUMLDomainFormal) isKindOf: Collection) equals: true.
+	dictionary := self getTestedClass validTargets.
+	self assert: (dictionary isKindOf: Dictionary).
+	self assert: ((dictionary at: OntoUMLDomainFormal) isKindOf: Collection)
 ]
 
 { #category : 'tests' }
 RelationTargetVerificationTest >> testValidTargetsFor [
+
 	| methodList |
-	methodList := (RelationTargetVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validTargetsFor.*' ].
-	self assert: methodList isNotEmpty.
-	methodList do: [ :methodName | 
-		self assert: (((RelationTargetVerification class >> (methodName asSymbol)) valueWithReceiver: nil arguments: #()) isKindOf: Association) equals: true ].
+	methodList := (RelationTargetVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName |
+		              methodName matchesRegex: 'validTargetsFor.*' ].
+	self denyEmpty: methodList.
+	methodList do: [ :methodName |
+			self assert:
+				((RelationTargetVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  )) isKindOf: Association) ]
 ]
 
 { #category : 'tests' }

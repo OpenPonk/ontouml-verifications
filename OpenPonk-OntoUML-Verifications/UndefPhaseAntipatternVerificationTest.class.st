@@ -20,6 +20,21 @@ UndefPhaseAntipatternVerificationTest >> getVerifiedClass [
 ]
 
 { #category : 'constants' }
+UndefPhaseAntipatternVerificationTest >> getVerifiedClassInstance [
+	| parent child gen gs |
+	parent := OPUMLClass new name: 'Parent'.
+	parent applyStereotype: OntoUMLKind new.
+	child := OPUMLClass new name: 'Child'.
+	child applyStereotype: OntoUMLPhase new.
+	gen := OPUMLGeneralization new
+		general: parent;
+		specific: child.
+	gs := OPUMLGeneralizationSet new.
+	gs generalizations add: gen.
+	^ gs
+]
+
+{ #category : 'constants' }
 UndefPhaseAntipatternVerificationTest >> testAspectsExistForInModel [
 	| kind quality characterisation model |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.	
@@ -42,9 +57,9 @@ UndefPhaseAntipatternVerificationTest >> testAttributesExistFor [
 	self assert: (self getTestedClass basicNew attributesExistFor: kind) equals: true.
 ]
 
-{ #category : 'constants' }
+{ #category : 'tests' }
 UndefPhaseAntipatternVerificationTest >> testCanVerify [
-	"self canVerifyTest."
+	self canVerifyTest
 ]
 
 { #category : 'constants' }

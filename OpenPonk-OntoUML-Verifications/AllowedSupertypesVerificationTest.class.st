@@ -111,19 +111,23 @@ AllowedSupertypesVerificationTest >> testValidModel [
 
 { #category : 'tests' }
 AllowedSupertypesVerificationTest >> testValidSubtypesFor [
+
 	| methodList |
-	methodList := (AllowedSupertypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validSupertypesFor.*' ].
-	methodList do: [ :methodName | 
-		self assert: (((AllowedSupertypesVerification class >> (methodName asSymbol)) valueWithReceiver: nil arguments: #()) isKindOf: Association) equals: true ].
+	methodList := (AllowedSupertypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName |
+		              methodName matchesRegex: 'validSupertypesFor.*' ].
+	methodList do: [ :methodName |
+			self assert:
+				((AllowedSupertypesVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  )) isKindOf: Association) ]
 ]
 
 { #category : 'tests' }
 AllowedSupertypesVerificationTest >> testValidSupertypesFor [
+
 	| methodList |
-	methodList := (AllowedSupertypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validSupertypesFor.*' ].
-	self assert: methodList isNotEmpty.
-	methodList do: [ :methodName | 
-		self assert: (AllowedSupertypesVerification class >>> (methodName asSymbol) isKindOf: Association). ].
+	methodList := (AllowedSupertypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName |
+		              methodName matchesRegex: 'validSupertypesFor.*' ].
+	self denyEmpty: methodList.
+	methodList do: [ :methodName | self assert: (AllowedSupertypesVerification class >>> methodName asSymbol isKindOf: Association) ]
 ]
 
 { #category : 'tests' }

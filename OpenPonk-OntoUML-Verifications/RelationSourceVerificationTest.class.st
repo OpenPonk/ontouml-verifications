@@ -108,19 +108,23 @@ RelationSourceVerificationTest >> testValidModel [
 
 { #category : 'tests' }
 RelationSourceVerificationTest >> testValidSources [
+
 	| dictionary |
-	dictionary  := self getTestedClass validSources.
-	self assert: (dictionary isKindOf: Dictionary) equals: true.
-	self assert: ((dictionary at: OntoUMLDomainFormal) isKindOf: Collection) equals: true.
+	dictionary := self getTestedClass validSources.
+	self assert: (dictionary isKindOf: Dictionary).
+	self assert: ((dictionary at: OntoUMLDomainFormal) isKindOf: Collection)
 ]
 
 { #category : 'tests' }
 RelationSourceVerificationTest >> testValidSourcesFor [
+
 	| methodList |
-	methodList := (RelationSourceVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName | 		methodName matchesRegex: 'validSourcesFor.*' ].
-	self assert: methodList isNotEmpty.
-	methodList do: [ :methodName | 
-		self assert: (((RelationSourceVerification class >> (methodName asSymbol)) valueWithReceiver: nil arguments: #()) isKindOf: Association) equals: true ].
+	methodList := (RelationSourceVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName |
+		              methodName matchesRegex: 'validSourcesFor.*' ].
+	self denyEmpty: methodList.
+	methodList do: [ :methodName |
+			self assert:
+				((RelationSourceVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  )) isKindOf: Association) ]
 ]
 
 { #category : 'tests' }

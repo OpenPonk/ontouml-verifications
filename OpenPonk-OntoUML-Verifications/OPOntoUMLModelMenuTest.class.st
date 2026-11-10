@@ -82,12 +82,13 @@ OPOntoUMLModelMenuTest >> testModelMenuContainsOntoUmlCommandsWhenUmlEditorHasOn
 { #category : 'tests' }
 OPOntoUMLModelMenuTest >> testVerificationSubMenuContainsAllVerificationCommandsWhenOntoUmlProfileApplied [
 	"Verifies that Verification submenu contains all 3 verification items."
+
 	| umlPlugin testEditor umlPackage ontoProfile profileApplication modelMenuItem verificationItems verificationNames |
-	umlPlugin := OPPluginRegistry default plugins
-		detect: [ :eachPluginCandidate | eachPluginCandidate isKindOf: OPUmlClassEditorPlugin ].
+	umlPlugin := OPPluginRegistry default plugins detect: [ :eachPluginCandidate |
+		             eachPluginCandidate isKindOf: OPUmlClassEditorPlugin ].
 	testEditor := (OPEditor on: umlPlugin)
-		workbench: mockWorkbench;
-		yourself.
+		              workbench: mockWorkbench;
+		              yourself.
 	umlPackage := OPUMLPackage new.
 	ontoProfile := OntoUMLProfileFactory profile.
 	profileApplication := OPUMLProfileApplication new appliedProfile: ontoProfile.
@@ -95,15 +96,11 @@ OPOntoUMLModelMenuTest >> testVerificationSubMenuContainsAllVerificationCommands
 	testEditor openEmptyModel: umlPackage.
 
 	toolbarPresenter focusedEditor: testEditor.
-	modelMenuItem := toolbarPresenter menu menuGroups first menuItems
-		detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
-	verificationItems := modelMenuItem subMenu menuGroups
-		flatCollect: [ :eachGroup | eachGroup menuItems select: [ :eachItem | eachItem name = 'Verification' ] ].
-	self assert: verificationItems isNotEmpty.
-	verificationNames := verificationItems first subMenu menuGroups
-		flatCollect: [ :eachGroup | eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
-	self assertCollection: verificationNames includesAll: #(
-		'Verify model'
-		'Detect anti-patterns'
-		'Remove highlights' )
+	modelMenuItem := toolbarPresenter menu menuGroups first menuItems detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
+	verificationItems := modelMenuItem subMenu menuGroups flatCollect: [ :eachGroup |
+		                     eachGroup menuItems select: [ :eachItem | eachItem name = 'Verification' ] ].
+	self denyEmpty: verificationItems.
+	verificationNames := verificationItems first subMenu menuGroups flatCollect: [ :eachGroup |
+		                     eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
+	self assertCollection: verificationNames includesAll: #( 'Verify model' 'Detect anti-patterns' 'Remove highlights' )
 ]
