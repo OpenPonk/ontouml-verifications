@@ -63,16 +63,18 @@ BinOverAntipatternVerification >> checkBinOverFor: aSource and: aTarget from: aM
 ]
 
 { #category : 'verification' }
-BinOverAntipatternVerification >> checkBinOverForMixins: aSource and: aTarget from: aModel [ 
+BinOverAntipatternVerification >> checkBinOverForMixins: aSource and: aTarget from: aModel [
 	| sourceChildren targetChildren sourceAncestors targetAncestors |
-	sourceChildren := (OntoUMLModelQuery getDescendantsFor: aSource from: aModel) 
+	sourceChildren := (OntoUMLModelQuery getDescendantsFor: aSource from: aModel)
 		select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'Sortal' ].
-	targetChildren := (OntoUMLModelQuery getDescendantsFor: aTarget from: aModel) 
+	targetChildren := (OntoUMLModelQuery getDescendantsFor: aTarget from: aModel)
 		select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'Sortal' ].
-	(sourceChildren anySatisfy: [ :source | targetChildren includes: source ]) ifTrue: [ ^ true. ].
-	sourceAncestors := (OntoUMLModelQuery getAncestorsFor: aSource) select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'MixinClass' ].
-	targetAncestors := (OntoUMLModelQuery getAncestorsFor: aSource) select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'MixinClass' ].
-	^ sourceChildren isEmpty and: (targetChildren isEmpty and: (sourceAncestors anySatisfy: [ :source | targetAncestors includes: source ])).
+	(sourceChildren anySatisfy: [ :source | targetChildren includes: source ]) ifTrue: [ ^ true ].
+	sourceAncestors := (OntoUMLModelQuery getAncestorsFor: aSource)
+		select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'MixinClass' ].
+	targetAncestors := (OntoUMLModelQuery getAncestorsFor: aTarget)
+		select: [ :entity | OntoUMLModelQuery isStereotypeOf: entity oclKindOf: 'MixinClass' ].
+	^ sourceChildren isEmpty and: (targetChildren isEmpty and: (sourceAncestors anySatisfy: [ :source | targetAncestors includes: source ]))
 ]
 
 { #category : 'verification' }
@@ -105,18 +107,20 @@ BinOverAntipatternVerification >> getAncestorTreeFor: aSource withIdentityProvid
 	queue := WaitfreeQueue new.
 	queue nextPut: aSource.
 	openedSet add: aSource.
-	[queue isEmpty] whileFalse: [
+	[ queue isEmpty ] whileFalse: [
 		entity := queue nextOrNil.
-		closedSet add: queue.
-		entity = identityProvider ifTrue: [ queue flush. ]
-		ifFalse:[
-		entity generalizations do: [ :generalization |
-			((closedSet includes: generalization general)
-				or: (openedSet includes: generalization general))
-			 	ifFalse: [ openedSet add: generalization general.
-					queue nextPut: generalization general. 
-					pathDictionary add: (generalization general -> generalization) ]. ]. ]. ].
-	^ pathDictionary.
+		closedSet add: entity.
+		entity = identityProvider
+			ifTrue: [ queue flush ]
+			ifFalse: [
+				entity generalizations do: [ :generalization |
+					((closedSet includes: generalization general)
+						or: (openedSet includes: generalization general))
+						ifFalse: [
+							openedSet add: generalization general.
+							queue nextPut: generalization general.
+							pathDictionary add: (generalization general -> generalization) ] ] ] ].
+	^ pathDictionary
 ]
 
 { #category : 'verification' }

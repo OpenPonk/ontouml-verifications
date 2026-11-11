@@ -137,6 +137,25 @@ IdentityRequiredVerificationTest >> testValidModel [
 ]
 
 { #category : 'tests' }
+IdentityRequiredVerificationTest >> testValidModelWithDiamondGeneralizationToNonSortal [
+	| kind phase phaseMixin roleMixin role genPhaseKind genRolePhase genRoleRoleMixin genPhaseMixin1 genPhaseMixin2 model result |
+	kind := OPUMLClass new name: 'Person'; applyStereotype: OntoUMLKind new.
+	phase := OPUMLClass new name: 'HealthyPerson'; applyStereotype: OntoUMLPhase new.
+	phaseMixin := OPUMLClass new name: 'EligibleEntity'; applyStereotype: OntoUMLPhaseMixin new.
+	roleMixin := OPUMLClass new name: 'ClinicalClient'; applyStereotype: OntoUMLRoleMixin new.
+	role := OPUMLClass new name: 'BloodDonor'; applyStereotype: OntoUMLRole new.
+	genPhaseKind := OPUMLGeneralization new general: kind; specific: phase.
+	genRolePhase := OPUMLGeneralization new general: phase; specific: role.
+	genRoleRoleMixin := OPUMLGeneralization new general: roleMixin; specific: role.
+	genPhaseMixin1 := OPUMLGeneralization new general: phaseMixin; specific: phase.
+	genPhaseMixin2 := OPUMLGeneralization new general: phaseMixin; specific: roleMixin.
+	model := { kind . phase . phaseMixin . roleMixin . role . genPhaseKind . genRolePhase . genRoleRoleMixin . genPhaseMixin1 . genPhaseMixin2 }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: role withModel: model).
+	self assertEmpty: result results
+]
+
+{ #category : 'tests' }
 IdentityRequiredVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]

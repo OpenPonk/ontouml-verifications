@@ -44,26 +44,26 @@ MixIdenAntipatternVerification >> checkForIdentityOverlapFor: aElements [
 
 { #category : 'verification' }
 MixIdenAntipatternVerification >> getIdentityProviderFor: aElement [
-	| identityProvider accumulator | 
-	(self providesIdentity: aElement) ifTrue: [ ^ aElement. ].
+	| identityProvider accumulator |
+	(self providesIdentity: aElement) ifTrue: [ ^ aElement ].
 	accumulator := Set new.
-	accumulator add: self.
-	aElement generalizations do: [ :generalization | 
-		identityProvider := self getIdentityProviderFor: generalization general withAccumulator: accumulator. 
-		identityProvider ifNotNil: [ ^ identityProvider. ]. ].
-	^ nil.
+	accumulator add: aElement.
+	aElement generalizations do: [ :generalization |
+		identityProvider := self getIdentityProviderFor: generalization general withAccumulator: accumulator.
+		identityProvider ifNotNil: [ ^ identityProvider ] ].
+	^ nil
 ]
 
 { #category : 'verification' }
 MixIdenAntipatternVerification >> getIdentityProviderFor: aElement withAccumulator: aAccumulator [
-	| identityProvider | 		
-	(self providesIdentity: aElement) ifTrue: [ ^ aElement. ].	
-	(aAccumulator includes: self) ifTrue: [ ^nil ].
-	aAccumulator add: self.	
-	aElement generalizations do: [ :generalization | 
-		identityProvider := self getIdentityProviderFor: generalization general withAccumulator: aAccumulator. 
-		identityProvider ifNotNil: [ ^ identityProvider. ]. ].
-	^ nil.
+	| identityProvider |
+	(self providesIdentity: aElement) ifTrue: [ ^ aElement ].
+	(aAccumulator includes: aElement) ifTrue: [ ^ nil ].
+	aAccumulator add: aElement.
+	aElement generalizations do: [ :generalization |
+		identityProvider := self getIdentityProviderFor: generalization general withAccumulator: aAccumulator.
+		identityProvider ifNotNil: [ ^ identityProvider ] ].
+	^ nil
 ]
 
 { #category : 'verification' }

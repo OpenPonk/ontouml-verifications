@@ -25,6 +25,22 @@ BinOverAntipatternVerificationTest >> testCanVerify [
 ]
 
 { #category : 'tests' }
+BinOverAntipatternVerificationTest >> testCheckBinOverForMixinsWithDisjointAncestors [
+	| parentMixinA parentMixinB childMixinA childMixinB genA genB association model result |
+	parentMixinA := self createClass: 'ParentMixinA' withStereotype: OntoUMLCategory.
+	parentMixinB := self createClass: 'ParentMixinB' withStereotype: OntoUMLCategory.
+	childMixinA := self createClass: 'ChildMixinA' withStereotype: OntoUMLCategory.
+	childMixinB := self createClass: 'ChildMixinB' withStereotype: OntoUMLCategory.
+	genA := self createGeneralizationFor: parentMixinA withSpecific: childMixinA.
+	genB := self createGeneralizationFor: parentMixinB withSpecific: childMixinB.
+	association := self createAssociationFrom: childMixinA to: childMixinB.
+	model := { parentMixinA . parentMixinB . childMixinA . childMixinB . genA . genB . association }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: association withModel: model).
+	self assertEmpty: result results
+]
+
+{ #category : 'tests' }
 BinOverAntipatternVerificationTest >> testCheckOverlapForAnd [
 	| kind subkind role |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.

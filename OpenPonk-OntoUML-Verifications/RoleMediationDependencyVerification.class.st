@@ -23,11 +23,6 @@ RoleMediationDependencyVerification class >> verifiedClass [
 	^ OPUMLClass.
 ]
 
-{ #category : 'constants' }
-RoleMediationDependencyVerification class >> verifiedStereotypes [
-	^ { OntoUMLRole.}.
-]
-
 { #category : 'verification' }
 RoleMediationDependencyVerification >> fulfillsMediationDependency: aMediation [
 	^ (aMediation memberEnds at: 1) lower >= 1 and: (aMediation memberEnds at: 2) lower >= 1

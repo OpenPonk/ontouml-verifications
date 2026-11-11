@@ -66,15 +66,20 @@ IdentityRequiredVerification class >> verifiedStereotypes [
 
 { #category : 'verification' }
 IdentityRequiredVerification >> countIdentitySources: aVerifiedObject fromModel: aVerifiedModel withAccumulator: aVerificationAccumulator [
-	| stereotype superclasses results |
-	(aVerificationAccumulator anySatisfy: [ :element | element = aVerifiedObject ]) ifTrue: [ ^ Float negativeInfinity. ].
-	aVerificationAccumulator add: aVerifiedObject.
+	| stereotype superclasses results branchAccumulator |
+	(aVerificationAccumulator anySatisfy: [ :element | element = aVerifiedObject ]) ifTrue: [ ^ Float negativeInfinity ].
+	branchAccumulator := aVerificationAccumulator copy.
+	branchAccumulator add: aVerifiedObject.
 	stereotype := self class getStereotype: aVerifiedObject.
 	(self hasIdentity: stereotype) ifTrue: [ ^ 1 ].
 	results := 0.
 	superclasses := self getSuperClasses: aVerifiedObject fromModel: aVerifiedModel.
-	superclasses do: [ :superclass | results := results + (self countIdentitySources: superclass fromModel: aVerifiedModel withAccumulator: aVerificationAccumulator) ].
-	^ results.
+	superclasses do: [ :superclass |
+		results := results + (self
+			countIdentitySources: superclass
+			fromModel: aVerifiedModel
+			withAccumulator: branchAccumulator) ].
+	^ results
 ]
 
 { #category : 'verification' }

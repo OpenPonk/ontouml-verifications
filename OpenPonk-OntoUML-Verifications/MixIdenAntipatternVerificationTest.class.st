@@ -47,6 +47,22 @@ MixIdenAntipatternVerificationTest >> testInvalidModel [
 ]
 
 { #category : 'tests' }
+MixIdenAntipatternVerificationTest >> testInvalidModelWithMultiStepIdentityProvider [
+	| roleMixin kind phase role genPhaseKind genRolePhase genRoleMixin model result |
+	roleMixin := self createClass: 'ClinicalClient' withStereotype: OntoUMLRoleMixin.
+	kind := self createClass: 'Person' withStereotype: OntoUMLKind.
+	phase := self createClass: 'HealthyPerson' withStereotype: OntoUMLPhase.
+	role := self createClass: 'BloodDonor' withStereotype: OntoUMLRole.
+	genPhaseKind := self createGeneralizationFor: kind withSpecific: phase.
+	genRolePhase := self createGeneralizationFor: phase withSpecific: role.
+	genRoleMixin := self createGeneralizationFor: roleMixin withSpecific: role.
+	model := { roleMixin . kind . phase . role . genPhaseKind . genRolePhase . genRoleMixin }.
+	result := VerificationResults new.
+	result addResults: (self getTestedClass verify: roleMixin withModel: model).
+	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning ]) size equals: 1
+]
+
+{ #category : 'tests' }
 MixIdenAntipatternVerificationTest >> testNew [
 	self newTest.
 ]
