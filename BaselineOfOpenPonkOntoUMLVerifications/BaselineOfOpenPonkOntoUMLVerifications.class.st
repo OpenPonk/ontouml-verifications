@@ -32,10 +32,13 @@ BaselineOfOpenPonkOntoUMLVerifications >> baseline: spec [
 			package: 'OpenPonk-OntoUML-Verifications'
 			with: [ spec requires: #( 'PetitParser' ) ].
 		spec
+			package: 'OpenPonk-OntoUML-Verifications-Tests'
+			with: [ spec requires: #( 'OpenPonk-OntoUML-Verifications' ) ].
+		spec
 			group: 'plugin'
 			with:
-			#( 'OpenPonkOntoUMLModelQuery-Plugin' 'OpenPonk-OntoUML-Verifications' ).
+			#( 'OpenPonkOntoUMLModelQuery-Plugin' 'OpenPonk-OntoUML-Verifications' 'OpenPonk-OntoUML-Verifications-Tests' ).
 		spec
 			group: 'default'
-			with: #( OpenPonkOntoUMLModelQuery 'OpenPonk-OntoUML-Verifications' ) ]
+			with: #( OpenPonkOntoUMLModelQuery 'OpenPonk-OntoUML-Verifications' 'OpenPonk-OntoUML-Verifications-Tests' ) ]
 ]
