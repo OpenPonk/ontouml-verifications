@@ -53,13 +53,13 @@ VerificationFrameworkSettingsTest >> testOntoUMLAntipatternsCategoryCanBeOpenedI
 VerificationFrameworkSettingsTest >> testOntoUMLVerificationsCategoryCanBeOpenedInSpecSettings [
 
 	| method pragma builder declaration node presenter initialValue |
-	method := VerificationFrameworkSettings class >> #settingsOnRoleMediationDependencyVerification:.
+	method := VerificationFrameworkSettings class >> #settingsOnRelationDependencyVerification:.
 	pragma := method pragmaAt: #systemsettings.
 	self deny: pragma identicalTo: nil.
 	self assert: pragma selector equals: #systemsettings.
 
 	builder := SettingTreeBuilder new.
-	VerificationFrameworkSettings settingsOnRoleMediationDependencyVerification: builder.
+	VerificationFrameworkSettings settingsOnRelationDependencyVerification: builder.
 	declaration := builder nodeList first settingDeclaration.
 	self assert: declaration target identicalTo: VerificationFrameworkSettings.
 	self assert: declaration targetSelector equals: #settingsInstance.
@@ -70,13 +70,13 @@ VerificationFrameworkSettingsTest >> testOntoUMLVerificationsCategoryCanBeOpened
 	presenter := node asPresenterOn: StSettingDetailPresenter new.
 	presenter build.
 
-	initialValue := VerificationFrameworkSettings settingsInstance accessRoleMediationDependencyVerification.
+	initialValue := VerificationFrameworkSettings settingsInstance accessRelationDependencyVerification.
 	[
 		presenter value: initialValue not.
-		self assert: VerificationFrameworkSettings settingsInstance accessRoleMediationDependencyVerification equals: initialValue not.
+		self assert: VerificationFrameworkSettings settingsInstance accessRelationDependencyVerification equals: initialValue not.
 		presenter value: initialValue.
-		self assert: VerificationFrameworkSettings settingsInstance accessRoleMediationDependencyVerification equals: initialValue ]
-		ensure: [ VerificationFrameworkSettings settingsInstance accessRoleMediationDependencyVerification: initialValue ]
+		self assert: VerificationFrameworkSettings settingsInstance accessRelationDependencyVerification equals: initialValue ] ensure: [
+		VerificationFrameworkSettings settingsInstance accessRelationDependencyVerification: initialValue ]
 ]
 
 { #category : 'tests' }

@@ -1,9 +1,5 @@
 "
-I am verification for RoleMediationDependency rule. 
-
-Overriden methods: verifiedClass, verifyObject:withModel:, verifiedStereotypes.
-
-New methods: calculateMultiplicity:, calculateMultiplicity:forMediation:, fulfilsMediationDependecy:.
+Verifies that role classes participate directly or via generalization ancestors in at least one mandatory relational dependency (mediation, material, componentOf, memberOf, or subCollectionOf) whose source and target lower multiplicities are at least 1 (or '*').
 "
 Class {
 	#name : 'RelationDependencyVerification',

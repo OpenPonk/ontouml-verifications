@@ -63,9 +63,8 @@ OntoUMLVerificationUpdater >> getRelationshipSpecificationPaths [
 { #category : 'updating' }
 OntoUMLVerificationUpdater >> getVerifications [
 
-	^ (self packageOrganizer packageNamed:
-		   'Openponk-OntoUML-Verifications') definedClasses select: [ :class |
-		  class packageTag name = 'Verification-Classes' "or: [ class packageTag name = 'Antipattern-Classes' ]" ]
+	^ (self packageOrganizer packageNamed: 'OpenPonk-OntoUML-Verifications') definedClasses select: [ :class |
+		  class packageTag name = 'Verification-Classes' ]
 ]
 
 { #category : 'constants' }

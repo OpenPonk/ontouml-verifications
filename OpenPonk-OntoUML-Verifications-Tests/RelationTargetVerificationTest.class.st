@@ -146,16 +146,20 @@ RelationTargetVerificationTest >> testValidTargets [
 { #category : 'tests' }
 RelationTargetVerificationTest >> testValidTargetsFor [
 
-	| methodList |
+	| methodList associations |
 	methodList := (RelationTargetVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName |
 		              methodName matchesRegex: 'validTargetsFor.*' ].
 	self denyEmpty: methodList.
-	methodList do: [ :methodName |
-			| association |
-			association := RelationTargetVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  ).
-			self assert: association class identicalTo: Association.
-			self assert: association key isClass description: 'Relation target specification key must be a stereotype class'.
-			self assert: association value class identicalTo: Array ]
+	associations := methodList collect: [ :methodName |
+			                | association |
+			                association := RelationTargetVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  ).
+			                self assert: association class identicalTo: Association.
+			                self
+				                assert: association key isClass
+				                description: 'Relation target specification key must be a stereotype class'.
+			                self assert: association value class identicalTo: Array.
+			                association ].
+	self assertCollection: (associations collect: #key) hasSameElements: self getTestedClass validTargets keys
 ]
 
 { #category : 'tests' }

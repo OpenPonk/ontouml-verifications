@@ -20,14 +20,19 @@ OntoUMLDotOrgReferencesTest >> getExpectedUpdatedMessageCode [
 { #category : 'tests' }
 OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceFor [
 
-	| kind class |
+	| kind class domainFormal |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
 	class := OPUMLClass new.
+	domainFormal := OPUMLAssociation new.
+	domainFormal applyStereotype: OntoUMLDomainFormal new.
 	self
 		assert: (OntoUMLDotOrgReferences getDefinitionReferenceFor: kind)
 		equals: 'https://ontouml.readthedocs.io/en/latest/classes/sortals/kind/index.html'.
-	self assert: (OntoUMLDotOrgReferences getDefinitionReferenceFor: class) equals: ''
+	self assert: (OntoUMLDotOrgReferences getDefinitionReferenceFor: class) equals: ''.
+	self
+		assert: (OntoUMLDotOrgReferences getDefinitionReferenceFor: domainFormal)
+		equals: 'https://ontouml.readthedocs.io/en/latest/relationships/formal/index.html'
 ]
 
 { #category : 'tests' }

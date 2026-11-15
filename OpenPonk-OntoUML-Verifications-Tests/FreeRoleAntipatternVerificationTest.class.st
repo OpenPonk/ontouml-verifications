@@ -30,7 +30,7 @@ FreeRoleAntipatternVerificationTest >> testCanVerify [
 ]
 
 { #category : 'tests' }
-FreeRoleAntipatternVerificationTest >> testFulfillsMediationDependency [
+FreeRoleAntipatternVerificationTest >> testFulfillsRelationalDependency [
 
 	| kind relator mediation sourceEnd targetEnd testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.

@@ -45,14 +45,13 @@ RelCompAntipatternVerification >> contains: aOriginSet ancestorOrSelfOf: aTarget
 
 { #category : 'verification' }
 RelCompAntipatternVerification >> createWarningMessageFor: aVerifiedObject and: aAssociation [
-	^ VerificationMessageWarning 
-			createFor: aVerifiedObject 
-			withVerification: self 
-			withText: 'Association ' ,
-				(OntoUMLModelQuery getAssociationName: aVerifiedObject) ,
-				' is in RelComp anti-pattern with  ' ,
-				(OntoUMLModelQuery getAssociationName: aAssociation)
-			documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRelOver.
+
+	^ VerificationMessageWarning
+		  createFor: aVerifiedObject
+		  withVerification: self
+		  withText: 'Association ' , (OntoUMLModelQuery getAssociationName: aVerifiedObject) , ' is in RelComp anti-pattern with  '
+			  , (OntoUMLModelQuery getAssociationName: aAssociation)
+		  documentationReference: OntoUMLDotOrgReferences getDefinitionReferenceForRelComp
 ]
 
 { #category : 'verification' }

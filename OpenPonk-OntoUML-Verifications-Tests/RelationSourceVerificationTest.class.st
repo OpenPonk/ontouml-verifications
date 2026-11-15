@@ -145,16 +145,20 @@ RelationSourceVerificationTest >> testValidSources [
 { #category : 'tests' }
 RelationSourceVerificationTest >> testValidSourcesFor [
 
-	| methodList |
+	| methodList associations |
 	methodList := (RelationSourceVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName |
 		              methodName matchesRegex: 'validSourcesFor.*' ].
 	self denyEmpty: methodList.
-	methodList do: [ :methodName |
-			| association |
-			association := RelationSourceVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  ).
-			self assert: association class identicalTo: Association.
-			self assert: association key isClass description: 'Relation source specification key must be a stereotype class'.
-			self assert: association value class identicalTo: Array ]
+	associations := methodList collect: [ :methodName |
+			                | association |
+			                association := RelationSourceVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  ).
+			                self assert: association class identicalTo: Association.
+			                self
+				                assert: association key isClass
+				                description: 'Relation source specification key must be a stereotype class'.
+			                self assert: association value class identicalTo: Array.
+			                association ].
+	self assertCollection: (associations collect: #key) hasSameElements: self getTestedClass validSources keys
 ]
 
 { #category : 'tests' }

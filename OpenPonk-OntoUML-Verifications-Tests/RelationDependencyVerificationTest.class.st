@@ -1,8 +1,8 @@
 "
-I represent tests for RoleMediationDependencyVerification.
+Tests relational dependency verification rules for role classes.
 "
 Class {
-	#name : 'RoleMediationDependencyVerificationTest',
+	#name : 'RelationDependencyVerificationTest',
 	#superclass : 'StereotypeVerificationTest',
 	#category : 'OpenPonk-OntoUML-Verifications-Tests-Verification-Classes',
 	#package : 'OpenPonk-OntoUML-Verifications-Tests',
@@ -10,27 +10,22 @@ Class {
 }
 
 { #category : 'constants' }
-RoleMediationDependencyVerificationTest >> getTestedClass [
+RelationDependencyVerificationTest >> getTestedClass [
 	^ RelationDependencyVerification.
 ]
 
 { #category : 'constants' }
-RoleMediationDependencyVerificationTest >> getVerifiedClass [
-	^ OPUMLClass.
-]
-
-{ #category : 'constants' }
-RoleMediationDependencyVerificationTest >> getVerifiedStereotypes [
+RelationDependencyVerificationTest >> getVerifiedStereotypes [
 	^{ OntoUMLRole.}.
 ]
 
 { #category : 'tests' }
-RoleMediationDependencyVerificationTest >> testCanVerify [
+RelationDependencyVerificationTest >> testCanVerify [
 	self canVerifyTest.
 ]
 
 { #category : 'tests' }
-RoleMediationDependencyVerificationTest >> testFulfillsMediationDependency [
+RelationDependencyVerificationTest >> testFulfillsRelationalDependency [
 
 	| kind role mediation |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
@@ -46,7 +41,7 @@ RoleMediationDependencyVerificationTest >> testFulfillsMediationDependency [
 ]
 
 { #category : 'tests' }
-RoleMediationDependencyVerificationTest >> testInvalidModel [
+RelationDependencyVerificationTest >> testInvalidModel [
 
 	| role model result message |
 	role := OPUMLClass new.
@@ -67,12 +62,12 @@ RoleMediationDependencyVerificationTest >> testInvalidModel [
 ]
 
 { #category : 'tests' }
-RoleMediationDependencyVerificationTest >> testNew [
+RelationDependencyVerificationTest >> testNew [
 	self newTest.
 ]
 
 { #category : 'tests' }
-RoleMediationDependencyVerificationTest >> testValidModel [
+RelationDependencyVerificationTest >> testValidModel [
 
 	| relator association role model result |
 	role := OPUMLClass new.
@@ -91,23 +86,18 @@ RoleMediationDependencyVerificationTest >> testValidModel [
 ]
 
 { #category : 'tests' }
-RoleMediationDependencyVerificationTest >> testVerifiedClass [
+RelationDependencyVerificationTest >> testVerifiedClass [
 	self verifiedClassTest.
 ]
 
 { #category : 'tests' }
-RoleMediationDependencyVerificationTest >> testVerifiedStereotypes [
-	super testVerifiedStereotypes.
-]
-
-{ #category : 'tests' }
-RoleMediationDependencyVerificationTest >> testVerifyObjectWithModel [
+RelationDependencyVerificationTest >> testVerifyObjectWithModel [
 	self testInvalidModel.
 	self testValidModel.
 ]
 
 { #category : 'tests' }
-RoleMediationDependencyVerificationTest >> testVerifyWithModel [
+RelationDependencyVerificationTest >> testVerifyWithModel [
 	self testInvalidModel.
 	self testValidModel.
 ]

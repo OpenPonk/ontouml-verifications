@@ -144,7 +144,8 @@ RelCompAntipatternVerificationTest >> testInvalidModel [
 	self assert: message class identicalTo: VerificationMessageWarning.
 	self assert: message objectReference identicalTo: associationA.
 	self assert: message verification class identicalTo: RelCompAntipatternVerification.
-	self assert: message messageText equals: 'Association sourceA->tagetA is in RelComp anti-pattern with  sourceB->targetB'
+	self assert: message messageText equals: 'Association sourceA->tagetA is in RelComp anti-pattern with  sourceB->targetB'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/RelComp/index.html'
 ]
 
 { #category : 'tests' }

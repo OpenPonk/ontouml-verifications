@@ -101,6 +101,13 @@ OntoUMLDotOrgReferences class >> getDefinitionReferenceForDerivation [
 ]
 
 { #category : 'constants - relationship' }
+OntoUMLDotOrgReferences class >> getDefinitionReferenceForDomainFormal [
+	"Return documentation reference for DomainFormal (mapped from OntoUML Formal)."
+
+	^ self getDefinitionReferenceForFormal
+]
+
+{ #category : 'constants - relationship' }
 OntoUMLDotOrgReferences class >> getDefinitionReferenceForFormal [
 	"I return documentation reference for: Formal"
 

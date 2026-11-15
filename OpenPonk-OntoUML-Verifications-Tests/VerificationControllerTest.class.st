@@ -112,8 +112,7 @@ VerificationControllerTest >> testGetVerifications [
 			PartOfGeneralizationSetVerification.
 			RelationSourceVerification.
 			RelationTargetVerification.
-			RelatorMediationDependencyVerification.
-			RoleMediationDependencyVerification }.
+			RelatorMediationDependencyVerification }.
 	self
 		assert: (verifications allSatisfy: [ :verificationClass | verificationClass packageTagName = 'Verification-Classes' ])
 		description: 'All verification classes must belong to tag Verification-Classes'

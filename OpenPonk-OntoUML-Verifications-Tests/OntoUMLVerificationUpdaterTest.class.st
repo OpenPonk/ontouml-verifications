@@ -181,6 +181,30 @@ OntoUMLVerificationUpdaterTest >> testGetRelationshipSpecificationPaths [
 ]
 
 { #category : 'tests' }
+OntoUMLVerificationUpdaterTest >> testGetVerifications [
+
+	| updater verifications |
+	updater := OntoUMLVerificationUpdater new.
+	verifications := updater getVerifications.
+	self assertCollection: verifications hasSameElements: {
+			Verification.
+			StereotypeVerification.
+			RelationEndVerification.
+			RelationDependencyVerification.
+			AllowedSubtypesVerification.
+			AllowedSupertypesVerification.
+			CharacterizedVerification.
+			IdentityRequiredVerification.
+			PartOfGeneralizationSetVerification.
+			RelationSourceVerification.
+			RelationTargetVerification.
+			RelatorMediationDependencyVerification }.
+	self
+		assert: (verifications allSatisfy: [ :verificationClass | verificationClass packageTagName = 'Verification-Classes' ])
+		description: 'All updater verification classes must belong to tag Verification-Classes'
+]
+
+{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testIndexUrl [
 	| updater | 
 	updater := OntoUMLVerificationUpdater new.

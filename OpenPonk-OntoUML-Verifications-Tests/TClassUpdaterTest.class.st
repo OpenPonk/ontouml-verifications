@@ -34,7 +34,7 @@ TClassUpdaterTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : 'constrants' }
+{ #category : 'constants' }
 TClassUpdaterTest >> tempPackageName [
 
 	^ 'OntoUML-VerificationFramework-TempTestClasses'
