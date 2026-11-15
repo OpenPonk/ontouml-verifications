@@ -31,29 +31,41 @@ RelatorMediationDependencyVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testGetMultiplicityFor [
+
 	| kind relator mediation |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
 	relator := OPUMLClass new applyStereotype: OntoUMLRelator new.
 	mediation := self createAssociationFrom: kind to: relator.
 	self assert: (self getTestedClass basicNew getUpperBoundMultiplicityOf: mediation for: relator) equals: 1.
-	(mediation memberEnds at:1) lowerValue value: 0.
-	self assert: (self getTestedClass basicNew getUpperBoundMultiplicityOf: mediation for: relator) equals: 0.
-	
+	mediation memberEnds first lowerValue value: 0.
+	self assert: (self getTestedClass basicNew getUpperBoundMultiplicityOf: mediation for: relator) equals: 0
 ]
 
 { #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testInvalidModel [
-	| relator association kind model result |
+
+	| relator association kind model result message |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
 	relator := OPUMLClass new.
 	relator applyStereotype: OntoUMLRelator new.
 	association := self createAssociationFrom: relator to: kind.
 	association applyStereotype: OntoUMLMediation new.
-	model := { kind. relator. association. }.
+	model := {
+		         kind.
+		         relator.
+		         association }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: relator withModel: model).
 	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: relator.
+	self assert: message verification class identicalTo: RelatorMediationDependencyVerification.
+	self
+		assert: message messageText
+		equals: 'OntoUMLRelator has to have total multiplicity on the other side of mediations equal or greater than 2.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/classes/sortals/relator/index.html'
 ]
 
 { #category : 'tests' }
@@ -63,6 +75,7 @@ RelatorMediationDependencyVerificationTest >> testNew [
 
 { #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testValidModel [
+
 	| relator association kind secondAssociation secondKind model result |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
@@ -74,10 +87,15 @@ RelatorMediationDependencyVerificationTest >> testValidModel [
 	association applyStereotype: OntoUMLMediation new.
 	secondAssociation := self createAssociationFrom: relator to: secondKind.
 	secondAssociation applyStereotype: OntoUMLMediation new.
-	model := { kind. secondKind. relator. association. secondAssociation.}.
+	model := {
+		         kind.
+		         secondKind.
+		         relator.
+		         association.
+		         secondAssociation }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: relator withModel: model).
-	self assert: result results size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

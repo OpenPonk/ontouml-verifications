@@ -42,24 +42,47 @@ BinOverAntipatternVerificationTest >> testCheckBinOverForMixinsWithDisjointAnces
 
 { #category : 'tests' }
 BinOverAntipatternVerificationTest >> testCheckOverlapForAnd [
+
 	| kind subkind role |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
- 	subkind := self createClass: 'subkind' withStereotype: OntoUMLSubKind.
+	subkind := self createClass: 'subkind' withStereotype: OntoUMLSubKind.
 	role := self createClass: 'role' withStereotype: OntoUMLRole.
-	self assert:  (self getTestedClass basicNew checkOverlapFor: { kind. } asSet and: { subkind. role. } asSet ) equals: false.
-	self assert:  (self getTestedClass basicNew checkOverlapFor: { kind.  subkind. } asSet and: { subkind. role. } asSet ) equals: true.
+	self
+		deny: (self getTestedClass basicNew checkOverlapFor: { kind } asSet and: {
+					 subkind.
+					 role } asSet)
+		description: 'Disjoint kind and subkind/role sets must not overlap'.
+	self
+		assert: (self getTestedClass basicNew
+				 checkOverlapFor: {
+						 kind.
+						 subkind } asSet
+				 and: {
+						 subkind.
+						 role } asSet)
+		description: 'Sets sharing subkind must report overlap'
 ]
 
 { #category : 'tests' }
 BinOverAntipatternVerificationTest >> testInvalidModel [
-	| kind association model result |
-	kind := self createClass: 'kind' withStereotype:  OntoUMLKind.
+
+	| kind association model result message |
+	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	association := self createAssociationFrom: kind to: kind.
-	model := { kind. association. }.
+	model := {
+		         kind.
+		         association }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: association withModel: model).
 	self assert: result results size equals: 1.
-	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageWarning. ]).
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: association.
+	self assert: message verification class identicalTo: BinOverAntipatternVerification.
+	self
+		assert: message messageText
+		equals: 'Both ends of the kind->kind association can be represented by the same individual: kind'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/BinOver/index.html'
 ]
 
 { #category : 'tests' }
@@ -69,14 +92,18 @@ BinOverAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 BinOverAntipatternVerificationTest >> testValidModel [
+
 	| kind secondKind association model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.
 	association := self createAssociationFrom: kind to: secondKind.
-	model := { kind. secondKind. association. }.
+	model := {
+		         kind.
+		         secondKind.
+		         association }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: association withModel: model).
-	self assert: result results size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

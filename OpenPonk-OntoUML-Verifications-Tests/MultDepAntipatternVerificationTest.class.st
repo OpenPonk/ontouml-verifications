@@ -31,7 +31,8 @@ MultDepAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 MultDepAntipatternVerificationTest >> testInvalidModel [
-	| kind secondKind collective firstMediation secondMediation model result |
+
+	| kind secondKind collective firstMediation secondMediation model result message |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.
 	collective := self createClass: 'collective' withStereotype: OntoUMLCollective.
@@ -39,10 +40,21 @@ MultDepAntipatternVerificationTest >> testInvalidModel [
 	firstMediation applyStereotype: OntoUMLMediation new.
 	secondMediation := self createAssociationFrom: kind to: collective.
 	secondMediation applyStereotype: OntoUMLMediation new.
-	model := { kind. secondKind. collective. firstMediation. secondMediation. }.
+	model := {
+		         kind.
+		         secondKind.
+		         collective.
+		         firstMediation.
+		         secondMediation }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: kind withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: kind.
+	self assert: message verification class identicalTo: MultDepAntipatternVerification.
+	self assert: message messageText equals: 'Sortal kind is directly connected to two or more mediations.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/MultDep/index.html'
 ]
 
 { #category : 'tests' }
@@ -52,6 +64,7 @@ MultDepAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 MultDepAntipatternVerificationTest >> testValidModel [
+
 	| kind secondKind collective firstMediation secondAssociation model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.
@@ -59,10 +72,15 @@ MultDepAntipatternVerificationTest >> testValidModel [
 	firstMediation := self createAssociationFrom: kind to: secondKind.
 	firstMediation applyStereotype: OntoUMLMediation new.
 	secondAssociation := self createAssociationFrom: kind to: collective.
-	model := { kind. secondKind. collective. firstMediation. secondAssociation. }.
+	model := {
+		         kind.
+		         secondKind.
+		         collective.
+		         firstMediation.
+		         secondAssociation }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: secondKind withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

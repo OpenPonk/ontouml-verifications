@@ -64,39 +64,49 @@ PartOverAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 PartOverAntipatternVerificationTest >> testCheckForOverlap [
+
 	| model part mediatedEnds testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
 	model := self getValidModel.
 	part := model first.
 	mediatedEnds := testedClassInstance getPartWholeAssociationsFor: part from: model.
-	self assert: (testedClassInstance checkForOverlap: mediatedEnds) equals: false.
-	
+	self
+		deny: (testedClassInstance checkForOverlap: mediatedEnds)
+		description: 'Part shared by disjoint wholes must not report overlap'.
+
 	model := self getInvalidModel.
 	part := model first.
 	mediatedEnds := testedClassInstance getPartWholeAssociationsFor: part from: model.
-	self assert: (testedClassInstance checkForOverlap: mediatedEnds) equals: true.
-	
+	self
+		assert: (testedClassInstance checkForOverlap: mediatedEnds)
+		description: 'Part shared by wholes with common supertype must report overlap'
 ]
 
 { #category : 'tests' }
 PartOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
+
 	| model part mediatedEnds testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
 	model := self getValidModel.
 	part := model first.
-	mediatedEnds := (testedClassInstance getPartWholeAssociationsFor: part from: model) select: [ :end | end memberEnds second upper = 1].
-	mediatedEnds := { mediatedEnds first. }.
-	self assert: (testedClassInstance checkUpperMultiplicityFor: mediatedEnds) equals: false.
-	
+	mediatedEnds := (testedClassInstance getPartWholeAssociationsFor: part from: model) select: [ :end |
+		                end memberEnds second upper = 1 ].
+	mediatedEnds := { mediatedEnds first }.
+	self
+		deny: (testedClassInstance checkUpperMultiplicityFor: mediatedEnds)
+		description: 'Single part-whole association with upper bound 1 must not trigger upper multiplicity check'.
+
 	model := self getInvalidModel.
 	part := model first.
 	mediatedEnds := testedClassInstance getPartWholeAssociationsFor: part from: model.
-	self assert: (testedClassInstance checkUpperMultiplicityFor: mediatedEnds) equals: true.
-	
+	self
+		assert: (testedClassInstance checkUpperMultiplicityFor: mediatedEnds)
+		description: 'Multiple part-whole associations summing >= 2 must trigger upper multiplicity check'
 ]
 
 { #category : 'tests' }
 PartOverAntipatternVerificationTest >> testGetPartWholeAssociationsForFrom [
+
 	| wholeA wholeB partA partB association partWholeAssociationA partWholeAssociationB model testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
 	wholeA := self createClass: 'wholeA' withStereotype: OntoUMLKind.
@@ -104,43 +114,37 @@ PartOverAntipatternVerificationTest >> testGetPartWholeAssociationsForFrom [
 	partA := self createClass: 'partA' withStereotype: OntoUMLKind.
 	partB := self createClass: 'partB' withStereotype: OntoUMLKind.
 	association := self createAssociationFrom: wholeA to: partA.
-	partWholeAssociationA := self
-		createAssociationFrom: wholeA
-		to: partA
-		with: OntoUMLComponentOf new.
-	partWholeAssociationB := self
-		createAssociationFrom: wholeB
-		to: partA
-		with: OntoUMLComponentOf new.
-	model := {wholeA.
-	wholeB.
-	partA.
-	partB.
-	association.
-	partWholeAssociationA.
-	partWholeAssociationB}.
-	self
-		assertCollection:
-			(testedClassInstance getPartWholeAssociationsFor: partA from: model)
-				asOrderedCollection
-		hasSameElements:
-			{partWholeAssociationA.
-			partWholeAssociationB} asOrderedCollection.
-	self
-		assert:
-			(testedClassInstance getPartWholeAssociationsFor: partB from: model)
-				size
-		equals: 0
+	partWholeAssociationA := self createAssociationFrom: wholeA to: partA with: OntoUMLComponentOf new.
+	partWholeAssociationB := self createAssociationFrom: wholeB to: partA with: OntoUMLComponentOf new.
+	model := {
+		         wholeA.
+		         wholeB.
+		         partA.
+		         partB.
+		         association.
+		         partWholeAssociationA.
+		         partWholeAssociationB }.
+	self assertCollection: (testedClassInstance getPartWholeAssociationsFor: partA from: model) hasSameElements: {
+			partWholeAssociationA.
+			partWholeAssociationB }.
+	self assertEmpty: (testedClassInstance getPartWholeAssociationsFor: partB from: model)
 ]
 
 { #category : 'tests' }
 PartOverAntipatternVerificationTest >> testInvalidModel [
-	| part model result |
+
+	| part model result message |
 	model := self getInvalidModel.
 	part := model first.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: part withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: part.
+	self assert: message verification class identicalTo: PartOverAntipatternVerification.
+	self assert: message messageText equals: 'part is part of multiple wholes that have possible overlap.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/PartOver/index.html'
 ]
 
 { #category : 'tests' }
@@ -150,12 +154,13 @@ PartOverAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 PartOverAntipatternVerificationTest >> testValidModel [
+
 	| part model result |
 	model := self getValidModel.
 	part := model first.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: part withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

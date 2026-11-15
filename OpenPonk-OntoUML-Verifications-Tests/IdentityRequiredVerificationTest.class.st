@@ -65,16 +65,26 @@ IdentityRequiredVerificationTest >> testCountIdentitySourcesFromModelWithAccumul
 
 { #category : 'tests' }
 IdentityRequiredVerificationTest >> testGetSuperClassesFromModel [
+
 	| kind subkind role model gen1 gen2 |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
 	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.
 	role := OPUMLClass new applyStereotype: OntoUMLRole new.
 	gen1 := OPUMLGeneralization new.
 	gen2 := OPUMLGeneralization new.
-	gen1 general: kind; specific: subkind.
-	gen2 general: subkind; specific: role.
-	model := { kind. subkind. role. gen1. gen2. }.	
-	self assert: ((self getTestedClass basicNew getSuperClasses: role fromModel: model) at:1) equals: subkind.
+	gen1
+		general: kind;
+		specific: subkind.
+	gen2
+		general: subkind;
+		specific: role.
+	model := {
+		         kind.
+		         subkind.
+		         role.
+		         gen1.
+		         gen2 }.
+	self assertCollection: (self getTestedClass basicNew getSuperClasses: role fromModel: model) hasSameElements: { subkind }
 ]
 
 { #category : 'tests' }
@@ -87,21 +97,30 @@ IdentityRequiredVerificationTest >> testGetUpdatedMessageCode [
 
 { #category : 'tests' }
 IdentityRequiredVerificationTest >> testHasIdentity [
+
 	| kind subkind |
 	kind := OntoUMLKind new.
 	subkind := OntoUMLSubKind new.
-	self assert: (self getTestedClass basicNew hasIdentity: kind) equals: true. 
-	self assert: (self getTestedClass basicNew hasIdentity: subkind) equals: false.
+	self assert: (self getTestedClass basicNew hasIdentity: kind) description: 'Kind stereotype must provide identity'.
+	self deny: (self getTestedClass basicNew hasIdentity: subkind) description: 'SubKind stereotype must not provide identity'
 ]
 
 { #category : 'tests' }
 IdentityRequiredVerificationTest >> testIdentityProviders [
-	self assert: (self getTestedClass identityProviders isKindOf: Collection) equals: true.
+
+	self assertCollection: self getTestedClass identityProviders hasSameElements: {
+			OntoUMLKind.
+			OntoUMLCollective.
+			OntoUMLQuantity.
+			OntoUMLRelator.
+			OntoUMLMode.
+			OntoUMLQuality }
 ]
 
 { #category : 'tests' }
 IdentityRequiredVerificationTest >> testInvalidModel [
-	| kind subkind generalization model result |
+
+	| kind subkind generalization model result message |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
 	subkind := OPUMLClass new.
@@ -109,10 +128,19 @@ IdentityRequiredVerificationTest >> testInvalidModel [
 	generalization := OPUMLGeneralization new.
 	generalization general: subkind.
 	generalization specific: kind.
-	model := { kind. subkind. generalization. }.
+	model := {
+		         kind.
+		         subkind.
+		         generalization }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: subkind withModel: model).
 	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: subkind.
+	self assert: message verification class identicalTo: IdentityRequiredVerification.
+	self assert: message messageText equals: 'OntoUMLSubKind has no identity.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/classes/sortals/subkind/index.html'
 ]
 
 { #category : 'tests' }
@@ -122,6 +150,7 @@ IdentityRequiredVerificationTest >> testNew [
 
 { #category : 'tests' }
 IdentityRequiredVerificationTest >> testValidModel [
+
 	| kind subkind generalization model result |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
@@ -130,10 +159,13 @@ IdentityRequiredVerificationTest >> testValidModel [
 	generalization := OPUMLGeneralization new.
 	generalization general: kind.
 	generalization specific: subkind.
-	model := { kind. subkind. generalization. }.
+	model := {
+		         kind.
+		         subkind.
+		         generalization }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: subkind withModel: model).
-	self assert: result results size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

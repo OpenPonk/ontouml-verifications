@@ -90,11 +90,12 @@ OntoUMLClassStereotypeYamlTest >> testAbstract [
 
 { #category : 'tests' }
 OntoUMLClassStereotypeYamlTest >> testDependency [
+
 	| classYaml |
-	classYaml := self getTestedClassInstance: self referenceYaml.	
-	self assert: classYaml forbiddenAssociations equals: (self referenceYaml at: 'forbidden_associations').
-	classYaml := self getTestedClassInstance: self referenceYamlAlternative.	
-	self assert: classYaml forbiddenAssociations equals: (self referenceYamlAlternative at: 'forbidden_associations').
+	classYaml := self getTestedClassInstance: self referenceYaml.
+	self assert: classYaml dependency equals: (self referenceYaml at: 'dependency').
+	classYaml := self getTestedClassInstance: self referenceYamlAlternative.
+	self assert: classYaml dependency equals: (self referenceYamlAlternative at: 'dependency')
 ]
 
 { #category : 'tests' }

@@ -60,28 +60,48 @@ RelSpecsAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testContainsAncestorOrSelfOf [
+
 	| firstKind firstSubKind secondKind secondSubKind ancestorSet |
 	firstKind := self createClass: 'firstKind' withStereotype: OntoUMLKind.
-	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.	
+	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.
 	firstSubKind := self createClass: 'firstSubKind' withStereotype: OntoUMLSubKind.
 	secondSubKind := self createClass: 'secondSubKind' withStereotype: OntoUMLSubKind.
 	self createGeneralizationFor: firstKind withSpecific: firstSubKind.
 	self createGeneralizationFor: secondKind withSpecific: secondSubKind.
-	ancestorSet := { firstSubKind. firstKind. }.
-	self assert: (self getTestedClass basicNew contains: ancestorSet ancestorOrSelfOf: firstSubKind) equals: true.
-	self assert: (self getTestedClass basicNew contains: ancestorSet ancestorOrSelfOf: firstKind) equals: true.
-	self assert: (self getTestedClass basicNew contains: ancestorSet ancestorOrSelfOf: secondSubKind) equals: false.
-	self assert: (self getTestedClass basicNew contains: ancestorSet ancestorOrSelfOf: secondKind) equals: false.
+	ancestorSet := {
+		               firstSubKind.
+		               firstKind }.
+	self
+		assert: (self getTestedClass basicNew contains: ancestorSet ancestorOrSelfOf: firstSubKind)
+		description: 'Ancestor set must match self firstSubKind'.
+	self
+		assert: (self getTestedClass basicNew contains: ancestorSet ancestorOrSelfOf: firstKind)
+		description: 'Ancestor set must match ancestor firstKind'.
+	self
+		deny: (self getTestedClass basicNew contains: ancestorSet ancestorOrSelfOf: secondSubKind)
+		description: 'Ancestor set must not match unrelated secondSubKind'.
+	self
+		deny: (self getTestedClass basicNew contains: ancestorSet ancestorOrSelfOf: secondKind)
+		description: 'Ancestor set must not match unrelated secondKind'
 ]
 
 { #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testInvalidModel [
-	| firstAssociation model result |	
+
+	| firstAssociation model result message |
 	model := self getInvalidModel.
 	firstAssociation := model first.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: firstAssociation withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: firstAssociation.
+	self assert: message verification class identicalTo: RelSpecAntipatternVerification.
+	self
+		assert: message messageText
+		equals: 'Association firstKind->secondKind is in RelSpecs anti-pattern with  secondSubKind->firstSubKind'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/RelSpec/index.html'
 ]
 
 { #category : 'tests' }
@@ -91,26 +111,32 @@ RelSpecsAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testRelSpecsExistsBetweenAnd [
+
 	| firstAssociation secondAssociation model |
 	model := self getValidModel.
 	firstAssociation := model first.
 	secondAssociation := model second.
-	self assert: (self getTestedClass basicNew relSpecsExistsBetween: firstAssociation and: secondAssociation) equals: false.
-	
+	self
+		deny: (self getTestedClass basicNew relSpecsExistsBetween: firstAssociation and: secondAssociation)
+		description: 'Valid model associations must not trigger RelSpecs'.
+
 	model := self getInvalidModel.
 	firstAssociation := model first.
 	secondAssociation := model second.
-	self assert: (self getTestedClass basicNew relSpecsExistsBetween: firstAssociation and: secondAssociation) equals: true.
+	self
+		assert: (self getTestedClass basicNew relSpecsExistsBetween: firstAssociation and: secondAssociation)
+		description: 'Invalid model associations must trigger RelSpecs'
 ]
 
 { #category : 'tests' }
 RelSpecsAntipatternVerificationTest >> testValidModel [
+
 	| firstAssociation model result |
 	model := self getValidModel.
 	firstAssociation := model first.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: firstAssociation withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

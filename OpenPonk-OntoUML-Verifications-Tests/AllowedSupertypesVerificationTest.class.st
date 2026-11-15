@@ -73,7 +73,8 @@ AllowedSupertypesVerificationTest >> testGetValidSupertypesForCodeFromCollection
 
 { #category : 'tests' }
 AllowedSupertypesVerificationTest >> testInvalidModel [
-	| kind subkind generalization model result |
+
+	| kind subkind generalization model result message |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
 	subkind := OPUMLClass new.
@@ -81,11 +82,19 @@ AllowedSupertypesVerificationTest >> testInvalidModel [
 	generalization := OPUMLGeneralization new.
 	generalization general: subkind.
 	generalization specific: kind.
-	model := { kind. subkind. generalization. }.
+	model := {
+		         kind.
+		         subkind.
+		         generalization }.
 	result := VerificationResults new.
-	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
+	result addResults: (self getTestedClass verify: generalization withModel: model).
 	self assert: result results size equals: 1.
-	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: generalization.
+	self assert: message verification class identicalTo: AllowedSupertypesVerification.
+	self assert: message messageText equals: 'OntoUMLSubKind cannot be supertype of OntoUMLKind.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/classes/sortals/subkind/index.html'
 ]
 
 { #category : 'tests' }
@@ -95,6 +104,7 @@ AllowedSupertypesVerificationTest >> testNew [
 
 { #category : 'tests' }
 AllowedSupertypesVerificationTest >> testValidModel [
+
 	| kind subkind generalization model result |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
@@ -103,21 +113,38 @@ AllowedSupertypesVerificationTest >> testValidModel [
 	generalization := OPUMLGeneralization new.
 	generalization general: kind.
 	generalization specific: subkind.
-	model := { kind. subkind. generalization. }.
+	model := {
+		         kind.
+		         subkind.
+		         generalization }.
 	result := VerificationResults new.
-	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
-	self assert: result results size equals: 0.
+	result addResults: (self getTestedClass verify: generalization withModel: model).
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }
-AllowedSupertypesVerificationTest >> testValidSubtypesFor [
+AllowedSupertypesVerificationTest >> testValidSupertypes [
 
-	| methodList |
-	methodList := (AllowedSupertypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName |
-		              methodName matchesRegex: 'validSupertypesFor.*' ].
-	methodList do: [ :methodName |
-			self assert:
-				((AllowedSupertypesVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  )) isKindOf: Association) ]
+	| result |
+	result := AllowedSupertypesVerification validSupertypes.
+	self assert: result class identicalTo: Dictionary.
+	self assertCollection: result keys hasSameElements: {
+			OntoUMLCategory.
+			OntoUMLCollective.
+			OntoUMLKind.
+			OntoUMLMixin.
+			OntoUMLMode.
+			OntoUMLPhase.
+			OntoUMLPhaseMixin.
+			OntoUMLQuality.
+			OntoUMLQuantity.
+			OntoUMLRelator.
+			OntoUMLRole.
+			OntoUMLRoleMixin.
+			OntoUMLSubKind }.
+	self
+		assert: (result values allSatisfy: [ :allowed | allowed class == Array ])
+		description: 'Each allowed supertypes entry must be an Array of stereotype classes'
 ]
 
 { #category : 'tests' }
@@ -127,7 +154,12 @@ AllowedSupertypesVerificationTest >> testValidSupertypesFor [
 	methodList := (AllowedSupertypesVerification class localMethods collect: [ :method | method selector ]) select: [ :methodName |
 		              methodName matchesRegex: 'validSupertypesFor.*' ].
 	self denyEmpty: methodList.
-	methodList do: [ :methodName | self assert: (AllowedSupertypesVerification class >>> methodName asSymbol isKindOf: Association) ]
+	methodList do: [ :methodName |
+			| association |
+			association := AllowedSupertypesVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  ).
+			self assert: association class identicalTo: Association.
+			self assert: association key isClass description: 'Supertype specification key must be a stereotype class'.
+			self assert: association value class identicalTo: Array ]
 ]
 
 { #category : 'tests' }

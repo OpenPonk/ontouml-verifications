@@ -9,6 +9,12 @@ Class {
 	#tag : 'Verification-Classes'
 }
 
+{ #category : 'testing' }
+StereotypeVerificationTest class >> isAbstract [
+
+	^ self = StereotypeVerificationTest
+]
+
 { #category : 'constants' }
 StereotypeVerificationTest >> getNotVerifiedClass [
 	^ OPUMLAssociation.
@@ -26,7 +32,8 @@ StereotypeVerificationTest >> getVerifiedClass [
 
 { #category : 'constants' }
 StereotypeVerificationTest >> getVerifiedClassInstance [
-	^ super getVerifiedClassInstance applyStereotype: (self getVerifiedStereotypes at: 1) new.
+
+	^ super getVerifiedClassInstance applyStereotype: self getVerifiedStereotypes first new
 ]
 
 { #category : 'constants' }
@@ -34,18 +41,16 @@ StereotypeVerificationTest >> getVerifiedStereotypes [
 	self subclassResponsibility.
 ]
 
-{ #category : 'testing' }
-StereotypeVerificationTest >> isAbstract [
-
-	^ self = StereotypeVerificationTest
-]
-
 { #category : 'tests' }
 StereotypeVerificationTest >> testCanVerifyStereotype [
-	self assert: (self getTestedClass canVerify: OPUMLClass new) equals: false.	
+
+	self
+		deny: (self getTestedClass canVerify: self getVerifiedClass new)
+		description: 'Stereotype verification must reject verified class instance without stereotype'
 ]
 
 { #category : 'tests' }
 StereotypeVerificationTest >> testVerifiedStereotypes [
-	self assert: (self getTestedClass verifiedStereotypes isKindOf: Collection) equals: true.	
+
+	self assertCollection: self getTestedClass verifiedStereotypes hasSameElements: self getVerifiedStereotypes
 ]

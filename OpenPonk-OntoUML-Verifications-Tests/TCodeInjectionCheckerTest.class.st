@@ -11,12 +11,17 @@ Class {
 
 { #category : 'tests' }
 TCodeInjectionCheckerTest >> testCheckStringForCodeInjection [
-	self shouldnt: [ TCodeInjectionChecker checkStringForCodeInjection: 'TestCode' ] raise: PossibleCodeInjection. 
-	self should: [ TCodeInjectionChecker checkStringForCodeInjection: '. self shouldNotImplement.' ] raise: PossibleCodeInjection. 
+
+	self assert: (TCodeInjectionChecker checkStringForCodeInjection: 'TestCode') identicalTo: TCodeInjectionChecker.
+	self should: [ TCodeInjectionChecker checkStringForCodeInjection: '. self shouldNotImplement.' ] raise: PossibleCodeInjection
 ]
 
 { #category : 'tests' }
 TCodeInjectionCheckerTest >> testCheckUrlForCodeInjection [
-	self shouldnt: [ TCodeInjectionChecker checkUrlForCodeInjection: 'https://ontouml.readthedocs.io/en/latest/classes/nonsortals/mixin/index.html' ] raise: PossibleCodeInjection. 
-	self should: [ TCodeInjectionChecker checkUrlForCodeInjection: '''. self shouldNotImplement.' ] raise: PossibleCodeInjection. 
+
+	self
+		assert:
+		(TCodeInjectionChecker checkUrlForCodeInjection: 'https://ontouml.readthedocs.io/en/latest/classes/nonsortals/mixin/index.html')
+		identicalTo: TCodeInjectionChecker.
+	self should: [ TCodeInjectionChecker checkUrlForCodeInjection: '''. self shouldNotImplement.' ] raise: PossibleCodeInjection
 ]

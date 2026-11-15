@@ -72,18 +72,29 @@ RelationSourceVerificationTest >> testGetValidSourcesForFromCollection [
 
 { #category : 'tests' }
 RelationSourceVerificationTest >> testInvalidModel [
-	| collective quality association model result |
+
+	| collective quality association model result message |
 	collective := OPUMLClass new.
 	collective applyStereotype: OntoUMLCollective new.
 	quality := OPUMLClass new.
 	quality applyStereotype: OntoUMLQuality new.
 	association := self createAssociationFrom: quality to: collective.
 	association applyStereotype: OntoUMLMemberOf new.
-	model := { collective. quality. association. }.
+	model := {
+		         collective.
+		         quality.
+		         association }.
 	result := VerificationResults new.
 	result addResults: (RelationSourceVerification verify: association withModel: model).
 	self assert: result results size equals: 1.
-	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: association.
+	self assert: message verification class identicalTo: RelationSourceVerification.
+	self assert: message messageText equals: 'OntoUMLQuality cannot be source of OntoUMLMemberOf association'.
+	self
+		assert: message documentationReference
+		equals: 'https://ontouml.readthedocs.io/en/latest/relationships/aggregations/memberOf/index.html'
 ]
 
 { #category : 'tests' }
@@ -93,6 +104,7 @@ RelationSourceVerificationTest >> testNew [
 
 { #category : 'tests' }
 RelationSourceVerificationTest >> testValidModel [
+
 	| collective quality association model result |
 	collective := OPUMLClass new.
 	collective applyStereotype: OntoUMLCollective new.
@@ -100,10 +112,13 @@ RelationSourceVerificationTest >> testValidModel [
 	quality applyStereotype: OntoUMLQuality new.
 	association := self createAssociationFrom: collective to: quality.
 	association applyStereotype: OntoUMLMemberOf new.
-	model := { collective. quality. association. }.
+	model := {
+		         collective.
+		         quality.
+		         association }.
 	result := VerificationResults new.
 	result addResults: (RelationSourceVerification verify: association withModel: model).
-	self assert: result results size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }
@@ -111,8 +126,20 @@ RelationSourceVerificationTest >> testValidSources [
 
 	| dictionary |
 	dictionary := self getTestedClass validSources.
-	self assert: (dictionary isKindOf: Dictionary).
-	self assert: ((dictionary at: OntoUMLDomainFormal) isKindOf: Collection)
+	self assert: dictionary class identicalTo: Dictionary.
+	self assertCollection: dictionary keys hasSameElements: {
+			OntoUMLCharacterization.
+			OntoUMLComponentOf.
+			OntoUMLContainment.
+			OntoUMLDerivation.
+			OntoUMLDomainFormal.
+			OntoUMLMaterial.
+			OntoUMLMediation.
+			OntoUMLMemberOf.
+			OntoUMLSubCollectionOf.
+			OntoUMLSubQuantityOf }.
+	self assert: (dictionary at: OntoUMLDomainFormal) class identicalTo: Array.
+	self denyEmpty: (dictionary at: OntoUMLDomainFormal)
 ]
 
 { #category : 'tests' }
@@ -123,8 +150,11 @@ RelationSourceVerificationTest >> testValidSourcesFor [
 		              methodName matchesRegex: 'validSourcesFor.*' ].
 	self denyEmpty: methodList.
 	methodList do: [ :methodName |
-			self assert:
-				((RelationSourceVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  )) isKindOf: Association) ]
+			| association |
+			association := RelationSourceVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  ).
+			self assert: association class identicalTo: Association.
+			self assert: association key isClass description: 'Relation source specification key must be a stereotype class'.
+			self assert: association value class identicalTo: Array ]
 ]
 
 { #category : 'tests' }

@@ -11,6 +11,7 @@ Class {
 
 { #category : 'tests' }
 VerificationControllerTest >> testExampleBloodDonationPassesVerificationsAndAntipatterns [
+
 	| model controller verifyResults antipatternResults classStereotypes associationStereotypes |
 	model := OntoUMLExamples exampleBloodDonation.
 	controller := VerificationController new.
@@ -18,22 +19,36 @@ VerificationControllerTest >> testExampleBloodDonationPassesVerificationsAndAnti
 	antipatternResults := controller detectAntiPatternsIn: model.
 	self assertEmpty: verifyResults results.
 	self assertEmpty: antipatternResults results.
-	classStereotypes := ((model packagedElements select: [ :each | each isKindOf: OPUMLClass ])
-		collect: [ :each | (OntoUMLModelQuery getStereotypeClass: each) ]) asSet.
-	self
-		assertCollection: classStereotypes
-		includesAll: {
-			OntoUMLCategory . OntoUMLMixin . OntoUMLRoleMixin . OntoUMLPhaseMixin .
-			OntoUMLKind . OntoUMLSubKind . OntoUMLPhase . OntoUMLRole .
-			OntoUMLCollective . OntoUMLQuantity . OntoUMLRelator . OntoUMLMode . OntoUMLQuality }.
-	associationStereotypes := ((model packagedElements select: [ :each | each isKindOf: OPUMLAssociation ])
-		collect: [ :each | (OntoUMLModelQuery getStereotypeClass: each) ]) asSet.
-	self
-		assertCollection: associationStereotypes
-		includesAll: {
-			OntoUMLMediation . OntoUMLMaterial . OntoUMLCharacterization .
-			OntoUMLMemberOf . OntoUMLSubCollectionOf . OntoUMLSubQuantityOf .
-			OntoUMLContainment . OntoUMLComponentOf . OntoUMLDomainFormal }
+	classStereotypes := (model packagedElements
+		                     select: [ :each | each isKindOf: OPUMLClass ]
+		                     thenCollect: [ :each | OntoUMLModelQuery getStereotypeClass: each ]) asSet.
+	self assertCollection: classStereotypes includesAll: {
+			OntoUMLCategory.
+			OntoUMLMixin.
+			OntoUMLRoleMixin.
+			OntoUMLPhaseMixin.
+			OntoUMLKind.
+			OntoUMLSubKind.
+			OntoUMLPhase.
+			OntoUMLRole.
+			OntoUMLCollective.
+			OntoUMLQuantity.
+			OntoUMLRelator.
+			OntoUMLMode.
+			OntoUMLQuality }.
+	associationStereotypes := (model packagedElements
+		                           select: [ :each | each isKindOf: OPUMLAssociation ]
+		                           thenCollect: [ :each | OntoUMLModelQuery getStereotypeClass: each ]) asSet.
+	self assertCollection: associationStereotypes includesAll: {
+			OntoUMLMediation.
+			OntoUMLMaterial.
+			OntoUMLCharacterization.
+			OntoUMLMemberOf.
+			OntoUMLSubCollectionOf.
+			OntoUMLSubQuantityOf.
+			OntoUMLContainment.
+			OntoUMLComponentOf.
+			OntoUMLDomainFormal }
 ]
 
 { #category : 'tests' }
@@ -53,13 +68,30 @@ VerificationControllerTest >> testGetAntiPatternVerifications [
 	| controller antiPatternVerifications |
 	controller := VerificationController new.
 	antiPatternVerifications := controller getAntiPatternVerifications.
-	self assert: (antiPatternVerifications isKindOf: Collection).
-	self assert: antiPatternVerifications isEmpty equals: false.
+	self assertCollection: antiPatternVerifications hasSameElements: {
+			ImpAbsAntipatternVerification.
+			DepPhaseAntipatternVerification.
+			PartOverAntipatternVerification.
+			GSRigAntipatternVerification.
+			UndefPhaseAntipatternVerification.
+			DecIntAntipatternVerification.
+			BinOverAntipatternVerification.
+			WholeOverAntipatternVerification.
+			MultDepAntipatternVerification.
+			UndefFormalAntipatternVerification.
+			MixRigAntipatternVerification.
+			MixIdenAntipatternVerification.
+			RepRelAntipatternVerification.
+			HomoFuncAntipatternVerification.
+			RelSpecAntipatternVerification.
+			HetCollAntipatternVerification.
+			RelRigAntipatternVerification.
+			RelCompAntipatternVerification.
+			FreeRoleAntipatternVerification.
+			RelOverAntipatternVerification }.
 	self
-		assert:
-			(antiPatternVerifications allSatisfy: [ :verificationClass |
-				 verificationClass packageTag name = 'Antipattern-Classes' ])
-		equals: true
+		assert: (antiPatternVerifications allSatisfy: [ :verificationClass | verificationClass packageTagName = 'Antipattern-Classes' ])
+		description: 'All antipattern verifications must belong to tag Antipattern-Classes'
 ]
 
 { #category : 'tests' }
@@ -68,16 +100,23 @@ VerificationControllerTest >> testGetVerifications [
 	| controller verifications |
 	controller := VerificationController new.
 	verifications := controller getVerifications.
-	self assert: (verifications isKindOf: Collection).
-	self assert: verifications isEmpty equals: false.
+	self assertCollection: verifications hasSameElements: {
+			Verification.
+			StereotypeVerification.
+			RelationEndVerification.
+			RelationDependencyVerification.
+			AllowedSubtypesVerification.
+			AllowedSupertypesVerification.
+			CharacterizedVerification.
+			IdentityRequiredVerification.
+			PartOfGeneralizationSetVerification.
+			RelationSourceVerification.
+			RelationTargetVerification.
+			RelatorMediationDependencyVerification.
+			RoleMediationDependencyVerification }.
 	self
-		assert: (verifications anySatisfy: [ :verificationClass |
-				 verificationClass = Verification ])
-		equals: true.
-	self
-		assert: (verifications allSatisfy: [ :verificationClass |
-				 verificationClass packageTag name = 'Verification-Classes' ])
-		equals: true
+		assert: (verifications allSatisfy: [ :verificationClass | verificationClass packageTagName = 'Verification-Classes' ])
+		description: 'All verification classes must belong to tag Verification-Classes'
 ]
 
 { #category : 'tests' }
@@ -99,42 +138,69 @@ VerificationControllerTest >> testGetVerifiedObjects [
 
 { #category : 'tests' }
 VerificationControllerTest >> testVerify [
+
 	| kind subkind controller array results model |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
-	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.	
-	array := {kind. subkind}.
+	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.
+	array := {
+		         kind.
+		         subkind }.
 	model := OPUMLPackage new.
 	model packagedElements: array.
 	controller := VerificationController new.
-	results := controller verify:model.
-	self assert: (results isKindOf: VerificationResults) equals: true.
-	self assert: (results hasErrors: kind) equals: false.
-	self assert: (results hasErrors: subkind) equals: true.
+	results := controller verify: model.
+	self assert: results class identicalTo: VerificationResults.
+	self deny: (results hasErrors: kind) description: 'Kind should have no verification errors'.
+	self assert: (results hasErrors: subkind) description: 'SubKind without supertype should produce verification errors'
 ]
 
 { #category : 'tests' }
 VerificationControllerTest >> testVerifySingleObjectWithVerificationsWithModelWithResults [
+
 	| kind subkind controller array results |
 	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
-	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.	
-	array := {kind. subkind}.
+	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.
+	array := {
+		         kind.
+		         subkind }.
 	controller := VerificationController new.
 	results := VerificationResults new.
-	controller verifySingleObject: kind withVerifications: controller getVerifications withModel: array withResults: results.
-	self assert: (results results) isEmpty equals: true.
-	controller verifySingleObject: subkind withVerifications: controller getVerifications withModel: array withResults: results.
-	self assert: (results hasErrors: subkind) equals: true.
+	controller
+		verifySingleObject: kind
+		withVerifications: controller getVerifications
+		withModel: array
+		withResults: results.
+	self assertEmpty: results results.
+	controller
+		verifySingleObject: subkind
+		withVerifications: controller getVerifications
+		withModel: array
+		withResults: results.
+	self assert: (results hasErrors: subkind) description: 'SubKind without supertype should produce verification errors'
 ]
 
 { #category : 'tests' }
 VerificationControllerTest >> testVerifyUnconnectedRoleProducesSingleErrorAndMemberOfRoleIsValid [
-	| kind collective unconnectedRole memberRole gen1 gen2 memberOf model controller results memberRoleErrors unconnectedRoleErrors |
-	kind := OPUMLClass new name: 'Person'; applyStereotype: OntoUMLKind new.
-	collective := OPUMLClass new name: 'MedicalStaff'; applyStereotype: OntoUMLCollective new.
-	unconnectedRole := OPUMLClass new name: 'UnconnectedRole'; applyStereotype: OntoUMLRole new.
-	memberRole := OPUMLClass new name: 'Nurse'; applyStereotype: OntoUMLRole new.
-	gen1 := OPUMLGeneralization new general: kind; specific: unconnectedRole.
-	gen2 := OPUMLGeneralization new general: kind; specific: memberRole.
+
+	| kind collective unconnectedRole memberRole gen1 gen2 memberOf model controller results memberRoleErrors unconnectedRoleErrors error |
+	kind := OPUMLClass new
+		        name: 'Person';
+		        applyStereotype: OntoUMLKind new.
+	collective := OPUMLClass new
+		              name: 'MedicalStaff';
+		              applyStereotype: OntoUMLCollective new.
+	unconnectedRole := OPUMLClass new
+		                   name: 'UnconnectedRole';
+		                   applyStereotype: OntoUMLRole new.
+	memberRole := OPUMLClass new
+		              name: 'Nurse';
+		              applyStereotype: OntoUMLRole new.
+	gen1 := OPUMLGeneralization new
+		        general: kind;
+		        specific: unconnectedRole.
+	gen2 := OPUMLGeneralization new
+		        general: kind;
+		        specific: memberRole.
 	memberOf := OPUMLAssociation new.
 	OPUMLProperty new
 		name: '';
@@ -151,11 +217,27 @@ VerificationControllerTest >> testVerifyUnconnectedRoleProducesSingleErrorAndMem
 	memberOf memberEnds addAll: memberOf ownedEnds.
 	memberOf applyStereotype: OntoUMLMemberOf new.
 	model := OPUMLPackage new.
-	model packagedElements addAll: { kind . collective . unconnectedRole . memberRole . gen1 . gen2 . memberOf }.
+	model packagedElements addAll: {
+			kind.
+			collective.
+			unconnectedRole.
+			memberRole.
+			gen1.
+			gen2.
+			memberOf }.
 	controller := VerificationController new.
 	results := controller verify: model.
 	memberRoleErrors := results results select: [ :each | each objectReference = memberRole ].
 	unconnectedRoleErrors := results results select: [ :each | each objectReference = unconnectedRole ].
 	self assertEmpty: memberRoleErrors.
-	self assert: unconnectedRoleErrors size equals: 1
+	self assert: unconnectedRoleErrors size equals: 1.
+	error := unconnectedRoleErrors anyOne.
+	self assert: error class identicalTo: VerificationMessageError.
+	self assert: error verification class identicalTo: RelationDependencyVerification.
+	self assert: error objectReference identicalTo: unconnectedRole.
+	self
+		assert: error messageText
+		equals:
+		'OntoUMLRole has to have at least one association stereotyped as mediation, material, componentOf, memberOf or subCollectionOf, with multiplicities on both ends >= 1.'.
+	self assert: error documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/classes/sortals/role/index.html'
 ]

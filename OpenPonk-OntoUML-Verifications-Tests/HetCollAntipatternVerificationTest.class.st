@@ -21,7 +21,16 @@ HetCollAntipatternVerificationTest >> getVerifiedClass [
 
 { #category : 'constants' }
 HetCollAntipatternVerificationTest >> getVerifiedStereotypes [
-	^ { OntoUMLCollective. }.
+
+	^ {
+		  OntoUMLCollective.
+		  OntoUMLSubKind.
+		  OntoUMLRole.
+		  OntoUMLPhase.
+		  OntoUMLMixin.
+		  OntoUMLRoleMixin.
+		  OntoUMLPhaseMixin.
+		  OntoUMLCategory }
 ]
 
 { #category : 'tests' }
@@ -31,19 +40,30 @@ HetCollAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 HetCollAntipatternVerificationTest >> testInvalidModel [
-	| firstPart secondPart collective firstComponentOf secondComponentOf model result |
-	firstPart := self createClass: 'firstPart'  withStereotype: OntoUMLKind.
-	secondPart := self createClass: 'secondPart'  withStereotype: OntoUMLKind.
-	collective := self createClass: 'collective'  withStereotype: OntoUMLCollective .
+
+	| firstPart secondPart collective firstComponentOf secondComponentOf model result message |
+	firstPart := self createClass: 'firstPart' withStereotype: OntoUMLKind.
+	secondPart := self createClass: 'secondPart' withStereotype: OntoUMLKind.
+	collective := self createClass: 'collective' withStereotype: OntoUMLCollective.
 	firstComponentOf := self createAssociationFrom: collective to: firstPart.
 	firstComponentOf applyStereotype: OntoUMLMemberOf new.
-	secondComponentOf := self createAssociationFrom: collective to:  secondPart.
+	secondComponentOf := self createAssociationFrom: collective to: secondPart.
 	secondComponentOf applyStereotype: OntoUMLMemberOf new.
-	
-	model := { firstPart. secondPart. collective. firstComponentOf. secondComponentOf. }.
+	model := {
+		         firstPart.
+		         secondPart.
+		         collective.
+		         firstComponentOf.
+		         secondComponentOf }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: collective withModel: model).
-	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: collective.
+	self assert: message verification class identicalTo: HetCollAntipatternVerification.
+	self assert: message messageText equals: 'Collective collective contains multiple different parts.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/HetColl/index.html'
 ]
 
 { #category : 'tests' }
@@ -53,16 +73,19 @@ HetCollAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 HetCollAntipatternVerificationTest >> testValidModel [
+
 	| part collective componentOf model result |
-	part := self createClass: 'part'  withStereotype: OntoUMLKind.
-	collective := self createClass: 'collective'  withStereotype: OntoUMLCollective .
+	part := self createClass: 'part' withStereotype: OntoUMLKind.
+	collective := self createClass: 'collective' withStereotype: OntoUMLCollective.
 	componentOf := self createAssociationFrom: part to: collective.
 	componentOf applyStereotype: OntoUMLComponentOf new.
-	
-	model := { part. collective. componentOf. }.
+	model := {
+		         part.
+		         collective.
+		         componentOf }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: collective withModel: model).
-	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

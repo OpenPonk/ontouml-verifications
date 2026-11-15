@@ -26,38 +26,47 @@ GSRigAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 GSRigAntipatternVerificationTest >> testIncludesAntiRigidSubtype [
+
 	| roleMixin kind mixin genSet |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	mixin := self createClass: 'mixin' withStereotype: OntoUMLMixin.
 	roleMixin := self createClass: 'roleMixin' withStereotype: OntoUMLRole.
 	genSet := OPUMLGeneralizationSet new.
-	genSet generalizations: { 
-		self createGeneralizationFor: mixin withSpecific: kind.}.
-	self assert: (self getTestedClass basicNew includesAntiRigidSubtype: genSet) equals: false.
-	genSet generalizations: { 
-		self createGeneralizationFor: mixin withSpecific: roleMixin.
-		self createGeneralizationFor: mixin withSpecific: kind. }.
-	self assert: (self getTestedClass basicNew includesAntiRigidSubtype: genSet) equals: true.
+	genSet generalizations: { (self createGeneralizationFor: mixin withSpecific: kind) }.
+	self
+		deny: (self getTestedClass basicNew includesAntiRigidSubtype: genSet)
+		description: 'Generalization set with only rigid subtype must not report anti-rigid subtype'.
+	genSet generalizations: {
+			(self createGeneralizationFor: mixin withSpecific: roleMixin).
+			(self createGeneralizationFor: mixin withSpecific: kind) }.
+	self
+		assert: (self getTestedClass basicNew includesAntiRigidSubtype: genSet)
+		description: 'Generalization set with role subtype must report anti-rigid subtype'
 ]
 
 { #category : 'tests' }
 GSRigAntipatternVerificationTest >> testIncludesRigidSubtype [
+
 	| role subkindA kind genSet |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	subkindA := self createClass: 'subkindA' withStereotype: OntoUMLSubKind.
 	role := self createClass: 'role' withStereotype: OntoUMLRole.
 	genSet := OPUMLGeneralizationSet new.
-	genSet generalizations: { 
-		self createGeneralizationFor: kind withSpecific: role.}.
-	self assert: (self getTestedClass basicNew includesRigidSubtype: genSet) equals: false.
-	genSet generalizations: { 
-		self createGeneralizationFor: kind withSpecific: role.
-		self createGeneralizationFor: kind withSpecific: subkindA. }.
-	self assert: (self getTestedClass basicNew isSupertypeRigid: genSet) equals: true.
+	genSet generalizations: { (self createGeneralizationFor: kind withSpecific: role) }.
+	self
+		deny: (self getTestedClass basicNew includesRigidSubtype: genSet)
+		description: 'Generalization set with only anti-rigid subtype must not report rigid subtype'.
+	genSet generalizations: {
+			(self createGeneralizationFor: kind withSpecific: role).
+			(self createGeneralizationFor: kind withSpecific: subkindA) }.
+	self
+		assert: (self getTestedClass basicNew includesRigidSubtype: genSet)
+		description: 'Generalization set with subkind subtype must report rigid subtype'
 ]
 
 { #category : 'tests' }
 GSRigAntipatternVerificationTest >> testInvalidModel [
+
 	| kind subkind role genA genB genSet model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	subkind := self createClass: 'subkind' withStereotype: OntoUMLSubKind.
@@ -66,29 +75,52 @@ GSRigAntipatternVerificationTest >> testInvalidModel [
 	genB := self createGeneralizationFor: kind withSpecific: role.
 	genSet := OPUMLGeneralizationSet new.
 	genSet name: 'genSet'.
-	genSet generalizations: { genA. genB. }.
-	model := { kind. subkind. role. genA. genB. genSet. }.
+	genSet generalizations: {
+			genA.
+			genB }.
+	model := {
+		         kind.
+		         subkind.
+		         role.
+		         genA.
+		         genB.
+		         genSet }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: genSet withModel: model).
 	self assert: result results size equals: 2.
+	self assertCollection: (result results collect: #objectReference) hasSameElements: {
+			genA.
+			genB }.
+	result results do: [ :message |
+			self assert: message class identicalTo: VerificationMessageWarning.
+			self assert: message verification class identicalTo: GSRigAntipatternVerification.
+			self
+				assert: message messageText
+				equals: 'Generalization set genSet contains rigid subtype that has both rigid and anti-rigid subtype.'.
+			self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/GSRig/index.html' ]
 ]
 
 { #category : 'tests' }
 GSRigAntipatternVerificationTest >> testIsSupertypeRigid [
+
 	| role subkindA subkindB kind genSet |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	subkindA := self createClass: 'subkindA' withStereotype: OntoUMLSubKind.
 	subkindB := self createClass: 'subkindB' withStereotype: OntoUMLSubKind.
 	role := self createClass: 'role' withStereotype: OntoUMLRole.
 	genSet := OPUMLGeneralizationSet new.
-	genSet generalizations: { 
-		self createGeneralizationFor: kind withSpecific: subkindA.
-		self createGeneralizationFor: kind withSpecific: subkindB. }.
-	self assert: (self getTestedClass basicNew isSupertypeRigid: genSet) equals: true.
-	genSet generalizations: { 
-		self createGeneralizationFor: kind withSpecific: subkindA.
-		self createGeneralizationFor: role withSpecific: subkindB. }.
-	self assert: (self getTestedClass basicNew isSupertypeRigid: genSet) equals: false.
+	genSet generalizations: {
+			(self createGeneralizationFor: kind withSpecific: subkindA).
+			(self createGeneralizationFor: kind withSpecific: subkindB) }.
+	self
+		assert: (self getTestedClass basicNew isSupertypeRigid: genSet)
+		description: 'Generalization set with rigid kind supertype must be rigid'.
+	genSet generalizations: {
+			(self createGeneralizationFor: kind withSpecific: subkindA).
+			(self createGeneralizationFor: role withSpecific: subkindB) }.
+	self
+		deny: (self getTestedClass basicNew isSupertypeRigid: genSet)
+		description: 'Generalization set with mixed anti-rigid role supertype must not be rigid'
 ]
 
 { #category : 'tests' }
@@ -98,6 +130,7 @@ GSRigAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 GSRigAntipatternVerificationTest >> testValidModel [
+
 	| mixin subkind role genA genB genSet model result |
 	mixin := self createClass: 'mixin' withStereotype: OntoUMLMixin.
 	subkind := self createClass: 'subkind' withStereotype: OntoUMLSubKind.
@@ -106,11 +139,19 @@ GSRigAntipatternVerificationTest >> testValidModel [
 	genB := self createGeneralizationFor: mixin withSpecific: role.
 	genSet := OPUMLGeneralizationSet new.
 	genSet name: 'genSet'.
-	genSet generalizations: { genA. genB. }.
-	model := { mixin. subkind. role. genA. genB. genSet. }.
+	genSet generalizations: {
+			genA.
+			genB }.
+	model := {
+		         mixin.
+		         subkind.
+		         role.
+		         genA.
+		         genB.
+		         genSet }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: genSet withModel: model).
-	self assert: result results size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

@@ -38,31 +38,32 @@ OPOntoUMLModelMenuTest >> tearDown [
 { #category : 'tests' }
 OPOntoUMLModelMenuTest >> testModelMenuContainsNoOntoUmlCommandsWhenGenericUmlEditorFocusedWithoutProfile [
 	"Verifies that generic UML editor without OntoUML profile does not contain any OntoUML-specific commands."
+
 	| umlPlugin testEditor modelMenuItem subMenuNames |
-	umlPlugin := OPPluginRegistry default plugins
-		detect: [ :eachPluginCandidate | eachPluginCandidate isKindOf: OPUmlClassEditorPlugin ].
+	umlPlugin := OPPluginRegistry default plugins detect: [ :eachPluginCandidate |
+		             eachPluginCandidate isKindOf: OPUmlClassEditorPlugin ].
 	testEditor := (OPEditor on: umlPlugin)
-		workbench: mockWorkbench;
-		yourself.
+		              workbench: mockWorkbench;
+		              yourself.
 	testEditor openEmptyModel: OPUMLPackage new.
 
 	toolbarPresenter focusedEditor: testEditor.
-	modelMenuItem := toolbarPresenter menu menuGroups first menuItems
-		detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
+	modelMenuItem := toolbarPresenter menu menuGroups first menuItems detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
 
-	subMenuNames := modelMenuItem subMenu menuGroups
-		flatCollect: [ :eachGroup | eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
-	self deny: (subMenuNames includesAny: #( 'Patterns' 'Verification' 'Transform to UML' ))
+	subMenuNames := modelMenuItem subMenu menuGroups flatCollect: [ :eachGroup |
+		                eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
+	self denyCollection: subMenuNames includesAny: #( 'Patterns' 'Verification' 'Transform to UML' )
 ]
 
 { #category : 'tests' }
 OPOntoUMLModelMenuTest >> testModelMenuContainsOntoUmlCommandsWhenUmlEditorHasOntoUmlProfile [
 	"Verifies that Model menu is enabled and contains OntoUML verification items when OntoUML profile is applied."
+
 	| umlPlugin testEditor umlPackage ontoProfile profileApplication modelMenuItem subMenuNames |
 	umlPlugin := OPUmlClassEditorPlugin new.
 	testEditor := (OPEditor on: umlPlugin)
-		workbench: mockWorkbench;
-		yourself.
+		              workbench: mockWorkbench;
+		              yourself.
 	umlPackage := OPUMLPackage new.
 	ontoProfile := OntoUMLProfileFactory profile.
 	profileApplication := OPUMLProfileApplication new appliedProfile: ontoProfile.
@@ -70,12 +71,11 @@ OPOntoUMLModelMenuTest >> testModelMenuContainsOntoUmlCommandsWhenUmlEditorHasOn
 	testEditor openEmptyModel: umlPackage.
 
 	toolbarPresenter focusedEditor: testEditor.
-	modelMenuItem := toolbarPresenter menu menuGroups first menuItems
-		detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
+	modelMenuItem := toolbarPresenter menu menuGroups first menuItems detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
 
-	self assert: modelMenuItem isEnabled.
-	subMenuNames := modelMenuItem subMenu menuGroups
-		flatCollect: [ :eachGroup | eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
+	self assert: modelMenuItem isEnabled description: 'Model menu item must be enabled when OntoUML profile is applied'.
+	subMenuNames := modelMenuItem subMenu menuGroups flatCollect: [ :eachGroup |
+		                eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
 	self assertCollection: subMenuNames includesAll: #( 'Verification' )
 ]
 

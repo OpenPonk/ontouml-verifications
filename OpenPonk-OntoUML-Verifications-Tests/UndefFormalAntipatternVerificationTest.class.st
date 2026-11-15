@@ -26,11 +26,16 @@ UndefFormalAntipatternVerificationTest >> getVerifiedStereotypes [
 
 { #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testAttributesExistFor [
+
 	| kind |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
-	self assert: (self getTestedClass basicNew attributesExistFor: kind) equals: false.
+	self
+		deny: (self getTestedClass basicNew attributesExistFor: kind)
+		description: 'Class without ownedAttributes must report no attributes'.
 	kind ownedAttributes: { OPUMLProperty new }.
-	self assert: (self getTestedClass basicNew attributesExistFor: kind) equals: true.
+	self
+		assert: (self getTestedClass basicNew attributesExistFor: kind)
+		description: 'Class with ownedAttribute must report existing attributes'
 ]
 
 { #category : 'tests' }
@@ -40,15 +45,30 @@ UndefFormalAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testInvalidModel [
-	| firstKind secondKind firstAssociation model result |
+
+	| firstKind secondKind firstAssociation model result message |
 	firstKind := self createClass: 'firstKind' withStereotype: OntoUMLKind.
-	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.	
+	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.
 	firstAssociation := self createAssociationFrom: firstKind to: secondKind.
 	firstAssociation applyStereotype: OntoUMLDomainFormal new.
-	model := { firstKind. secondKind. firstAssociation. }.
+	model := {
+		         firstKind.
+		         secondKind.
+		         firstAssociation }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: firstAssociation withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: firstAssociation.
+	self assert: message verification class identicalTo: UndefFormalAntipatternVerification.
+	self
+		assert: message messageText
+		equals:
+		'Formal association firstKind->secondKind joins two elements and one or both of the elements don''t have attribute/quality.'.
+	self
+		assert: message documentationReference
+		equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/UndefFormal/index.html'
 ]
 
 { #category : 'tests' }
@@ -58,33 +78,47 @@ UndefFormalAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testQualitiesExistForInModel [
+
 	| kind quality characterisation model |
-	kind := self createClass: 'kind' withStereotype: OntoUMLKind.	
-	model := { kind. }.
-	self assert: (self getTestedClass basicNew qualitiesExistFor: kind inModel: model) equals: false.
-	
-	quality := self createClass: 'quality' withStereotype: OntoUMLQuality.	
+	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
+	model := { kind }.
+	self
+		deny: (self getTestedClass basicNew qualitiesExistFor: kind inModel: model)
+		description: 'Class without characterizing quality must report no qualities'.
+
+	quality := self createClass: 'quality' withStereotype: OntoUMLQuality.
 	characterisation := self createAssociationFrom: kind to: quality.
-	characterisation applyStereotype: OntoUMLCharacterization new.	
-	model := { kind. characterisation. quality. }.
-	self assert: (self getTestedClass basicNew qualitiesExistFor: kind inModel: model) equals: true.
+	characterisation applyStereotype: OntoUMLCharacterization new.
+	model := {
+		         kind.
+		         characterisation.
+		         quality }.
+	self
+		assert: (self getTestedClass basicNew qualitiesExistFor: kind inModel: model)
+		description: 'Class connected by characterization to quality must report existing qualities'
 ]
 
 { #category : 'tests' }
 UndefFormalAntipatternVerificationTest >> testValidModel [
+
 	| firstKind secondKind quality domainFormal characterisation model result |
 	firstKind := self createClass: 'firstKind' withStereotype: OntoUMLKind.
-	firstKind ownedAttributes: { OPUMLProperty new. }.
-	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.	
-	quality := self createClass: 'quality' withStereotype: OntoUMLQuality.	
+	firstKind ownedAttributes: { OPUMLProperty new }.
+	secondKind := self createClass: 'secondKind' withStereotype: OntoUMLKind.
+	quality := self createClass: 'quality' withStereotype: OntoUMLQuality.
 	domainFormal := self createAssociationFrom: firstKind to: secondKind.
 	domainFormal applyStereotype: OntoUMLDomainFormal new.
 	characterisation := self createAssociationFrom: secondKind to: quality.
 	characterisation applyStereotype: OntoUMLCharacterization new.
-	model := { firstKind. secondKind. domainFormal. characterisation. quality. }.
+	model := {
+		         firstKind.
+		         secondKind.
+		         domainFormal.
+		         characterisation.
+		         quality }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: domainFormal withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

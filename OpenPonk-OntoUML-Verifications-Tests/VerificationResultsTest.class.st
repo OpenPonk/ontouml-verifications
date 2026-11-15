@@ -11,88 +11,96 @@ Class {
 
 { #category : 'tests' }
 VerificationResultsTest >> testAddResult [
+
 	| verificationResults dummyMessage |
-	dummyMessage := 'dummyMessage'.	
+	dummyMessage := 'dummyMessage'.
 	verificationResults := VerificationResults new.
-	self assert: verificationResults results size equals: 0.
+	self assertEmpty: verificationResults results.
 	verificationResults addResult: dummyMessage.
-	self assert: (verificationResults results anySatisfy: [ :item | item = dummyMessage ])
+	self assertCollection: verificationResults results hasSameElements: { dummyMessage }
 ]
 
 { #category : 'tests' }
 VerificationResultsTest >> testAddResults [
+
 	| verificationResults dummyMessageCollection |
-	dummyMessageCollection := {'dummyMessage'. 'dummyMessage2'}.	
+	dummyMessageCollection := { 'dummyMessage'. 'dummyMessage2' }.
 	verificationResults := VerificationResults new.
-	self assert: verificationResults results size equals: 0.
+	self assertEmpty: verificationResults results.
 	verificationResults addResults: dummyMessageCollection.
-	self assert: verificationResults results size equals: 2.
-	self assert: (verificationResults results anySatisfy: [ :item | item = (dummyMessageCollection at: 1) ]).
-	self assert: (verificationResults results anySatisfy: [ :item | item = (dummyMessageCollection at: 2) ]).
+	self assertCollection: verificationResults results hasSameElements: dummyMessageCollection
 ]
 
 { #category : 'tests' }
 VerificationResultsTest >> testHasErrors [
+
 	| verificationResults dummyMessage dummyObject dummyVerification |
 	dummyObject := Object new.
 	dummyVerification := Verification basicNew.
-	dummyMessage := VerificationMessageError createFor: dummyObject withVerification: dummyVerification  withText: 'some text'.	
+	dummyMessage := VerificationMessageError createFor: dummyObject withVerification: dummyVerification withText: 'some text'.
 	verificationResults := VerificationResults new.
-	self assert: (verificationResults hasErrors: dummyObject) not.
+	self deny: (verificationResults hasErrors: dummyObject) description: 'Empty results should not have errors for object'.
 	verificationResults addResult: dummyMessage.
-	self assert: (verificationResults hasErrors: dummyObject).
+	self assert: (verificationResults hasErrors: dummyObject) description: 'Results containing an error should report errors present'
 ]
 
 { #category : 'tests' }
 VerificationResultsTest >> testHasWarnings [
+
 	| verificationResults dummyMessage dummyObject dummyVerification |
 	dummyObject := Object new.
 	dummyVerification := Verification basicNew.
-	dummyMessage := VerificationMessageWarning createFor: dummyObject withVerification: dummyVerification  withText: 'some text'.	
+	dummyMessage := VerificationMessageWarning createFor: dummyObject withVerification: dummyVerification withText: 'some text'.
 	verificationResults := VerificationResults new.
-	self assert: (verificationResults hasWarnings: dummyObject) not.
+	self deny: (verificationResults hasWarnings: dummyObject) description: 'Empty results should not have warnings for object'.
 	verificationResults addResult: dummyMessage.
-	self assert: (verificationResults hasWarnings: dummyObject).
+	self
+		assert: (verificationResults hasWarnings: dummyObject)
+		description: 'Results containing a warning should report warnings present'
 ]
 
 { #category : 'tests' }
 VerificationResultsTest >> testInitialize [
-	self assert: VerificationResults new results equals: Set new.
+
+	| results |
+	results := VerificationResults new results.
+	self assert: results class identicalTo: Set.
+	self assertEmpty: results
 ]
 
 { #category : 'tests' }
 VerificationResultsTest >> testResults [
+
 	| verificationResults dummyMessage |
-	dummyMessage := 'dummyMessage'.	
+	dummyMessage := 'dummyMessage'.
 	verificationResults := VerificationResults new.
-	self assert: verificationResults results size equals: 0.
+	self assertEmpty: verificationResults results.
 	verificationResults addResult: dummyMessage.
-	self assert: verificationResults results size equals: 1.
-	self assert: (verificationResults results anySatisfy: [ :item | item = dummyMessage ])
+	self assertCollection: verificationResults results hasSameElements: { dummyMessage }
 ]
 
 { #category : 'tests' }
 VerificationResultsTest >> testSelectErrors [
+
 	| verificationResults dummyMessage dummyObject dummyVerification |
 	dummyObject := Object new.
 	dummyVerification := Verification basicNew.
-	dummyMessage := VerificationMessageError createFor: dummyObject withVerification: dummyVerification  withText: 'some text'.	
+	dummyMessage := VerificationMessageError createFor: dummyObject withVerification: dummyVerification withText: 'some text'.
 	verificationResults := VerificationResults new.
-	self assert: verificationResults selectErrors size equals: 0.
+	self assertEmpty: verificationResults selectErrors.
 	verificationResults addResult: dummyMessage.
-	self assert: verificationResults selectErrors size equals: 1.	
-	self assert: (verificationResults selectErrors anySatisfy: [ :item | item = dummyMessage ]).
+	self assertCollection: verificationResults selectErrors hasSameElements: { dummyMessage }
 ]
 
 { #category : 'tests' }
 VerificationResultsTest >> testSelectWarnings [
+
 	| verificationResults dummyMessage dummyObject dummyVerification |
 	dummyObject := Object new.
 	dummyVerification := Verification basicNew.
-	dummyMessage := VerificationMessageWarning createFor: dummyObject withVerification: dummyVerification  withText: 'some text'.	
+	dummyMessage := VerificationMessageWarning createFor: dummyObject withVerification: dummyVerification withText: 'some text'.
 	verificationResults := VerificationResults new.
-	self assert: verificationResults selectWarnings size equals: 0.
+	self assertEmpty: verificationResults selectWarnings.
 	verificationResults addResult: dummyMessage.
-	self assert: verificationResults selectWarnings size equals: 1.	
-	self assert: (verificationResults selectWarnings anySatisfy: [ :item | item = dummyMessage ]).
+	self assertCollection: verificationResults selectWarnings hasSameElements: { dummyMessage }
 ]

@@ -55,61 +55,94 @@ WholeOverAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testCheckForOverlapInModel [
+
 	| model testedAssociationEnds overlapingSet1 overlapingSet2 nonOverlapingSet |
 	model := self getTestModelForMethods.
-	testedAssociationEnds := (model select: [ :object | object isKindOf: OPUMLAssociation. ])
-		collect: [ :association | association memberEnds second ].
+	testedAssociationEnds := model
+		                         select: [ :object | object isKindOf: OPUMLAssociation ]
+		                         thenCollect: [ :association | association memberEnds second ].
 	overlapingSet1 := testedAssociationEnds reject: [ :end | end type name = 'testedObject3' ].
 	overlapingSet2 := testedAssociationEnds reject: [ :end | end type name = 'testedObject1' ].
 	nonOverlapingSet := testedAssociationEnds reject: [ :end | end type name = 'testedObject2' ].
-	self assert: ((self getTestedClass basicNew) checkForOverlap: overlapingSet1 inModel: model) equals: true.
-	self assert: ((self getTestedClass basicNew) checkForOverlap: overlapingSet2 inModel: model) equals: true.
-	self assert: ((self getTestedClass basicNew) checkForOverlap: nonOverlapingSet inModel: model) equals: false.
+	self
+		assert: (self getTestedClass basicNew checkForOverlap: overlapingSet1 inModel: model)
+		description: 'testedObject1 and testedObject2 share common ancestor overlap'.
+	self
+		assert: (self getTestedClass basicNew checkForOverlap: overlapingSet2 inModel: model)
+		description: 'testedObject2 and testedObject3 share commonChild overlap'.
+	self
+		deny: (self getTestedClass basicNew checkForOverlap: nonOverlapingSet inModel: model)
+		description: 'testedObject1 and testedObject3 must not overlap'
 ]
 
 { #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testCheckUpperMultiplicityFor [
+
 	| model testedAssociationEnds highUpperEndSet1 highUpperEndSet2 okUpperEndSet |
 	model := self getTestModelForMethods.
-	testedAssociationEnds := (model select: [ :object | object isKindOf: OPUMLAssociation. ])
-		collect: [ :association | association memberEnds second ].
+	testedAssociationEnds := model
+		                         select: [ :object | object isKindOf: OPUMLAssociation ]
+		                         thenCollect: [ :association | association memberEnds second ].
 	highUpperEndSet1 := testedAssociationEnds select: [ :end | end type name = 'testedObject1' ].
 	highUpperEndSet2 := testedAssociationEnds reject: [ :end | end type name = 'testedObject1' ].
 	okUpperEndSet := testedAssociationEnds select: [ :end | end type name = 'testedObject3' ].
-	self assert: ((self getTestedClass basicNew) checkUpperMultiplicityFor: highUpperEndSet1) equals: true.
-	self assert: ((self getTestedClass basicNew) checkUpperMultiplicityFor: highUpperEndSet2) equals: true.
-	self assert: ((self getTestedClass basicNew) checkUpperMultiplicityFor: okUpperEndSet) equals: false.
+	self
+		assert: (self getTestedClass basicNew checkUpperMultiplicityFor: highUpperEndSet1)
+		description: 'Set containing unlimited * upper bound must trigger check'.
+	self
+		assert: (self getTestedClass basicNew checkUpperMultiplicityFor: highUpperEndSet2)
+		description: 'Set with sum of upper bounds >= 2 must trigger check'.
+	self
+		deny: (self getTestedClass basicNew checkUpperMultiplicityFor: okUpperEndSet)
+		description: 'Single end with upper bound 1 must not trigger check'
 ]
 
 { #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testGetPartEndsForFrom [
+
 	| model whole result |
 	model := self getTestModelForMethods.
-	whole := ((model select: [ :object | object isKindOf: OPUMLClass. ])
-		select: [ :entity | entity name = 'commonAncestor' ]) first.
-	result := ((model select: [ :object | object isKindOf: OPUMLAssociation. ])
-		select: [ :association | { 'testedObject1'. 'testedObject2'. 'testedObject3'. } includes: association memberEnds second type name ])
-		collect: [ :association | association memberEnds second ].
-	self assert: ((self getTestedClass basicNew) getPartEndsFor: whole from: model) equals: result.
+	whole := model detect: [ :object | (object isKindOf: OPUMLClass) and: [ object name = 'commonAncestor' ] ].
+	result := model
+		          select: [ :object |
+				          (object isKindOf: OPUMLAssociation) and: [
+					          { 'testedObject1'. 'testedObject2'. 'testedObject3' } includes: object memberEnds second type name ] ]
+		          thenCollect: [ :association | association memberEnds second ].
+	self assertCollection: (self getTestedClass basicNew getPartEndsFor: whole from: model) hasSameElements: result
 ]
 
 { #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testInvalidModel [
-	| whole partA partB child generalizationA generalizationB componentOfA componentOfB model result |
+
+	| whole partA partB child generalizationA generalizationB componentOfA componentOfB model result message |
 	whole := self createClass: 'whole' withStereotype: OntoUMLKind.
-	child := self createClass: 'child' withStereotype: OntoUMLKind.	
-	partA := self createClass: 'partA' withStereotype: OntoUMLCategory.	
-	partB := self createClass: 'partB' withStereotype: OntoUMLCategory.	
+	child := self createClass: 'child' withStereotype: OntoUMLKind.
+	partA := self createClass: 'partA' withStereotype: OntoUMLCategory.
+	partB := self createClass: 'partB' withStereotype: OntoUMLCategory.
 	componentOfA := self createAssociationFrom: whole to: partA.
 	componentOfA applyStereotype: OntoUMLComponentOf new.
 	componentOfB := self createAssociationFrom: whole to: partB.
 	componentOfB applyStereotype: OntoUMLComponentOf new.
 	generalizationA := self createGeneralizationFor: partA withSpecific: child.
 	generalizationB := self createGeneralizationFor: partB withSpecific: child.
-	model := { whole. partA. partB. child. generalizationA. generalizationB. componentOfA. componentOfB. }.
+	model := {
+		         whole.
+		         partA.
+		         partB.
+		         child.
+		         generalizationA.
+		         generalizationB.
+		         componentOfA.
+		         componentOfB }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: whole withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: whole.
+	self assert: message verification class identicalTo: WholeOverAntipatternVerification.
+	self assert: message messageText equals: 'Whole whole has multiple parts with possible overlap.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/WholeOver/index.html'
 ]
 
 { #category : 'tests' }
@@ -119,18 +152,24 @@ WholeOverAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 WholeOverAntipatternVerificationTest >> testValidModel [
+
 	| whole partA partB componentOfA componentOfB model result |
 	whole := self createClass: 'whole' withStereotype: OntoUMLKind.
-	partA := self createClass: 'partA' withStereotype: OntoUMLCategory.	
-	partB := self createClass: 'partB' withStereotype: OntoUMLCategory.	
+	partA := self createClass: 'partA' withStereotype: OntoUMLCategory.
+	partB := self createClass: 'partB' withStereotype: OntoUMLCategory.
 	componentOfA := self createAssociationFrom: whole to: partA.
 	componentOfA applyStereotype: OntoUMLComponentOf new.
 	componentOfB := self createAssociationFrom: whole to: partB.
 	componentOfB applyStereotype: OntoUMLComponentOf new.
-	model := { whole. partA. partB. componentOfA. componentOfB. }.
+	model := {
+		         whole.
+		         partA.
+		         partB.
+		         componentOfA.
+		         componentOfB }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: whole withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

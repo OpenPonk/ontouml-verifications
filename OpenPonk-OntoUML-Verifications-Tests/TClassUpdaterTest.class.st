@@ -46,13 +46,13 @@ TClassUpdaterTest >> testUpdateMessageWithClassification [
 	| testCode |
 	testCode := 'testMethod: aResponse
 	^ aResponse.'.
-	self deny: (updaterClass class canUnderstand: #testMethod:).
+	self
+		deny: (updaterClass class canUnderstand: #testMethod:)
+		description: 'Target class should not understand #testMethod: before compilation'.
 	updaterClass updateMessage: testCode withClassification: 'test'.
-	self assert: (updaterClass class canUnderstand: #testMethod:).
 	self
-		assert: (updaterClass class >> #testMethod:) sourceCode
-		equals: testCode.
-	self
-		assert: (updaterClass class >> #testMethod:) protocolName
-		equals: 'test'
+		assert: (updaterClass class canUnderstand: #testMethod:)
+		description: 'Target class should understand #testMethod: after updateMessage:withClassification:'.
+	self assert: (updaterClass class >> #testMethod:) sourceCode equals: testCode.
+	self assert: (updaterClass class >> #testMethod:) protocolName equals: 'test'
 ]

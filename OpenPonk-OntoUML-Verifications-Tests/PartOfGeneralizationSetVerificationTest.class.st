@@ -31,14 +31,22 @@ PartOfGeneralizationSetVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testInvalidModel [
-	| phase model result |
+
+	| phase model result message |
 	phase := OPUMLClass new.
 	phase applyStereotype: OntoUMLPhase new.
-	model := { phase. }.
+	model := { phase }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: phase withModel: model).
 	self assert: result results size equals: 1.
-	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: phase.
+	self assert: message verification class identicalTo: PartOfGeneralizationSetVerification.
+	self
+		assert: message messageText
+		equals: 'OntoUMLPhase has to be part of one or more generalisation sets that are disjoint and complete.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/classes/sortals/phase/index.html'
 ]
 
 { #category : 'tests' }
@@ -48,6 +56,7 @@ PartOfGeneralizationSetVerificationTest >> testNew [
 
 { #category : 'tests' }
 PartOfGeneralizationSetVerificationTest >> testValidModel [
+
 	| kind phase generalization generalizationSet model result |
 	phase := OPUMLClass new.
 	phase applyStereotype: OntoUMLPhase new.
@@ -57,14 +66,18 @@ PartOfGeneralizationSetVerificationTest >> testValidModel [
 	generalization general: kind.
 	generalization specific: phase.
 	generalizationSet := OPUMLGeneralizationSet new.
-	generalizationSet generalizations: {generalization}.
+	generalizationSet generalizations: { generalization }.
 	generalizationSet isDisjoint: true.
 	generalizationSet isCovering: true.
-	generalization generalizationSets: {generalizationSet}.
-	model := { kind. phase. generalization. generalizationSet. }.
+	generalization generalizationSets: { generalizationSet }.
+	model := {
+		         kind.
+		         phase.
+		         generalization.
+		         generalizationSet }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: phase withModel: model).
-	self assert: result results size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

@@ -19,8 +19,13 @@ AbstractVerificationTest class >> isAbstract [
 
 { #category : 'tests' }
 AbstractVerificationTest >> canVerifyTest [
-	self assert: (self getTestedClass canVerify: self getNotVerifiedClassInstance) equals: false.	
-	self assert: (self getTestedClass canVerify: self getVerifiedClassInstance) equals: true.
+
+	self
+		deny: (self getTestedClass canVerify: self getNotVerifiedClassInstance)
+		description: 'Verification must not accept unsupported object type'.
+	self
+		assert: (self getTestedClass canVerify: self getVerifiedClassInstance)
+		description: 'Verification must accept supported verified object instance'
 ]
 
 { #category : 'tests - utility' }
@@ -102,5 +107,6 @@ AbstractVerificationTest >> newTest [
 
 { #category : 'tests' }
 AbstractVerificationTest >> verifiedClassTest [
-	self assert: self getTestedClass verifiedClass equals: self getVerifiedClass.
+
+	self assert: self getTestedClass verifiedClass identicalTo: self getVerifiedClass
 ]

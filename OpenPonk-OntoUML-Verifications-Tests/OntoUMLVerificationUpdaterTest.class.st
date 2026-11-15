@@ -181,16 +181,6 @@ OntoUMLVerificationUpdaterTest >> testGetRelationshipSpecificationPaths [
 ]
 
 { #category : 'tests' }
-OntoUMLVerificationUpdaterTest >> testGetVerifications [
-	| controller verifications |
-	controller := VerificationController new.
-	verifications := controller getVerifications.
-	self assert: (verifications isKindOf: Collection).
-	self assert: (verifications isEmpty) equals: false.
-	self assert: (verifications anySatisfy: [ :verificationClass | verificationClass = Verification ]) equals: true. 
-]
-
-{ #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testIndexUrl [
 	| updater | 
 	updater := OntoUMLVerificationUpdater new.
@@ -199,23 +189,25 @@ OntoUMLVerificationUpdaterTest >> testIndexUrl [
 
 { #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testParseClassYaml [
-	| updater result | 
+
+	| updater result |
 	updater := OntoUMLVerificationUpdater new.
 	result := updater parseClassYaml: self referenceClassYamlText.
-	self assert: result class equals: OntoUMLClassStereotypeYaml.
-	self assert: result yaml equals: (self referenceClassYaml at: 'class_stereotype').
+	self assert: result class identicalTo: OntoUMLClassStereotypeYaml.
+	self assert: result yaml equals: (self referenceClassYaml at: 'class_stereotype')
 ]
 
 { #category : 'tests' }
 OntoUMLVerificationUpdaterTest >> testParseRelationshipYaml [
-	| updater result | 
+
+	| updater result |
 	updater := OntoUMLVerificationUpdater new.
 	result := updater parseRelationshipYaml: self referenceRelationshipYamlText.
-	self assert: result class equals: OntoUMLRelationshipStereotypeYaml.
+	self assert: result class identicalTo: OntoUMLRelationshipStereotypeYaml.
 	self assert: result yaml equals: (self referenceRelationshipYaml at: 'relationship_stereotype').
 	result := updater parseRelationshipYaml: self referenceAggregationYamlText.
-	self assert: result class equals: OntoUMLRelationshipStereotypeYaml.
-	self assert: result yaml equals: (self referenceAggregationYaml at: 'aggregation_stereotype').
+	self assert: result class identicalTo: OntoUMLRelationshipStereotypeYaml.
+	self assert: result yaml equals: (self referenceAggregationYaml at: 'aggregation_stereotype')
 ]
 
 { #category : 'tests' }

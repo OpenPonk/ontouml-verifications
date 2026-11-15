@@ -73,7 +73,8 @@ AllowedSubtypesVerificationTest >> testGetValidSubtypesForCodeFromCollection [
 
 { #category : 'tests' }
 AllowedSubtypesVerificationTest >> testInvalidModel [
-	| kind subkind generalization model result |
+
+	| kind subkind generalization model result message |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
 	subkind := OPUMLClass new.
@@ -81,11 +82,19 @@ AllowedSubtypesVerificationTest >> testInvalidModel [
 	generalization := OPUMLGeneralization new.
 	generalization general: subkind.
 	generalization specific: kind.
-	model := { kind. subkind. generalization. }.
+	model := {
+		         kind.
+		         subkind.
+		         generalization }.
 	result := VerificationResults new.
 	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
 	self assert: result results size equals: 1.
-	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: generalization.
+	self assert: message verification class identicalTo: AllowedSubtypesVerification.
+	self assert: message messageText equals: 'OntoUMLKind cannot be subtype of OntoUMLSubKind.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/classes/sortals/kind/index.html'
 ]
 
 { #category : 'tests' }
@@ -95,6 +104,7 @@ AllowedSubtypesVerificationTest >> testNew [
 
 { #category : 'tests' }
 AllowedSubtypesVerificationTest >> testValidModel [
+
 	| kind subkind generalization model result |
 	kind := OPUMLClass new.
 	kind applyStereotype: OntoUMLKind new.
@@ -103,10 +113,13 @@ AllowedSubtypesVerificationTest >> testValidModel [
 	generalization := OPUMLGeneralization new.
 	generalization general: kind.
 	generalization specific: subkind.
-	model := { kind. subkind. generalization. }.
+	model := {
+		         kind.
+		         subkind.
+		         generalization }.
 	result := VerificationResults new.
 	result addResults: (AllowedSubtypesVerification verify: generalization withModel: model).
-	self assert: result results size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }
@@ -114,9 +127,24 @@ AllowedSubtypesVerificationTest >> testValidSubtypes [
 
 	| result |
 	result := AllowedSubtypesVerification validSubtypes.
+	self assert: result class identicalTo: Dictionary.
+	self assertCollection: result keys hasSameElements: {
+			OntoUMLCategory.
+			OntoUMLCollective.
+			OntoUMLKind.
+			OntoUMLMixin.
+			OntoUMLMode.
+			OntoUMLPhase.
+			OntoUMLPhaseMixin.
+			OntoUMLQuality.
+			OntoUMLQuantity.
+			OntoUMLRelator.
+			OntoUMLRole.
+			OntoUMLRoleMixin.
+			OntoUMLSubKind }.
 	self
-		assert: (result isKindOf: Dictionary);
-		denyEmpty: result
+		assert: (result values allSatisfy: [ :allowed | allowed class == Array ])
+		description: 'Each allowed subtypes entry must be an Array of stereotype classes'
 ]
 
 { #category : 'tests' }
@@ -127,8 +155,11 @@ AllowedSubtypesVerificationTest >> testValidSubtypesFor [
 		              methodName matchesRegex: 'validSubtypesFor.*' ].
 	self denyEmpty: methodList.
 	methodList do: [ :methodName |
-			self assert:
-				((AllowedSubtypesVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  )) isKindOf: Association) ]
+			| association |
+			association := AllowedSubtypesVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  ).
+			self assert: association class identicalTo: Association.
+			self assert: association key isClass description: 'Subtype specification key must be a stereotype class'.
+			self assert: association value class identicalTo: Array ]
 ]
 
 { #category : 'tests' }

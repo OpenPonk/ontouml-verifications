@@ -11,30 +11,32 @@ Class {
 
 { #category : 'tests' }
 VerificationFrameworkSettingsTest >> testGetSettingFor [
+
 	| settings |
 	settings := VerificationFrameworkSettings new.
-	self assert: (settings getSettingFor: 'A') equals: true.
+	self assert: (settings getSettingFor: 'A') description: 'Unconfigured setting should default to true'.
 	settings setSettingFor: 'A' withValue: false.
-	self assert: (settings getSettingFor: 'A') equals: false.
-	
+	self deny: (settings getSettingFor: 'A') description: 'Setting updated to false should return false'
 ]
 
 { #category : 'tests' }
 VerificationFrameworkSettingsTest >> testOntoUMLAntipatternsCategoryCanBeOpenedInSpecSettings [
+
 	| method pragma builder declaration node presenter initialValue |
 	method := VerificationFrameworkSettings class >> #settingsOnImpAbsAntipatternVerification:.
 	pragma := method pragmaAt: #systemsettings.
-	self assert: pragma isNotNil description: 'Method must declare <systemsettings> pragma'.
+	self deny: pragma identicalTo: nil.
+	self assert: pragma selector equals: #systemsettings.
 
 	builder := SettingTreeBuilder new.
 	VerificationFrameworkSettings settingsOnImpAbsAntipatternVerification: builder.
 	declaration := builder nodeList first settingDeclaration.
-	self assert: declaration target equals: VerificationFrameworkSettings.
+	self assert: declaration target identicalTo: VerificationFrameworkSettings.
 	self assert: declaration targetSelector equals: #settingsInstance.
 
 	node := StSettingNode new
-		declaration: declaration;
-		yourself.
+		        declaration: declaration;
+		        yourself.
 	presenter := node asPresenterOn: StSettingDetailPresenter new.
 	presenter build.
 
@@ -43,27 +45,28 @@ VerificationFrameworkSettingsTest >> testOntoUMLAntipatternsCategoryCanBeOpenedI
 		presenter value: initialValue not.
 		self assert: VerificationFrameworkSettings settingsInstance accessImpAbsAntipatternVerification equals: initialValue not.
 		presenter value: initialValue.
-		self assert: VerificationFrameworkSettings settingsInstance accessImpAbsAntipatternVerification equals: initialValue
-	] ensure: [
+		self assert: VerificationFrameworkSettings settingsInstance accessImpAbsAntipatternVerification equals: initialValue ] ensure: [
 		VerificationFrameworkSettings settingsInstance accessImpAbsAntipatternVerification: initialValue ]
 ]
 
 { #category : 'tests' }
 VerificationFrameworkSettingsTest >> testOntoUMLVerificationsCategoryCanBeOpenedInSpecSettings [
+
 	| method pragma builder declaration node presenter initialValue |
 	method := VerificationFrameworkSettings class >> #settingsOnRoleMediationDependencyVerification:.
 	pragma := method pragmaAt: #systemsettings.
-	self assert: pragma isNotNil description: 'Method must declare <systemsettings> pragma'.
+	self deny: pragma identicalTo: nil.
+	self assert: pragma selector equals: #systemsettings.
 
 	builder := SettingTreeBuilder new.
 	VerificationFrameworkSettings settingsOnRoleMediationDependencyVerification: builder.
 	declaration := builder nodeList first settingDeclaration.
-	self assert: declaration target equals: VerificationFrameworkSettings.
+	self assert: declaration target identicalTo: VerificationFrameworkSettings.
 	self assert: declaration targetSelector equals: #settingsInstance.
 
 	node := StSettingNode new
-		declaration: declaration;
-		yourself.
+		        declaration: declaration;
+		        yourself.
 	presenter := node asPresenterOn: StSettingDetailPresenter new.
 	presenter build.
 
@@ -72,17 +75,18 @@ VerificationFrameworkSettingsTest >> testOntoUMLVerificationsCategoryCanBeOpened
 		presenter value: initialValue not.
 		self assert: VerificationFrameworkSettings settingsInstance accessRoleMediationDependencyVerification equals: initialValue not.
 		presenter value: initialValue.
-		self assert: VerificationFrameworkSettings settingsInstance accessRoleMediationDependencyVerification equals: initialValue
-	] ensure: [
-		VerificationFrameworkSettings settingsInstance accessRoleMediationDependencyVerification: initialValue ]
+		self assert: VerificationFrameworkSettings settingsInstance accessRoleMediationDependencyVerification equals: initialValue ]
+		ensure: [ VerificationFrameworkSettings settingsInstance accessRoleMediationDependencyVerification: initialValue ]
 ]
 
 { #category : 'tests' }
 VerificationFrameworkSettingsTest >> testSetSettingForWithValue [
+
 	| settings |
 	settings := VerificationFrameworkSettings new.
-	self assert: (settings getSettingFor: 'A') equals: true.
+	self assert: (settings getSettingFor: 'A') description: 'Unconfigured setting should default to true'.
 	settings setSettingFor: 'A' withValue: false.
-	self assert: (settings getSettingFor: 'A') equals: false.
-	
+	self deny: (settings getSettingFor: 'A') description: 'Setting updated to false should return false'.
+	settings setSettingFor: 'A' withValue: true.
+	self assert: (settings getSettingFor: 'A') description: 'Setting updated back to true should return true'
 ]

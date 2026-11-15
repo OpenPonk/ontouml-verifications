@@ -31,18 +31,29 @@ DepPhaseAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 DepPhaseAntipatternVerificationTest >> testInvalidModel [
-	| kind phase relator generalization mediation model result |
-	kind := self createClass: 'kind'  withStereotype: OntoUMLKind.
-	phase := self createClass: 'phase'  withStereotype: OntoUMLPhase.
-	relator := self createClass: 'relator'  withStereotype: OntoUMLRelator.	
+
+	| kind phase relator generalization mediation model result message |
+	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
+	phase := self createClass: 'phase' withStereotype: OntoUMLPhase.
+	relator := self createClass: 'relator' withStereotype: OntoUMLRelator.
 	generalization := self createGeneralizationFor: kind withSpecific: phase.
 	mediation := self createAssociationFrom: phase to: relator.
 	mediation applyStereotype: OntoUMLMediation new.
-		
-	model := { kind. phase. relator. generalization. mediation. }.
+	model := {
+		         kind.
+		         phase.
+		         relator.
+		         generalization.
+		         mediation }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: mediation withModel: model).
-	self assert: (result results select: [ :message | message class = VerificationMessageWarning ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: phase.
+	self assert: message verification class identicalTo: DepPhaseAntipatternVerification.
+	self assert: message messageText equals: 'Phase phase is part of Mediation association.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/DepPhase/index.html'
 ]
 
 { #category : 'tests' }
@@ -52,18 +63,23 @@ DepPhaseAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 DepPhaseAntipatternVerificationTest >> testValidModel [
+
 	| kind role relator generalization mediation model result |
-	kind := self createClass: 'kind'  withStereotype: OntoUMLKind.
-	role := self createClass: 'role'  withStereotype: OntoUMLRole.
-	relator := self createClass: 'relator'  withStereotype: OntoUMLRelator.	
+	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
+	role := self createClass: 'role' withStereotype: OntoUMLRole.
+	relator := self createClass: 'relator' withStereotype: OntoUMLRelator.
 	generalization := self createGeneralizationFor: kind withSpecific: role.
-	mediation := self createAssociationFrom: kind to: relator. 
+	mediation := self createAssociationFrom: kind to: relator.
 	mediation applyStereotype: OntoUMLMediation new.
-		
-	model := { kind. role. relator. generalization. mediation. }.
+	model := {
+		         kind.
+		         role.
+		         relator.
+		         generalization.
+		         mediation }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: mediation withModel: model).
-	self assert: (result results select: [ :message | message class = VerificationMessageWarning ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

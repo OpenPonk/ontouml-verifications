@@ -11,19 +11,28 @@ Class {
 
 { #category : 'tests' }
 RelCompAntipatternVerificationTest >> getInvalidModel [
+
 	| sourceA tagetA sourceB targetB associationA associationB firstGeneralization secondGeneralization |
 	sourceA := self createClass: 'sourceA' withStereotype: OntoUMLKind.
-	tagetA := self createClass: 'tagetA' withStereotype: OntoUMLKind.	
+	tagetA := self createClass: 'tagetA' withStereotype: OntoUMLKind.
 	sourceB := self createClass: 'sourceB' withStereotype: OntoUMLSubKind.
 	targetB := self createClass: 'targetB' withStereotype: OntoUMLSubKind.
 	firstGeneralization := self createGeneralizationFor: tagetA withSpecific: sourceB.
-	secondGeneralization := self createGeneralizationFor: tagetA withSpecific: targetB.	
+	secondGeneralization := self createGeneralizationFor: tagetA withSpecific: targetB.
 	associationA := self createAssociationFrom: sourceA to: tagetA.
-	associationA memberEnds second lowerValue: (OPUMLLiteralUnlimitedNatural new value: 1).
+	associationA memberEnds second lowerValue: (OPUMLLiteralInteger new value: 1).
 	associationA memberEnds second upperValue: (OPUMLLiteralUnlimitedNatural new value: '*').
 	associationB := self createAssociationFrom: sourceB to: targetB.
 	associationB applyStereotype: OntoUMLMediation new.
-	^ { associationA. associationB. sourceA. tagetA. sourceB. targetB. firstGeneralization. secondGeneralization. }.
+	^ {
+		  associationA.
+		  associationB.
+		  sourceA.
+		  tagetA.
+		  sourceB.
+		  targetB.
+		  firstGeneralization.
+		  secondGeneralization }
 ]
 
 { #category : 'constants' }
@@ -33,19 +42,28 @@ RelCompAntipatternVerificationTest >> getTestedClass [
 
 { #category : 'tests' }
 RelCompAntipatternVerificationTest >> getValidModel [
+
 	| sourceA tagetA sourceB targetB associationA associationB firstGeneralization secondGeneralization |
 	sourceA := self createClass: 'sourceA' withStereotype: OntoUMLKind.
-	tagetA := self createClass: 'tagetA' withStereotype: OntoUMLKind.	
+	tagetA := self createClass: 'tagetA' withStereotype: OntoUMLKind.
 	sourceB := self createClass: 'sourceB' withStereotype: OntoUMLSubKind.
 	targetB := self createClass: 'targetB' withStereotype: OntoUMLSubKind.
 	firstGeneralization := self createGeneralizationFor: tagetA withSpecific: sourceB.
-	secondGeneralization := self createGeneralizationFor: tagetA withSpecific: targetB.	
+	secondGeneralization := self createGeneralizationFor: tagetA withSpecific: targetB.
 	associationA := self createAssociationFrom: sourceA to: tagetA.
-	associationA memberEnds second lowerValue: (OPUMLLiteralUnlimitedNatural new value: 0).
+	associationA memberEnds second lowerValue: (OPUMLLiteralInteger new value: 0).
 	associationA memberEnds second upperValue: (OPUMLLiteralUnlimitedNatural new value: 1).
 	associationB := self createAssociationFrom: sourceB to: targetB.
 	associationB applyStereotype: OntoUMLMediation new.
-	^ { associationA. associationB. sourceA. tagetA. sourceB. targetB. firstGeneralization. secondGeneralization. }.
+	^ {
+		  associationA.
+		  associationB.
+		  sourceA.
+		  tagetA.
+		  sourceB.
+		  targetB.
+		  firstGeneralization.
+		  secondGeneralization }
 ]
 
 { #category : 'constants' }
@@ -60,6 +78,7 @@ RelCompAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 RelCompAntipatternVerificationTest >> testCheckBoundsFor [
+
 	| kindA kindB associationA associationB testedClassInstance |
 	testedClassInstance := self getTestedClass basicNew.
 	kindA := self createClass: 'kindA' withStereotype: OntoUMLKind.
@@ -74,39 +93,58 @@ RelCompAntipatternVerificationTest >> testCheckBoundsFor [
 	associationB memberEnds first upperValue value: 1.
 	associationB memberEnds second lowerValue value: 0.
 	associationB memberEnds second upperValue: (OPUMLLiteralUnlimitedNatural new value: '*').
-	self assert: (testedClassInstance checkBoundsFor: associationA memberEnds first) equals: true.
-	self assert: (testedClassInstance checkBoundsFor: associationA memberEnds second) equals: false.
-	self assert: (testedClassInstance checkBoundsFor: associationB memberEnds first) equals: false.
-	self assert: (testedClassInstance checkBoundsFor: associationB memberEnds second) equals: false.
+	self
+		assert: (testedClassInstance checkBoundsFor: associationA memberEnds first)
+		description: 'End with upper > 1 and lower > 0 must satisfy checkBoundsFor:'.
+	self
+		deny: (testedClassInstance checkBoundsFor: associationA memberEnds second)
+		description: 'End with upper = 1 must not satisfy checkBoundsFor:'.
+	self
+		deny: (testedClassInstance checkBoundsFor: associationB memberEnds first)
+		description: 'End with upper = 1 must not satisfy checkBoundsFor:'.
+	self
+		deny: (testedClassInstance checkBoundsFor: associationB memberEnds second)
+		description: 'End with lower = 0 must not satisfy checkBoundsFor:'
 ]
 
 { #category : 'tests' }
 RelCompAntipatternVerificationTest >> testContainsAncestorOrSelfOf [
-	| kind subkindA subkindB subkindC kindB testedClassInstance ancestorTree  |
+
+	| kind subkindA subkindB subkindC kindB testedClassInstance ancestorTree |
 	testedClassInstance := self getTestedClass basicNew.
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
-	kindB := self createClass: 'kindB' withStereotype: OntoUMLKind.	
+	kindB := self createClass: 'kindB' withStereotype: OntoUMLKind.
 	subkindA := self createClass: 'subkindA' withStereotype: OntoUMLSubKind.
 	subkindB := self createClass: 'subkindB' withStereotype: OntoUMLSubKind.
 	subkindC := self createClass: 'subkindC' withStereotype: OntoUMLSubKind.
 	self createGeneralizationFor: kind withSpecific: subkindA.
 	self createGeneralizationFor: kind withSpecific: subkindB.
 	self createGeneralizationFor: subkindB withSpecific: subkindC.
-	
+
 	ancestorTree := OntoUMLModelQuery getAncestorsFor: subkindA.
 	ancestorTree add: subkindA.
-	self assert: (testedClassInstance contains: ancestorTree ancestorOrSelfOf: subkindC) equals: true.
-	self assert: (testedClassInstance contains: ancestorTree ancestorOrSelfOf: kindB) equals: false.
+	self
+		assert: (testedClassInstance contains: ancestorTree ancestorOrSelfOf: subkindC)
+		description: 'Ancestor tree containing common kind ancestor must match subkindC'.
+	self
+		deny: (testedClassInstance contains: ancestorTree ancestorOrSelfOf: kindB)
+		description: 'Ancestor tree must not match unrelated kindB'
 ]
 
 { #category : 'tests' }
 RelCompAntipatternVerificationTest >> testInvalidModel [
-	| associationA model result |
+
+	| associationA model result message |
 	model := self getInvalidModel.
 	associationA := model first.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: associationA withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: associationA.
+	self assert: message verification class identicalTo: RelCompAntipatternVerification.
+	self assert: message messageText equals: 'Association sourceA->tagetA is in RelComp anti-pattern with  sourceB->targetB'
 ]
 
 { #category : 'tests' }
@@ -116,26 +154,32 @@ RelCompAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 RelCompAntipatternVerificationTest >> testRelCompExistsBetweenAnd [
+
 	| model associationA associationB |
 	model := self getValidModel.
 	associationA := model first.
 	associationB := model second.
-	self assert: (self getTestedClass basicNew relCompExistsBetween: associationA and: associationB) equals: false.
-	
+	self
+		deny: (self getTestedClass basicNew relCompExistsBetween: associationA and: associationB)
+		description: 'Valid model associations must not trigger RelComp'.
+
 	model := self getInvalidModel.
 	associationA := model first.
 	associationB := model second.
-	self assert: (self getTestedClass basicNew relCompExistsBetween: associationA and: associationB) equals: true.
+	self
+		assert: (self getTestedClass basicNew relCompExistsBetween: associationA and: associationB)
+		description: 'Invalid model associations must trigger RelComp'
 ]
 
 { #category : 'tests' }
 RelCompAntipatternVerificationTest >> testValidModel [
-	| associationA  model result |	
+
+	| associationA model result |
 	model := self getValidModel.
 	associationA := model first.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: associationA withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

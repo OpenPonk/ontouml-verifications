@@ -31,17 +31,28 @@ MixRigAntipatternVerificationTest >> testCanVerify [
 
 { #category : 'tests' }
 MixRigAntipatternVerificationTest >> testInvalidModel [
-	| kind collective mixin firstGeneralization secondGeneralization model result |
-	kind := self createClass: 'kind'  withStereotype: OntoUMLKind.
-	collective := self createClass: 'collective'  withStereotype: OntoUMLCollective.
-	mixin := self createClass: 'mixin'  withStereotype: OntoUMLMixin.
+
+	| kind collective mixin firstGeneralization secondGeneralization model result message |
+	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
+	collective := self createClass: 'collective' withStereotype: OntoUMLCollective.
+	mixin := self createClass: 'mixin' withStereotype: OntoUMLMixin.
 	firstGeneralization := self createGeneralizationFor: mixin withSpecific: kind.
 	secondGeneralization := self createGeneralizationFor: mixin withSpecific: collective.
-	
-	model := { kind. collective. mixin. firstGeneralization. secondGeneralization. }.
+	model := {
+		         kind.
+		         collective.
+		         mixin.
+		         firstGeneralization.
+		         secondGeneralization }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: mixin withModel: model).
-	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: mixin.
+	self assert: message verification class identicalTo: MixRigAntipatternVerification.
+	self assert: message messageText equals: 'All subtypes of Mixin mixin have same rigidity.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/MixRig/index.html'
 ]
 
 { #category : 'tests' }
@@ -51,18 +62,24 @@ MixRigAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 MixRigAntipatternVerificationTest >> testValidModel [
+
 	| kind phase mixin firstGeneralization secondGeneralization thirdGeneralization model result |
-	kind := self createClass: 'kind'  withStereotype: OntoUMLKind.
-	phase := self createClass: 'phase'  withStereotype: OntoUMLPhase.
-	mixin := self createClass: 'mixin'  withStereotype: OntoUMLMixin.
+	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
+	phase := self createClass: 'phase' withStereotype: OntoUMLPhase.
+	mixin := self createClass: 'mixin' withStereotype: OntoUMLMixin.
 	firstGeneralization := self createGeneralizationFor: mixin withSpecific: kind.
 	secondGeneralization := self createGeneralizationFor: mixin withSpecific: phase.
 	thirdGeneralization := self createGeneralizationFor: kind withSpecific: phase.
-	
-	model := { kind. phase. mixin. firstGeneralization. secondGeneralization. thirdGeneralization. }.
+	model := {
+		         kind.
+		         phase.
+		         mixin.
+		         firstGeneralization.
+		         secondGeneralization.
+		         thirdGeneralization }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: mixin withModel: model).
-	self assert: (result results select: [ :message | message class = VerificationMessageWarning. ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }

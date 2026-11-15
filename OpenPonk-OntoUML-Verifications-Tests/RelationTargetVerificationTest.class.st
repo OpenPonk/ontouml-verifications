@@ -73,18 +73,29 @@ RelationTargetVerificationTest >> testGetValidTargetsForFromCollection [
 
 { #category : 'tests' }
 RelationTargetVerificationTest >> testInvalidModel [
-	| mode quality association model result |
+
+	| mode quality association model result message |
 	mode := OPUMLClass new.
 	mode applyStereotype: OntoUMLMode new.
 	quality := OPUMLClass new.
 	quality applyStereotype: OntoUMLQuality new.
-	association := self createAssociationFrom: quality to: mode .
+	association := self createAssociationFrom: quality to: mode.
 	association applyStereotype: OntoUMLContainment new.
-	model := { mode. quality. association. }.
+	model := {
+		         mode.
+		         quality.
+		         association }.
 	result := VerificationResults new.
 	result addResults: (RelationTargetVerification verify: association withModel: model).
 	self assert: result results size equals: 1.
-	self assert: (result results anySatisfy: [ :message | message isKindOf: VerificationMessageError. ]).
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: association.
+	self assert: message verification class identicalTo: RelationTargetVerification.
+	self assert: message messageText equals: 'OntoUMLMode cannot be target of OntoUMLContainment association'.
+	self
+		assert: message documentationReference
+		equals: 'https://ontouml.readthedocs.io/en/latest/relationships/aggregations/containment/index.html'
 ]
 
 { #category : 'tests' }
@@ -94,17 +105,21 @@ RelationTargetVerificationTest >> testNew [
 
 { #category : 'tests' }
 RelationTargetVerificationTest >> testValidModel [
+
 	| mode quantity association model result |
 	mode := OPUMLClass new.
 	mode applyStereotype: OntoUMLMode new.
 	quantity := OPUMLClass new.
 	quantity applyStereotype: OntoUMLQuantity new.
-	association := self createAssociationFrom: mode to: quantity .
+	association := self createAssociationFrom: mode to: quantity.
 	association applyStereotype: OntoUMLContainment new.
-	model := { mode. quantity. association. }.
+	model := {
+		         mode.
+		         quantity.
+		         association }.
 	result := VerificationResults new.
 	result addResults: (RelationTargetVerification verify: association withModel: model).
-	self assert: result results size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }
@@ -112,8 +127,20 @@ RelationTargetVerificationTest >> testValidTargets [
 
 	| dictionary |
 	dictionary := self getTestedClass validTargets.
-	self assert: (dictionary isKindOf: Dictionary).
-	self assert: ((dictionary at: OntoUMLDomainFormal) isKindOf: Collection)
+	self assert: dictionary class identicalTo: Dictionary.
+	self assertCollection: dictionary keys hasSameElements: {
+			OntoUMLCharacterization.
+			OntoUMLComponentOf.
+			OntoUMLContainment.
+			OntoUMLDerivation.
+			OntoUMLDomainFormal.
+			OntoUMLMaterial.
+			OntoUMLMediation.
+			OntoUMLMemberOf.
+			OntoUMLSubCollectionOf.
+			OntoUMLSubQuantityOf }.
+	self assert: (dictionary at: OntoUMLDomainFormal) class identicalTo: Array.
+	self denyEmpty: (dictionary at: OntoUMLDomainFormal)
 ]
 
 { #category : 'tests' }
@@ -124,8 +151,11 @@ RelationTargetVerificationTest >> testValidTargetsFor [
 		              methodName matchesRegex: 'validTargetsFor.*' ].
 	self denyEmpty: methodList.
 	methodList do: [ :methodName |
-			self assert:
-				((RelationTargetVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  )) isKindOf: Association) ]
+			| association |
+			association := RelationTargetVerification class >> methodName asSymbol valueWithReceiver: nil arguments: #(  ).
+			self assert: association class identicalTo: Association.
+			self assert: association key isClass description: 'Relation target specification key must be a stereotype class'.
+			self assert: association value class identicalTo: Array ]
 ]
 
 { #category : 'tests' }

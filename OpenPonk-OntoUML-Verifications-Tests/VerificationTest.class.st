@@ -26,7 +26,10 @@ VerificationTest >> getVerifiedClassInstance [
 
 { #category : 'tests' }
 VerificationTest >> testCanVerify [
-	self assert: (self getTestedClass canVerify: self getNotVerifiedClassInstance) equals: false.
+
+	self
+		deny: (self getTestedClass canVerify: self getNotVerifiedClassInstance)
+		description: 'Abstract Verification base class must not verify arbitrary objects'
 ]
 
 { #category : 'tests' }
@@ -35,16 +38,25 @@ VerificationTest >> testNew [
 ]
 
 { #category : 'tests' }
+VerificationTest >> testStereotypeVerificationDefaults [
+
+	self assertEmpty: StereotypeVerification verifiedStereotypes.
+	self
+		deny: (StereotypeVerification canVerifyStereotype: OPUMLClass new)
+		description: 'StereotypeVerification without concrete stereotypes must reject unstereotyped class'.
+	self
+		deny: (StereotypeVerification canVerify: OPUMLClass new)
+		description: 'Abstract StereotypeVerification must not verify unstereotyped class'
+]
+
+{ #category : 'tests' }
 VerificationTest >> testVerifiedClass [
-	self assert: self getTestedClass verifiedClass equals: self getVerifiedClass.
+
+	self assert: self getTestedClass verifiedClass identicalTo: self getVerifiedClass
 ]
 
 { #category : 'tests' }
 VerificationTest >> testVerifyObjectWithModel [
-	self
-		assertCollection:
-			(self getTestedClass
-				verify: self getVerifiedClassInstance
-				withModel: 'dummyModel')
-		hasSameElements: {}
+
+	self assertEmpty: (self getTestedClass verify: self getVerifiedClassInstance withModel: 'dummyModel')
 ]

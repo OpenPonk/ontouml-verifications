@@ -71,7 +71,8 @@ RepRelAntipatternVerificationTest >> testGetUpperBoundMultiplicityOfFor [
 
 { #category : 'tests' }
 RepRelAntipatternVerificationTest >> testInvalidModel [
-	| kind firstRole secondRole relator firstMediation secondMediation firstGeneralization secondGeneralization model result |
+
+	| kind firstRole secondRole relator firstMediation secondMediation firstGeneralization secondGeneralization model result message |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	relator := self createClass: 'relator' withStereotype: OntoUMLRelator.
 	firstRole := self createClass: 'firstRole' withStereotype: OntoUMLRole.
@@ -84,10 +85,24 @@ RepRelAntipatternVerificationTest >> testInvalidModel [
 	secondMediation := self createAssociationFrom: secondRole to: relator.
 	secondMediation applyStereotype: OntoUMLMediation new.
 	secondMediation memberEnds second upperValue: (OPUMLLiteralUnlimitedNatural new value: '*').
-	model := { kind. firstRole. secondRole. relator. firstMediation. secondMediation. firstGeneralization. secondGeneralization. }.
+	model := {
+		         kind.
+		         firstRole.
+		         secondRole.
+		         relator.
+		         firstMediation.
+		         secondMediation.
+		         firstGeneralization.
+		         secondGeneralization }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: relator withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 1.
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageWarning.
+	self assert: message objectReference identicalTo: relator.
+	self assert: message verification class identicalTo: RepRelAntipatternVerification.
+	self assert: message messageText equals: 'OntoUMLRelator may exist in two identical instances.'.
+	self assert: message documentationReference equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/RepRel/index.html'
 ]
 
 { #category : 'tests' }
@@ -97,6 +112,7 @@ RepRelAntipatternVerificationTest >> testNew [
 
 { #category : 'tests' }
 RepRelAntipatternVerificationTest >> testValidModel [
+
 	| kind firstRole secondRole relator firstMediation secondMediation firstGeneralization secondGeneralization model result |
 	kind := self createClass: 'kind' withStereotype: OntoUMLKind.
 	relator := self createClass: 'relator' withStereotype: OntoUMLRelator.
@@ -108,10 +124,18 @@ RepRelAntipatternVerificationTest >> testValidModel [
 	firstMediation applyStereotype: OntoUMLMediation new.
 	secondMediation := self createAssociationFrom: secondRole to: relator.
 	secondMediation applyStereotype: OntoUMLMediation new.
-	model := { kind. firstRole. secondRole. relator. firstMediation. secondMediation. firstGeneralization. secondGeneralization. }.
+	model := {
+		         kind.
+		         firstRole.
+		         secondRole.
+		         relator.
+		         firstMediation.
+		         secondMediation.
+		         firstGeneralization.
+		         secondGeneralization }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: relator withModel: model).
-	self assert: (result results select: [ :message | message isKindOf: VerificationMessageWarning. ]) size equals: 0.
+	self assertEmpty: result results
 ]
 
 { #category : 'tests' }
