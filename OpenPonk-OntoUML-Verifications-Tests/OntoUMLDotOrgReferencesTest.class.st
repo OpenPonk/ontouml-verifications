@@ -36,6 +36,15 @@ OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceFor [
 ]
 
 { #category : 'tests' }
+OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceForClass [
+
+	self assert: (OntoUMLDotOrgReferences getDefinitionReferenceForClass: AllowedSubtypesVerification) equals: ''.
+	self
+		assert: (OntoUMLDotOrgReferences getDefinitionReferenceForClass: FreeRoleAntipatternVerification)
+		equals: 'https://ontouml.readthedocs.io/en/latest/anti-patterns/FreeRole/index.html'
+]
+
+{ #category : 'tests' }
 OntoUMLDotOrgReferencesTest >> testGetDefinitionReferenceForStereotype [
 
 	| methodList |

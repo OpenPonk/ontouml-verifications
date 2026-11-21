@@ -26,11 +26,11 @@ RelationDependencyVerification class >> verifiedStereotypes [
 
 { #category : 'verification' }
 RelationDependencyVerification >> fulfillsRelationalDependency: aRelation [
+
 	| sourceLowerBound targetLowerBound |
-	sourceLowerBound := (OntoUMLModelQuery getSourceEndFrom: aRelation) lower value.
-	targetLowerBound := (OntoUMLModelQuery getTargetEndFrom: aRelation) lower value.
-	^ (sourceLowerBound = '*' ifTrue: [ true. ] ifFalse: [ sourceLowerBound >= 1. ])
-		and: (targetLowerBound = '*' ifTrue: [ true. ] ifFalse: [ targetLowerBound >= 1. ]).
+	sourceLowerBound := (OntoUMLModelQuery getSourceEndFrom: aRelation) lower.
+	targetLowerBound := (OntoUMLModelQuery getTargetEndFrom: aRelation) lower.
+	^ sourceLowerBound >= 1 and: [ targetLowerBound >= 1 ]
 ]
 
 { #category : 'verification' }

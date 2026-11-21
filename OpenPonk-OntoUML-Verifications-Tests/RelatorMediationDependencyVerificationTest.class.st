@@ -69,6 +69,22 @@ RelatorMediationDependencyVerificationTest >> testInvalidModel [
 ]
 
 { #category : 'tests' }
+RelatorMediationDependencyVerificationTest >> testInvalidModelWithoutAnyMediation [
+
+	| relator model result message |
+	relator := self createClass: 'Enrollment' withStereotype: OntoUMLRelator.
+	model := { relator }.
+	result := VerificationResults new.
+	result addResults: (RelatorMediationDependencyVerification verify: relator withModel: model).
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: relator.
+	self assert: message verification class identicalTo: RelatorMediationDependencyVerification.
+	self assert: message messageText equals: 'OntoUMLRelator has to be part of at least one mediation.'
+]
+
+{ #category : 'tests' }
 RelatorMediationDependencyVerificationTest >> testNew [
 	self newTest.
 ]

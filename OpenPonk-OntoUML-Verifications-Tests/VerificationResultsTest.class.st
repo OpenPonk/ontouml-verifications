@@ -69,6 +69,27 @@ VerificationResultsTest >> testInitialize [
 ]
 
 { #category : 'tests' }
+VerificationResultsTest >> testMixedErrorsAndWarningsFiltering [
+
+	| verificationResults errorObject warningObject verification errorMessage warningMessage |
+	errorObject := Object new.
+	warningObject := Object new.
+	verification := Verification basicNew.
+	errorMessage := VerificationMessageError createFor: errorObject withVerification: verification withText: 'error'.
+	warningMessage := VerificationMessageWarning createFor: warningObject withVerification: verification withText: 'warning'.
+	verificationResults := VerificationResults new.
+	verificationResults addResults: {
+			errorMessage.
+			warningMessage }.
+	self assertCollection: verificationResults selectErrors hasSameElements: { errorMessage }.
+	self assertCollection: verificationResults selectWarnings hasSameElements: { warningMessage }.
+	self assert: (verificationResults hasErrors: errorObject) description: 'Object with error must report hasErrors: true'.
+	self deny: (verificationResults hasErrors: warningObject) description: 'Object with only warning must report hasErrors: false'.
+	self assert: (verificationResults hasWarnings: warningObject) description: 'Object with warning must report hasWarnings: true'.
+	self deny: (verificationResults hasWarnings: errorObject) description: 'Object with only error must report hasWarnings: false'
+]
+
+{ #category : 'tests' }
 VerificationResultsTest >> testResults [
 
 	| verificationResults dummyMessage |

@@ -173,6 +173,95 @@ RelationSourceVerificationTest >> testVerifyObjectWithModel [
 ]
 
 { #category : 'tests' }
+RelationSourceVerificationTest >> testVerifySkipsAssociationWithoutStereotype [
+
+	| collective quality association model |
+	collective := self createClass: 'Team' withStereotype: OntoUMLCollective.
+	quality := self createClass: 'Size' withStereotype: OntoUMLQuality.
+	association := self createAssociationFrom: quality to: collective.
+	model := {
+		         collective.
+		         quality.
+		         association }.
+	self assertEmpty: (RelationSourceVerification verify: association withModel: model)
+]
+
+{ #category : 'tests' }
+RelationSourceVerificationTest >> testVerifySkipsEndWithoutStereotype [
+
+	| unstereotypedClass collective association model result |
+	unstereotypedClass := OPUMLClass new.
+	collective := self createClass: 'Team' withStereotype: OntoUMLCollective.
+	association := self createAssociationFrom: unstereotypedClass to: collective with: OntoUMLMemberOf new.
+	model := {
+		         unstereotypedClass.
+		         collective.
+		         association }.
+	result := VerificationResults new.
+	result addResults: (RelationSourceVerification verify: association withModel: model).
+	self assertEmpty: result results
+]
+
+{ #category : 'tests' }
+RelationSourceVerificationTest >> testVerifySubKindWithInvalidParentNoParentAndCycle [
+
+	| kind orphanSubKind invalidParentSubKind cycleSubKindA cycleSubKindB member genToKind genCycle1 genCycle2 assocOrphan assocInvalid assocCycle model |
+	kind := self createClass: 'Person' withStereotype: OntoUMLKind.
+	orphanSubKind := self createClass: 'Orphan' withStereotype: OntoUMLSubKind.
+	invalidParentSubKind := self createClass: 'Adult' withStereotype: OntoUMLSubKind.
+	cycleSubKindA := self createClass: 'CycleA' withStereotype: OntoUMLSubKind.
+	cycleSubKindB := self createClass: 'CycleB' withStereotype: OntoUMLSubKind.
+	member := self createClass: 'Item' withStereotype: OntoUMLKind.
+	genToKind := self createGeneralizationFor: kind withSpecific: invalidParentSubKind.
+	genCycle1 := self createGeneralizationFor: cycleSubKindB withSpecific: cycleSubKindA.
+	genCycle2 := self createGeneralizationFor: cycleSubKindA withSpecific: cycleSubKindB.
+	assocOrphan := self createAssociationFrom: orphanSubKind to: member with: OntoUMLMemberOf new.
+	assocInvalid := self createAssociationFrom: invalidParentSubKind to: member with: OntoUMLMemberOf new.
+	assocCycle := self createAssociationFrom: cycleSubKindA to: member with: OntoUMLMemberOf new.
+	model := {
+		         kind.
+		         orphanSubKind.
+		         invalidParentSubKind.
+		         cycleSubKindA.
+		         cycleSubKindB.
+		         member.
+		         genToKind.
+		         genCycle1.
+		         genCycle2.
+		         assocOrphan.
+		         assocInvalid.
+		         assocCycle }.
+	self assert: (RelationSourceVerification verify: assocOrphan withModel: model) size equals: 1.
+	self assert: (RelationSourceVerification verify: assocInvalid withModel: model) size equals: 1.
+	self assert: (RelationSourceVerification verify: assocCycle withModel: model) size equals: 1
+]
+
+{ #category : 'tests' }
+RelationSourceVerificationTest >> testVerifySubKindWithValidParentAndTransitiveParent [
+
+	| collective directSubKind nestedSubKind member directGen nestedGen directAssociation nestedAssociation model |
+	collective := self createClass: 'Group' withStereotype: OntoUMLCollective.
+	directSubKind := self createClass: 'Team' withStereotype: OntoUMLSubKind.
+	nestedSubKind := self createClass: 'SportsTeam' withStereotype: OntoUMLSubKind.
+	member := self createClass: 'Person' withStereotype: OntoUMLKind.
+	directGen := self createGeneralizationFor: collective withSpecific: directSubKind.
+	nestedGen := self createGeneralizationFor: directSubKind withSpecific: nestedSubKind.
+	directAssociation := self createAssociationFrom: directSubKind to: member with: OntoUMLMemberOf new.
+	nestedAssociation := self createAssociationFrom: nestedSubKind to: member with: OntoUMLMemberOf new.
+	model := {
+		         collective.
+		         directSubKind.
+		         nestedSubKind.
+		         member.
+		         directGen.
+		         nestedGen.
+		         directAssociation.
+		         nestedAssociation }.
+	self assertEmpty: (RelationSourceVerification verify: directAssociation withModel: model).
+	self assertEmpty: (RelationSourceVerification verify: nestedAssociation withModel: model)
+]
+
+{ #category : 'tests' }
 RelationSourceVerificationTest >> testVerifyWithModel [
 	self testInvalidModel.
 	self testValidModel.

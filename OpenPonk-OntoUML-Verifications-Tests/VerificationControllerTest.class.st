@@ -10,6 +10,43 @@ Class {
 }
 
 { #category : 'tests' }
+VerificationControllerTest >> testDetectAntiPatternsInModelWithAntipattern [
+
+	| kindA kindB formal model controller results |
+	kindA := OPUMLClass new
+		         name: 'Person';
+		         applyStereotype: OntoUMLKind new.
+	kindB := OPUMLClass new
+		         name: 'Car';
+		         applyStereotype: OntoUMLKind new.
+	formal := OPUMLAssociation new.
+	OPUMLProperty new
+		name: '';
+		lowerValue: (OPUMLLiteralInteger new value: 1);
+		upperValue: (OPUMLLiteralUnlimitedNatural new value: 1);
+		owningAssociation: formal;
+		type: kindA.
+	OPUMLProperty new
+		name: '';
+		lowerValue: (OPUMLLiteralInteger new value: 1);
+		upperValue: (OPUMLLiteralUnlimitedNatural new value: 1);
+		owningAssociation: formal;
+		type: kindB.
+	formal memberEnds addAll: formal ownedEnds.
+	formal applyStereotype: OntoUMLDomainFormal new.
+	model := OPUMLPackage new.
+	model packagedElements addAll: {
+			kindA.
+			kindB.
+			formal }.
+	controller := VerificationController new.
+	results := controller detectAntiPatternsIn: model.
+	self
+		assert: (results hasWarnings: formal)
+		description: 'UndefFormal antipattern should be detected on DomainFormal between Kinds without attributes'
+]
+
+{ #category : 'tests' }
 VerificationControllerTest >> testExampleBloodDonationPassesVerificationsAndAntipatterns [
 
 	| model controller verifyResults antipatternResults classStereotypes associationStereotypes |
@@ -133,6 +170,63 @@ VerificationControllerTest >> testGetVerifiedObjects [
 	collection := {kind. subkind. generalization.} asOrderedCollection.
 	controller := VerificationController new.
 	self assert: (controller getVerifiedObjects: model) equals: collection.
+]
+
+{ #category : 'tests' }
+VerificationControllerTest >> testGetVerifiedObjectsIncludesAssociationAndGeneralizationSet [
+
+	| model kind subkind association generalization generalizationSet note controller verifiedObjects |
+	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
+	subkind := OPUMLClass new applyStereotype: OntoUMLSubKind new.
+	generalization := OPUMLGeneralization new
+		                  general: kind;
+		                  specific: subkind;
+		                  yourself.
+	generalizationSet := OPUMLGeneralizationSet new
+		                     generalizations: { generalization };
+		                     yourself.
+	association := OPUMLAssociation new.
+	note := OPUMLNode new.
+	model := OPUMLPackage new.
+	model packagedElements addAll: {
+			kind.
+			subkind.
+			association.
+			generalizationSet.
+			note }.
+	controller := VerificationController new.
+	verifiedObjects := controller getVerifiedObjects: model.
+	self assertCollection: verifiedObjects hasSameElements: {
+			kind.
+			subkind.
+			association.
+			generalization.
+			generalizationSet }
+]
+
+{ #category : 'tests' }
+VerificationControllerTest >> testIsVerifiableIncludeGeneralizations [
+
+	| umlClass association generalization node |
+	umlClass := OPUMLClass new.
+	association := OPUMLAssociation new.
+	generalization := OPUMLGeneralization new.
+	node := OPUMLNode new.
+	self
+		assert: (VerificationController isVerifiable: umlClass includeGeneralizations: false)
+		description: 'OPUMLClass must be verifiable even when generalizations are excluded'.
+	self
+		assert: (VerificationController isVerifiable: association includeGeneralizations: false)
+		description: 'OPUMLAssociation must be verifiable even when generalizations are excluded'.
+	self
+		deny: (VerificationController isVerifiable: generalization includeGeneralizations: false)
+		description: 'OPUMLGeneralization must not be verifiable when generalizations are excluded'.
+	self
+		assert: (VerificationController isVerifiable: generalization includeGeneralizations: true)
+		description: 'OPUMLGeneralization must be verifiable when generalizations are included'.
+	self
+		deny: (VerificationController isVerifiable: node includeGeneralizations: true)
+		description: 'OPUMLNode must not be verifiable even when generalizations are included'
 ]
 
 { #category : 'tests' }

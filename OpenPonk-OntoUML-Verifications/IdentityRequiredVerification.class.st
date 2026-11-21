@@ -65,21 +65,36 @@ IdentityRequiredVerification class >> verifiedStereotypes [
 ]
 
 { #category : 'verification' }
-IdentityRequiredVerification >> countIdentitySources: aVerifiedObject fromModel: aVerifiedModel withAccumulator: aVerificationAccumulator [
-	| stereotype superclasses results branchAccumulator |
-	(aVerificationAccumulator anySatisfy: [ :element | element = aVerifiedObject ]) ifTrue: [ ^ Float negativeInfinity ].
-	branchAccumulator := aVerificationAccumulator copy.
-	branchAccumulator add: aVerifiedObject.
+IdentityRequiredVerification >> collectIdentitySources: aVerifiedObject fromModel: aVerifiedModel visited: aVisitedSet into: anIdentitySourcesSet [
+
+	| stereotype branchVisited superclasses |
+	(aVisitedSet includes: aVerifiedObject) ifTrue: [ ^ false ].
 	stereotype := self class getStereotype: aVerifiedObject.
-	(self hasIdentity: stereotype) ifTrue: [ ^ 1 ].
-	results := 0.
+	(self hasIdentity: stereotype) ifTrue: [
+			anIdentitySourcesSet add: aVerifiedObject.
+			^ true ].
+	branchVisited := aVisitedSet copy.
+	branchVisited add: aVerifiedObject.
 	superclasses := self getSuperClasses: aVerifiedObject fromModel: aVerifiedModel.
-	superclasses do: [ :superclass |
-		results := results + (self
-			countIdentitySources: superclass
-			fromModel: aVerifiedModel
-			withAccumulator: branchAccumulator) ].
-	^ results
+	^ superclasses allSatisfy: [ :superclass |
+			  self
+				  collectIdentitySources: superclass
+				  fromModel: aVerifiedModel
+				  visited: branchVisited
+				  into: anIdentitySourcesSet ]
+]
+
+{ #category : 'verification' }
+IdentityRequiredVerification >> countIdentitySources: aVerifiedObject fromModel: aVerifiedModel withAccumulator: aVerificationAccumulator [
+
+	| identitySources |
+	identitySources := Set new.
+	(self
+		 collectIdentitySources: aVerifiedObject
+		 fromModel: aVerifiedModel
+		 visited: aVerificationAccumulator
+		 into: identitySources) ifFalse: [ ^ Float negativeInfinity ].
+	^ identitySources size
 ]
 
 { #category : 'verification' }

@@ -10,6 +10,26 @@ Class {
 }
 
 { #category : 'tests' }
+VerificationMessageTest >> testCreateForWithDocumentationReferenceAndLazyLookup [
+
+	| kind verification messageWithExplicitRef messageWithLazyRef |
+	kind := OPUMLClass new applyStereotype: OntoUMLKind new.
+	verification := Verification basicNew.
+	messageWithExplicitRef := VerificationMessageError
+		                          createFor: kind
+		                          withVerification: verification
+		                          withText: 'explicit'
+		                          documentationReference: 'https://example.org/custom'.
+	self assert: messageWithExplicitRef documentationReference equals: 'https://example.org/custom'.
+	messageWithExplicitRef documentationReference: 'https://example.org/updated'.
+	self assert: messageWithExplicitRef documentationReference equals: 'https://example.org/updated'.
+	messageWithLazyRef := VerificationMessageError createFor: kind withVerification: verification withText: 'lazy'.
+	self
+		assert: messageWithLazyRef documentationReference
+		equals: 'https://ontouml.readthedocs.io/en/latest/classes/sortals/kind/index.html'
+]
+
+{ #category : 'tests' }
 VerificationMessageTest >> testCreateForWithVerificationWithText [
 
 	| validationMessage testObject testVerification testMessageText |
@@ -53,6 +73,18 @@ VerificationMessageTest >> testObjectReference [
 	self assert: validationMessage objectReference identicalTo: testObject.
 	validationMessage objectReference: secondObject.
 	self assert: validationMessage objectReference identicalTo: secondObject
+]
+
+{ #category : 'tests' }
+VerificationMessageTest >> testSeverity [
+
+	| verification errorMessage warningMessage |
+	verification := Verification basicNew.
+	self should: [ VerificationMessage basicNew severity ] raise: SubclassResponsibility.
+	errorMessage := VerificationMessageError createFor: Object new withVerification: verification withText: 'err'.
+	warningMessage := VerificationMessageWarning createFor: Object new withVerification: verification withText: 'warn'.
+	self assert: errorMessage severity equals: 'Error'.
+	self assert: warningMessage severity equals: 'Warning'
 ]
 
 { #category : 'tests' }

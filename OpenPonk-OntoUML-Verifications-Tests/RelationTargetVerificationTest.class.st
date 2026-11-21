@@ -174,6 +174,61 @@ RelationTargetVerificationTest >> testVerifyObjectWithModel [
 ]
 
 { #category : 'tests' }
+RelationTargetVerificationTest >> testVerifySkipsAssociationWithoutStereotype [
+
+	| mode quality association model |
+	mode := self createClass: 'Symptom' withStereotype: OntoUMLMode.
+	quality := self createClass: 'Weight' withStereotype: OntoUMLQuality.
+	association := self createAssociationFrom: quality to: mode.
+	model := {
+		         mode.
+		         quality.
+		         association }.
+	self assertEmpty: (RelationTargetVerification verify: association withModel: model)
+]
+
+{ #category : 'tests' }
+RelationTargetVerificationTest >> testVerifySkipsEndWithoutStereotype [
+
+	| quantity unstereotypedClass association model |
+	quantity := self createClass: 'Water' withStereotype: OntoUMLQuantity.
+	unstereotypedClass := OPUMLClass new.
+	association := self createAssociationFrom: quantity to: unstereotypedClass with: OntoUMLContainment new.
+	model := {
+		         quantity.
+		         unstereotypedClass.
+		         association }.
+	self assertEmpty: (RelationTargetVerification verify: association withModel: model)
+]
+
+{ #category : 'tests' }
+RelationTargetVerificationTest >> testVerifySubKindWithValidAndInvalidParent [
+
+	| quantity kind validSubKind invalidSubKind container genValid genInvalid validAssociation invalidAssociation model |
+	quantity := self createClass: 'Liquid' withStereotype: OntoUMLQuantity.
+	kind := self createClass: 'Person' withStereotype: OntoUMLKind.
+	validSubKind := self createClass: 'Wine' withStereotype: OntoUMLSubKind.
+	invalidSubKind := self createClass: 'Adult' withStereotype: OntoUMLSubKind.
+	container := self createClass: 'Bottle' withStereotype: OntoUMLKind.
+	genValid := self createGeneralizationFor: quantity withSpecific: validSubKind.
+	genInvalid := self createGeneralizationFor: kind withSpecific: invalidSubKind.
+	validAssociation := self createAssociationFrom: container to: validSubKind with: OntoUMLContainment new.
+	invalidAssociation := self createAssociationFrom: container to: invalidSubKind with: OntoUMLContainment new.
+	model := {
+		         quantity.
+		         kind.
+		         validSubKind.
+		         invalidSubKind.
+		         container.
+		         genValid.
+		         genInvalid.
+		         validAssociation.
+		         invalidAssociation }.
+	self assertEmpty: (RelationTargetVerification verify: validAssociation withModel: model).
+	self assert: (RelationTargetVerification verify: invalidAssociation withModel: model) size equals: 1
+]
+
+{ #category : 'tests' }
 RelationTargetVerificationTest >> testVerifyWithModel [
 	self testInvalidModel.
 	self testValidModel.

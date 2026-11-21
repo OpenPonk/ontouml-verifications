@@ -41,6 +41,19 @@ RelationDependencyVerificationTest >> testFulfillsRelationalDependency [
 ]
 
 { #category : 'tests' }
+RelationDependencyVerificationTest >> testFulfillsRelationalDependencyTargetZeroLowerBound [
+
+	| kind role mediation |
+	kind := self createClass: 'Person' withStereotype: OntoUMLKind.
+	role := self createClass: 'Student' withStereotype: OntoUMLRole.
+	mediation := self createAssociationFrom: kind to: role.
+	mediation memberEnds second lowerValue value: 0.
+	self
+		deny: (RelationDependencyVerification basicNew fulfillsRelationalDependency: mediation)
+		description: 'Relation with lower bound 0 on target end must not fulfill relational dependency'
+]
+
+{ #category : 'tests' }
 RelationDependencyVerificationTest >> testInvalidModel [
 
 	| role model result message |
@@ -83,6 +96,33 @@ RelationDependencyVerificationTest >> testValidModel [
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: role withModel: model).
 	self assertEmpty: result results
+]
+
+{ #category : 'tests' }
+RelationDependencyVerificationTest >> testValidModelInheritingRelationFromParentRoleMixinAndCycleSafety [
+
+	| roleMixin childRole cycleRoleA cycleRoleB targetKind material genToMixin genCycle1 genCycle2 model |
+	roleMixin := self createClass: 'Customer' withStereotype: OntoUMLRoleMixin.
+	childRole := self createClass: 'PersonalCustomer' withStereotype: OntoUMLRole.
+	cycleRoleA := self createClass: 'CycleRoleA' withStereotype: OntoUMLRole.
+	cycleRoleB := self createClass: 'CycleRoleB' withStereotype: OntoUMLRole.
+	targetKind := self createClass: 'Company' withStereotype: OntoUMLKind.
+	genToMixin := self createGeneralizationFor: roleMixin withSpecific: childRole.
+	genCycle1 := self createGeneralizationFor: cycleRoleB withSpecific: cycleRoleA.
+	genCycle2 := self createGeneralizationFor: cycleRoleA withSpecific: cycleRoleB.
+	material := self createAssociationFrom: roleMixin to: targetKind with: OntoUMLMaterial new.
+	model := {
+		         roleMixin.
+		         childRole.
+		         cycleRoleA.
+		         cycleRoleB.
+		         targetKind.
+		         genToMixin.
+		         genCycle1.
+		         genCycle2.
+		         material }.
+	self assertEmpty: (RelationDependencyVerification verify: childRole withModel: model).
+	self assert: (RelationDependencyVerification verify: cycleRoleA withModel: model) size equals: 1
 ]
 
 { #category : 'tests' }

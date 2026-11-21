@@ -174,6 +174,23 @@ AllowedSupertypesVerificationTest >> testVerifyObjectWithModel [
 ]
 
 { #category : 'tests' }
+AllowedSupertypesVerificationTest >> testVerifySkipsGeneralizationWithUnstereotypedEnds [
+
+	| kind unstereotypedClass genWithUnstereotypedGeneral genWithUnstereotypedSpecific model |
+	kind := self createClass: 'Person' withStereotype: OntoUMLKind.
+	unstereotypedClass := OPUMLClass new name: 'Plain'.
+	genWithUnstereotypedGeneral := self createGeneralizationFor: unstereotypedClass withSpecific: kind.
+	genWithUnstereotypedSpecific := self createGeneralizationFor: kind withSpecific: unstereotypedClass.
+	model := {
+		         kind.
+		         unstereotypedClass.
+		         genWithUnstereotypedGeneral.
+		         genWithUnstereotypedSpecific }.
+	self assertEmpty: (AllowedSupertypesVerification verify: genWithUnstereotypedGeneral withModel: model).
+	self assertEmpty: (AllowedSupertypesVerification verify: genWithUnstereotypedSpecific withModel: model)
+]
+
+{ #category : 'tests' }
 AllowedSupertypesVerificationTest >> testVerifyWithModel [
 	self testInvalidModel.
 	self testValidModel.

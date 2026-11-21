@@ -56,15 +56,6 @@ VerificationMessage >> documentationReference: aDocumentationReference [
 ]
 
 { #category : 'accessing' }
-VerificationMessage >> getObjectReferenceName [
-	(self objectReference respondsTo: #name)
-		ifTrue: [ ^ self objectReference name ].
-	(self objectReference isKindOf: OPUMLGeneralization)
-		ifTrue: [ ^ 'Generalization: ' , self objectReference general name , ' -> '
-				, self objectReference specific name ]
-]
-
-{ #category : 'accessing' }
 VerificationMessage >> messageText [
 	^ messageText.
 ]

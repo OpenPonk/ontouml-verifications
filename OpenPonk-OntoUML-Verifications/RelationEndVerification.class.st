@@ -59,16 +59,15 @@ RelationEndVerification >> getVerifiedEnd: aVerifiedAssociation [
 ]
 
 { #category : 'verification' }
-RelationEndVerification >> isEndValid: aEnd withModel: aModel withAssociationStereotype: aAssociationStereotype [
+RelationEndVerification >> isEndValid: anEnd withModel: aModel withAssociationStereotype: anAssociationStereotype [
+
 	| endStereotype |
-	endStereotype := self class getStereotype: aEnd.
-	endStereotype ifNil: [ ^ {} ]. 
-	((self validStereotypesForEnd at: aAssociationStereotype class) anySatisfy: [ :validsource | endStereotype class = validsource ])
-		ifTrue: [ ^ true. ].
-	"ifFalse"
-	(endStereotype class = OntoUMLSubKind) 
-		ifFalse: [ ^false. ]
-		ifTrue: [ ^ self isParentOfEndValid: aEnd withModel: aModel withAssociationStereotype: aAssociationStereotype ].
+	endStereotype := self class getStereotype: anEnd.
+	endStereotype ifNil: [ ^ true ].
+	((self validStereotypesForEnd at: anAssociationStereotype class) anySatisfy: [ :validStereotype |
+		 endStereotype class = validStereotype ]) ifTrue: [ ^ true ].
+	^ endStereotype class = OntoUMLSubKind and: [
+		  self isParentOfEndValid: anEnd withModel: aModel withAssociationStereotype: anAssociationStereotype ]
 ]
 
 { #category : 'verification' }

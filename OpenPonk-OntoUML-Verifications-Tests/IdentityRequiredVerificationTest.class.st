@@ -144,6 +144,57 @@ IdentityRequiredVerificationTest >> testInvalidModel [
 ]
 
 { #category : 'tests' }
+IdentityRequiredVerificationTest >> testInvalidModelWithGeneralizationLoop [
+
+	| subKindA subKindB gen1 gen2 model result message |
+	subKindA := self createClass: 'SubKindA' withStereotype: OntoUMLSubKind.
+	subKindB := self createClass: 'SubKindB' withStereotype: OntoUMLSubKind.
+	gen1 := self createGeneralizationFor: subKindB withSpecific: subKindA.
+	gen2 := self createGeneralizationFor: subKindA withSpecific: subKindB.
+	model := {
+		         subKindA.
+		         subKindB.
+		         gen1.
+		         gen2 }.
+	self
+		assert: (IdentityRequiredVerification basicNew countIdentitySources: subKindA fromModel: model withAccumulator: Set new)
+		equals: Float negativeInfinity.
+	result := VerificationResults new.
+	result addResults: (IdentityRequiredVerification verify: subKindA withModel: model).
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: subKindA.
+	self assert: message verification class identicalTo: IdentityRequiredVerification.
+	self assert: message messageText equals: 'OntoUMLSubKind has loop in generalisation structure.'
+]
+
+{ #category : 'tests' }
+IdentityRequiredVerificationTest >> testInvalidModelWithMultipleIdentitySources [
+
+	| kind1 kind2 role gen1 gen2 model result message |
+	kind1 := self createClass: 'Person' withStereotype: OntoUMLKind.
+	kind2 := self createClass: 'Organization' withStereotype: OntoUMLKind.
+	role := self createClass: 'Customer' withStereotype: OntoUMLRole.
+	gen1 := self createGeneralizationFor: kind1 withSpecific: role.
+	gen2 := self createGeneralizationFor: kind2 withSpecific: role.
+	model := {
+		         kind1.
+		         kind2.
+		         role.
+		         gen1.
+		         gen2 }.
+	result := VerificationResults new.
+	result addResults: (IdentityRequiredVerification verify: role withModel: model).
+	self assert: result results size equals: 1.
+	message := result results anyOne.
+	self assert: message class identicalTo: VerificationMessageError.
+	self assert: message objectReference identicalTo: role.
+	self assert: message verification class identicalTo: IdentityRequiredVerification.
+	self assert: message messageText equals: 'OntoUMLRole has multiple identity sources.'
+]
+
+{ #category : 'tests' }
 IdentityRequiredVerificationTest >> testNew [
 	self newTest.
 ]
@@ -184,6 +235,35 @@ IdentityRequiredVerificationTest >> testValidModelWithDiamondGeneralizationToNon
 	model := { kind . phase . phaseMixin . roleMixin . role . genPhaseKind . genRolePhase . genRoleRoleMixin . genPhaseMixin1 . genPhaseMixin2 }.
 	result := VerificationResults new.
 	result addResults: (self getTestedClass verify: role withModel: model).
+	self assertEmpty: result results
+]
+
+{ #category : 'tests' }
+IdentityRequiredVerificationTest >> testValidModelWithDiamondGeneralizationToSameKind [
+
+	| personKind maleSubKind citizenSubKind role genMale genCitizen genRoleMale genRoleCitizen model result |
+	personKind := self createClass: 'Person' withStereotype: OntoUMLKind.
+	maleSubKind := self createClass: 'Male' withStereotype: OntoUMLSubKind.
+	citizenSubKind := self createClass: 'Citizen' withStereotype: OntoUMLSubKind.
+	role := self createClass: 'Voter' withStereotype: OntoUMLRole.
+	genMale := self createGeneralizationFor: personKind withSpecific: maleSubKind.
+	genCitizen := self createGeneralizationFor: personKind withSpecific: citizenSubKind.
+	genRoleMale := self createGeneralizationFor: maleSubKind withSpecific: role.
+	genRoleCitizen := self createGeneralizationFor: citizenSubKind withSpecific: role.
+	model := {
+		         personKind.
+		         maleSubKind.
+		         citizenSubKind.
+		         role.
+		         genMale.
+		         genCitizen.
+		         genRoleMale.
+		         genRoleCitizen }.
+	self
+		assert: (IdentityRequiredVerification basicNew countIdentitySources: role fromModel: model withAccumulator: Set new)
+		equals: 1.
+	result := VerificationResults new.
+	result addResults: (IdentityRequiredVerification verify: role withModel: model).
 	self assertEmpty: result results
 ]
 

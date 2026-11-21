@@ -12,11 +12,12 @@ Class {
 }
 
 { #category : 'testing' }
-VerificationController class >> isVerifiable: aObject includeGeneralizations: aBoolean [
-	(aObject isKindOf: OPUMLClass) ifTrue: [ ^ true. ].
-	(aObject isKindOf: OPUMLAssociation) ifTrue: [ ^ true. ].
-	(aBoolean and: [ aObject isKindOf: OPUMLAssociation. ]) ifTrue: [ ^ true. ].
-	^ false.
+VerificationController class >> isVerifiable: anObject includeGeneralizations: aBoolean [
+
+	(anObject isKindOf: OPUMLClass) ifTrue: [ ^ true ].
+	(anObject isKindOf: OPUMLAssociation) ifTrue: [ ^ true ].
+	(aBoolean and: [ anObject isKindOf: OPUMLGeneralization ]) ifTrue: [ ^ true ].
+	^ false
 ]
 
 { #category : 'verification' }
